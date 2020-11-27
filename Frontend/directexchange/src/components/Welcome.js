@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import Footer from './footer';
-import Headers from './header';
+import Footer from './Footer';
+import Headers from './Header';
 import { Layout, Row, Col } from 'antd';
 
 

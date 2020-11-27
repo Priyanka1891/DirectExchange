@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Form, Input, Button, Alert, Select } from 'antd';
-import Headers from './header';
-import Footer from './footer';
+import Headers from './Header';
+import Footer from './Footer';
 import { Redirect } from 'react-router';
 
 
