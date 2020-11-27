@@ -1,15 +1,15 @@
 import './App.css';
-//import 'bootstrap/dist/css/bootstrap.min.css';
-
+import { BrowserRouter } from 'react-router-dom';
+import Main from './components/Main';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-       <h1>HOME PAGE</h1>
-      </header>
-    </div>
-  );
+      <BrowserRouter>
+        <div>  
+          <Main />
+        </div>
+      </BrowserRouter>
+    );
 }
 
 export default App;
