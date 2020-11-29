@@ -28,7 +28,7 @@ import org.springframework.lang.NonNull;
  */
 @Entity
 @Table(name = "User")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "username")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userName")
 public class User {
 
 	// @Id
@@ -37,7 +37,7 @@ public class User {
 	@Id
 	@Column(unique = true)
 	@NonNull
-	private String username; // Email
+	private String userName; // Email
 
 	@NonNull
 	private String name;
@@ -51,6 +51,9 @@ public class User {
 	private String authMode;
 
 	private String password;
+	
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user", fetch = FetchType.LAZY)
+	private List<BankAccount> bankAccounts;
 
 	// public long getId() {
 	// return id;
@@ -60,12 +63,12 @@ public class User {
 	// this.id = id;
 	// }
 
-	public String getUsername() {
-		return username;
+	public String getUserName() {
+		return userName;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setUsername(String userName) {
+		this.userName = userName;
 	}
 
 	public String getName() {
@@ -108,9 +111,9 @@ public class User {
 		this.password = password;
 	}
 
-	public User(String username, String name, String nickname, Boolean isVerified, String authMode, String password) {
+	public User(String userName, String name, String nickname, Boolean isVerified, String authMode, String password) {
 
-		this.username = username;
+		this.userName = userName;
 		this.name = name;
 		this.nickname = nickname;
 		this.isVerified = isVerified;
@@ -121,4 +124,12 @@ public class User {
 	public User() {
 	}
 
+	public List<BankAccount> getBankAccounts() {
+		return bankAccounts;
+	}
+
+	public void setBankAccounts(List<BankAccount> bankAccounts) {
+		this.bankAccounts = bankAccounts;
+	}
+	
 }

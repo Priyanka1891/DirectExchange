@@ -27,7 +27,6 @@ public class UserService {
 	 * @throws Exception
 	 */
 	public User createUser(User user) throws Exception {
-
 		return userRepository.save(user);
 	}
 

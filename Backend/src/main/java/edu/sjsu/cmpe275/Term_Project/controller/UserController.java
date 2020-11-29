@@ -78,7 +78,7 @@ public class UserController {
 			/**
 			 * Return status 400 if input is invalid
 			 */
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
 		}
 
 	}
