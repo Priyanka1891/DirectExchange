@@ -1,61 +1,79 @@
 import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
 import { Redirect } from 'react-router';
+import firebase from 'firebase';
 
 const { Header } = Layout;
 
-class Headers extends Component{
+class Headers extends Component {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-          redirectPage:''
-        };
-      }
-    
-
-
- clickedJoinUs = () => {
-    this.setState({
-      redirectPage: <Redirect to = {{pathname:'/register/'}} />
-    }) 
+  constructor(props) {
+    super(props);
+    this.state = {
+      redirectPage: '',
+      isSignedIn: false,
+    };
   }
 
-   clickedSignin = () => {
+
+
+  clickedJoinUs = () => {
     this.setState({
-      redirectPage: <Redirect to = {{pathname:'/login/'}} />
-    }) 
+      redirectPage: <Redirect to={{ pathname: '/register/' }} />
+    })
+  }
+
+  clickedSignin = () => {
+    this.setState({
+      redirectPage: <Redirect to={{ pathname: '/login/' }} />
+    })
   }
 
 
   clickedWelcome = () => {
     this.setState({
-      redirectPage: <Redirect to = {{pathname:'/welcome/'}} />
-      }) 
+      redirectPage: <Redirect to={{ pathname: '/welcome/' }} />
+    })
   }
 
+  logoutHandler = () => {
+    firebase.auth().signOut();
+    this.setState({
+      redirectPage: <Redirect to={{ pathname: '/' }} />
+    })
+  }
+  componentDidMount() {
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
+      (user) => this.setState({ isSignedIn: !!user })
+    );
+  }
 
-render(){
-return ( 
-    <div>
-              {this.state.redirectPage}
+  render() {
+    return (
+      <div>
+        {this.state.redirectPage}
+        
+        <Header>
+          <div />
 
-<Header>
-    <div />
-    <Menu
-      theme="dark"
-      mode="horizontal"
-      defaultSelectedKeys={this.props.selectedKey}
-      style={{ lineHeight: '64px'}}
-    >
-      <Menu.Item key="1" onClick={this.clickedWelcome}>Welcome</Menu.Item>
-      <Menu.Item key="2" onClick={this.clickedJoinUs}>Register</Menu.Item>
-      <Menu.Item key="3" onClick={this.clickedSignin}>Sign in</Menu.Item>
-    </Menu>
-  </Header>
-  </div>
-  )
-}
+          <Menu
+            theme="dark"
+            mode="horizontal"
+            defaultSelectedKeys={this.props.selectedKey}
+            style={{ lineHeight: '64px' }}
+          >
+            <Menu.Item key="3" onClick={this.clickedSignin}>Direct Exchange</Menu.Item>
+            {/* <Menu.Item key="1" onClick={this.clickedWelcome}>Welcome</Menu.Item> */}
+            {/* <Menu.Item key="2" onClick={this.clickedJoinUs}>Register</Menu.Item> */}
+            {/* <Menu.Item key="3" onClick={this.clickedSignin}>Sign in</Menu.Item> */}
+            {this.state.isSignedIn &&
+              <Menu.Item key="4" style={{ float: "right" }} onClick={this.logoutHandler}>Logout</Menu.Item>
+            }
+          </Menu>
+        </Header>
+      </div>
+    )
+  }
 
 
 

@@ -19,7 +19,7 @@ const initialState = {
     isSignedIn: false,
     redirectPage: '',
     showError: false,
-    // emailVerificationSent: false
+    emailVerificationSent: true
 };
 
 var actionCodeSettings = {
@@ -64,7 +64,9 @@ class Register extends Component {
                     <div>
                         <Headers selectedKey={['2']} />
                     </div>
+                    <div style={{ marginLeft: "50%", marginTop: "10%" }}>
                         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+                    </div>
                     <div>
                         <Footer />
                     </div>
@@ -72,7 +74,7 @@ class Register extends Component {
                 </div>
             );
         }
-        // {this.state.emailVerificationSent ? this.noop() :this.sendEmailVerification()};
+        { this.state.emailVerificationSent ? this.noop() : this.sendEmailVerification() };
         // TODO: after this redirect to some modal window giving msg that
         //  verify  email id. once user clicks verification link, user will be
         // directed to home page. 

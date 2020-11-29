@@ -17,16 +17,23 @@ const uiConfig = {
     ],
 };
 
+var actionCodeSettings = {
+    url: 'http://localhost:3000/'
+};
+
 const initialState = {
     isSignedIn: false,
     redirectPage: '',
     showError: false,
+    emailVerificationSent: false
 };
 
 class Login extends Component {
     constructor() {
         super();
         this.state = initialState;
+        this.sendEmailVerification = this.sendEmailVerification.bind(this);
+
     }
 
     // Listen to the Firebase Auth state and set the local state.
@@ -41,6 +48,22 @@ class Login extends Component {
         this.unregisterAuthObserver();
     }
   
+    noop = () => { }
+    sendEmailVerification = () => {
+
+        if (!this.state.emailVerificationSent) {
+            return;
+        }
+        var user = firebase.auth().currentUser;
+        user.sendEmailVerification(actionCodeSettings).then(function () {
+            console.log("Sent email");
+            this.setState({
+                emailVerificationSent: true
+            });
+        }).catch(function (error) {
+            console.log(error)
+        });
+    }
 
     render() {
         if (!this.state.isSignedIn) {
@@ -49,7 +72,9 @@ class Login extends Component {
                     <div>
                         <Headers selectedKey={['3']} />
                     </div>
+                    <div style={{ marginLeft: "50%", marginTop: "7%" }}>
                         <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+                    </div>
                     <div>
                         <Footer />
                     </div>
@@ -57,19 +82,21 @@ class Login extends Component {
                 </div>
             );
         }
-        return (
-            <div>
+        { this.sendEmailVerification() };
+        if (this.state.emailVerificationSent || this.state.isSignedIn) {
+            return (
                 <div>
-                    <Headers selectedKey={['3']} />
+                    <div>
+                        <Headers />
+                    </div>
+                    <h1>Verification Link Sent</h1>
+                    <p>Please verify your email address</p>
+                    <div>
+                        <Footer />
+                    </div>
                 </div>
-                <h1>My Home</h1>
-                <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p>
-                <a onClick={() => firebase.auth().signOut()}>Sign-out</a>
-                <div>
-                    <Footer />
-                </div>
-            </div>
-        );
+            );
+        }
     }
 }
 
