@@ -54,6 +54,9 @@ public class User {
 	
 	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user", fetch = FetchType.LAZY)
 	private List<BankAccount> bankAccounts;
+	
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user", fetch = FetchType.LAZY)
+	private List<ExchangeOffer> exchangeOffers;
 
 	// public long getId() {
 	// return id;
@@ -67,7 +70,7 @@ public class User {
 		return userName;
 	}
 
-	public void setUsername(String userName) {
+	public void setUserName(String userName) {
 		this.userName = userName;
 	}
 
@@ -130,6 +133,14 @@ public class User {
 
 	public void setBankAccounts(List<BankAccount> bankAccounts) {
 		this.bankAccounts = bankAccounts;
+	}
+
+	public List<ExchangeOffer> getExchangeOffers() {
+		return exchangeOffers;
+	}
+
+	public void setExchangeOffers(List<ExchangeOffer> exchangeOffers) {
+		this.exchangeOffers = exchangeOffers;
 	}
 	
 }
