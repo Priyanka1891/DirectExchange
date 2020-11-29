@@ -3,6 +3,8 @@ package edu.sjsu.cmpe275.Term_Project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -62,6 +64,30 @@ public class BankAccountController {
 		}
 		
 		
+	}
+	
+	
+	/**
+	 * GET API end point for getting distinct bank accounts of user
+	 * @param id
+	 * @return
+	 */
+	@GetMapping("/getDistinctBankAccountsCount/{userName}")
+	public ResponseEntity getDistinctBankAccounts(@PathVariable String userName) {
+		
+		try {
+			int count = bankAccountService.getDistinctBankAccountsOfUser(userName);
+			/**
+			 * Return response with status 200
+			 */
+			return ResponseEntity.ok(count);
+		} catch(Exception e) {
+			/**
+			 * Return status 400 if input is invalid
+			 */
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+
 	}
 	
 }

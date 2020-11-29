@@ -38,4 +38,18 @@ public class BankAccountService {
 		
 	}
 	
+	public int getDistinctBankAccountsOfUser(String userName) throws Exception{
+		
+		User user = userRepository.findById(userName).orElse(null);
+		
+		if(user==null) {
+			throw new Exception("User does not exist");
+		}
+		
+		int count = bankAccountRepository.getCountofDistinctAccounts(user);
+		
+		return count;
+		
+	}
+	
 }
