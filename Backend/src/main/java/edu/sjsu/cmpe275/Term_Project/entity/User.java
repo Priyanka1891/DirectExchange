@@ -42,7 +42,9 @@ public class User {
 	@NonNull
 	private String name;
 
+	@Column(unique = true)
 	private String nickname;
+
 
 	private Boolean isVerified = false;
 
