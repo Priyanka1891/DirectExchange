@@ -44,6 +44,10 @@ class Login extends Component {
                 this.setState({ isSignedIn: !!user });
                 console.log('user', user);
                 if (user) {
+
+                    localStorage.setItem("userName", user.email);
+
+
                     console.log('user', user);
                     var data = {
                         userName: user.email,

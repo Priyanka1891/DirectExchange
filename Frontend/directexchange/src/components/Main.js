@@ -6,10 +6,10 @@ import RegistrationForm from './Register';
 import firebase from 'firebase';
 import Rates from './rates';
 
-
 //import users components
 import CreateAccount from './users/CreateAccount';
 import PostOffer from './users/PostOffer';
+import MyOffers from './myoffers/MyOffers';
 
 
 // Main Component
@@ -37,11 +37,14 @@ class Main extends React.Component {
         }
 
         {/* If user is logged in */}
-        <Route path="/" component={WelcomePage} />
+        <Route path="/home" component={WelcomePage} />
         {/* <Route exact path="/" component={LoginForm} /> */}
 
         {/* <Route path="/login/" component={LoginForm} />
         <Route path="/register/" component={RegistrationForm} /> */}
+
+        <Route path="/user/myoffers/" component={MyOffers} />
+
 
         <Route path="/user/rates/" component={Rates} />
         <Route path="/user/createaccount/" component={CreateAccount} />
