@@ -37,7 +37,9 @@ class Main extends React.Component {
         {/* If user is logged in */}
         {this.state.isSignedIn &&
           <>
-            <Route path="/" component={Headers} />
+          <Route path="/" component={Headers} />
+          <Route exact path="/" component={MyOffers} />
+
           <Route path="/user/myoffers/" component={MyOffers} />
             <Route path="/user/rates/" component={Rates} />
             <Route path="/user/createaccount/" component={CreateAccount} />

@@ -1,8 +1,13 @@
 import React, { Component, Fragment, useState } from "react";
 import axios from "axios";
-import { Card } from 'antd';
+import { Button, Card } from 'antd';
 import firebase from 'firebase';
-
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route,
+    Link
+} from "react-router-dom";
 
 const gridStyle = {
     width: '25%',
@@ -44,28 +49,27 @@ class MyOffers extends React.Component {
         return (
             <Card title="My Offers">
                 {this.state.offers && this.state.offers.map((value, index) => {
-                    return <Card.Grid style={gridStyle}>
-                        {value.allowCounterOffers}
-                        {value.allowSplitExchanges}
-                        {value.amountToRemitSourceCurrency}
-                        {value.destinationCountry}
-                        {value.destinationCurrency}
-                        {value.exchangeRate}
-                        {value.expirationDate}
-                        {value.id}
-                        {value.offerStatus}
-                        {value.receivingAccountNumber}
-                        {value.sourceCountry}
-                        {value.sourceCurrency}
-                        {value.receivingBankName}
+                    return <Card.Grid bordered={true} style={gridStyle} extra={<a>{value.offerStatus}</a>}>
+                        <p>{value.allowCounterOffers}</p>
+                        <p>{value.allowSplitExchanges}</p>
+                        <p>{value.amountToRemitSourceCurrency}</p>
+                        <p>{value.destinationCountry}</p>
+                        <p>{value.destinationCurrency}</p>
+                        <p>{value.exchangeRate}</p>
+                        <p>{value.expirationDate}</p>
+                        <p>{value.id}</p>
+                        <p>{value.offerStatus}</p>
+                        <p>{value.receivingAccountNumber}</p>
+                        <p>{value.sourceCountry}</p>
+                        <p>{value.sourceCurrency}</p>
+                        <p>{value.receivingBankName}</p>
+
+                        <Link to={'matchingoffers/' + value.id}>
+                            <Button type="primary">Find Matching Offers</Button>
+                        </Link>
                     </Card.Grid>
                 })}
 
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
             </Card>
         )
     }
