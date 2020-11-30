@@ -28,7 +28,7 @@ class WelcomePage extends Component {
                 <div>
                     <Row >
                         <Layout className="layout">
-                            <Headers selectedKey={['1']} />
+
                             <Content>
                                 <div style={{ background: '#fff' }}>
                                     <br></br>
@@ -49,7 +49,7 @@ class WelcomePage extends Component {
                                 </div>
 
                             </Content>
-                            <Footer />
+
                         </Layout>
                     </Row>
                 </div>

@@ -37,8 +37,8 @@ class Main extends React.Component {
         }
 
         {/* If user is logged in */}
-        <Route path="/welcome/" component={WelcomePage} />
-        <Route exact path="/" component={LoginForm} />
+        <Route path="/" component={WelcomePage} />
+        {/* <Route exact path="/" component={LoginForm} /> */}
 
         {/* <Route path="/login/" component={LoginForm} />
         <Route path="/register/" component={RegistrationForm} /> */}
