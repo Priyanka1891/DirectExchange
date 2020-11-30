@@ -4,6 +4,7 @@ import Footer from './Footer';
 import { Redirect } from 'react-router';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
+import axios from "axios";
 
 // Configure FirebaseUI.
 const uiConfig = {
@@ -39,7 +40,38 @@ class Login extends Component {
     // Listen to the Firebase Auth state and set the local state.
     componentDidMount() {
         this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-            (user) => this.setState({isSignedIn: !!user})
+            (user) => {
+                this.setState({ isSignedIn: !!user });
+                console.log('user', user);
+                if (user) {
+                    console.log('user', user);
+                    var data = {
+                        userName: user.email,
+                        name: user.displayName,
+                        isVerified: user.emailVerified,
+                        //authMode :
+                        //password 
+                    }
+                    console.log('data', data);
+                    axios
+                        .post("http://localhost:8080" + "/user/signup", data)
+                        .then(response => {
+                            console.log("Search Result : ", response.data);
+                            if (response.data != undefined) {
+
+                            } else {
+
+                            }
+
+                        })
+                        .catch(errors => {
+                            console.log("Error" + errors);
+                        });
+
+                }
+
+            }
+
         );
     }
 
@@ -51,6 +83,9 @@ class Login extends Component {
     noop = () => { }
     sendEmailVerification = () => {
 
+
+
+
         if (!this.state.emailVerificationSent) {
             return;
         }
@@ -60,6 +95,7 @@ class Login extends Component {
             this.setState({
                 emailVerificationSent: true
             });
+            firebase.auth().signOut();
         }).catch(function (error) {
             console.log(error)
         });
