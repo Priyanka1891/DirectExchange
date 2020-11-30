@@ -1,8 +1,13 @@
 package edu.sjsu.cmpe275.Term_Project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
@@ -58,6 +63,28 @@ public class ExchangeOfferController {
 			 */
 			return ResponseEntity.ok(createdExchangeOffer);
 			
+		} catch(Exception e) {
+			/**
+			 * Return status 400 if input is invalid
+			 */
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+		
+	}
+	
+	
+	@GetMapping("/getMatchingExchangeOffersBasedOnCountry/{userName}")
+	public ResponseEntity getMatchingExchangeOffersBasedOnCountry(@PathVariable String userName, @Param("destinationCountry") String destinationCountry,
+																	@Param("destinationCurrency") String destinationCurrency,
+																		@Param("sourceCountry") String sourceCountry,
+																			@Param("sourceCurrency") String sourceCurrency) {
+		
+		try {
+			List<ExchangeOffer> matchingOffers = exchangeOfferService.getMatchingExchangeOffersBasedOnCountry(destinationCountry, destinationCurrency, sourceCountry, sourceCurrency, userName);
+			/**
+			 * Return response with status 200
+			 */
+			return ResponseEntity.ok(matchingOffers);
 		} catch(Exception e) {
 			/**
 			 * Return status 400 if input is invalid

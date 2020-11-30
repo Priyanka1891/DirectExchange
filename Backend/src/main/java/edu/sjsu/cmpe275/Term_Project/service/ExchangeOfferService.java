@@ -1,5 +1,7 @@
 package edu.sjsu.cmpe275.Term_Project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,20 @@ public class ExchangeOfferService {
 		
 		return exchangeOfferRepository.save(exchangeOffer);
 		
+	}
+	
+	public List<ExchangeOffer> getMatchingExchangeOffersBasedOnCountry(String destinationCountry, String destinationCurrency, 
+			String sourceCountry, String sourceCurrency, String userName) throws Exception{
+		
+		User user = userRepository.findById(userName).orElse(null);
+		
+		if(user==null) {
+			throw new Exception("User does not exist");
+		}
+		
+		List<ExchangeOffer> matchingOffers = exchangeOfferRepository.getMatchingExchangeOffersBasedOnCountry(destinationCountry, destinationCurrency, sourceCountry, sourceCurrency, user);
+		
+		return matchingOffers;
 	}
 	
 }
