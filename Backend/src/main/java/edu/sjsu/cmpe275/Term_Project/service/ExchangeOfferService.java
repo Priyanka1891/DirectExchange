@@ -52,4 +52,10 @@ public class ExchangeOfferService {
 		return matchingOffers;
 	}
 	
+	
+	public List<ExchangeOffer>  getOffersByUserName(String user_name) throws Exception {
+		System.out.println("Username service " + user_name);
+		List<ExchangeOffer> offers = exchangeOfferRepository.findOffersByUserName(user_name);
+		return offers;
+	}
 }

@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.sjsu.cmpe275.Term_Project.entity.ExchangeOffer;
+import edu.sjsu.cmpe275.Term_Project.entity.User;
 import edu.sjsu.cmpe275.Term_Project.requestModels.ExchangeOfferRequestModel;
 import edu.sjsu.cmpe275.Term_Project.service.ExchangeOfferService;
 
@@ -91,7 +92,23 @@ public class ExchangeOfferController {
 			 */
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
 		}
+	}
 		
+	/**
+	 * GET API end point for getOffers
+	 * 
+	 * @param username
+	 * @return list of exchange offers
+	 */
+	@GetMapping("/exchangeOffer/getOffers/{username}")
+	public ResponseEntity getOffers(@PathVariable String username) {
+		try {
+			List<ExchangeOffer> offers = exchangeOfferService.getOffersByUserName(username);
+			return ResponseEntity.ok(offers);
+		} catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+
 	}
 	
 }
