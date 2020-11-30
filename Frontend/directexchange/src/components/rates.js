@@ -1,8 +1,6 @@
 
 import React, { Component } from 'react';
 import { Table, Tag, Space } from 'antd';
-import Headers from './Header';
-import Footer from './Footer';
 import {ratesTable} from '../config/ratesInfo';
 
 const columns = [
@@ -55,17 +53,13 @@ class Rates extends Component{
     render(){
         return (
            <div>
-                <div>
-                    <Headers selectedKey={['2']} />
-                </div>
+
                <div>
                 <h1 style={{paddingTop:'2%', textAlign:'center'}} ><strong>Prevailing Rates Today</strong></h1>
 
              <Table style={{paddingTop:'1%'}}  dataSource={this.state.dataSource} columns={columns} />;
              </div>
-             <div>
-                    <Footer/>
-                </div>
+
 
             </div>
         );

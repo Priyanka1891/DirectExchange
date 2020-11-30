@@ -1,8 +1,6 @@
 import React from 'react';
 import { Route } from 'react-router-dom';
-import WelcomePage from './Welcome';
 import LoginForm from './Login';
-import RegistrationForm from './Register';
 import firebase from 'firebase';
 import Rates from './rates';
 
@@ -10,7 +8,7 @@ import Rates from './rates';
 import CreateAccount from './users/CreateAccount';
 import PostOffer from './users/PostOffer';
 import MyOffers from './myoffers/MyOffers';
-
+import Headers from './Header';
 
 // Main Component
 class Main extends React.Component {
@@ -37,18 +35,18 @@ class Main extends React.Component {
         }
 
         {/* If user is logged in */}
-        <Route path="/home" component={WelcomePage} />
-        {/* <Route exact path="/" component={LoginForm} /> */}
+        {this.state.isSignedIn &&
+          <>
+            <Route path="/" component={Headers} />
+          <Route path="/user/myoffers/" component={MyOffers} />
+            <Route path="/user/rates/" component={Rates} />
+            <Route path="/user/createaccount/" component={CreateAccount} />
+            <Route path="/user/postoffer/" component={PostOffer} />
+          </>
+        }
 
-        {/* <Route path="/login/" component={LoginForm} />
-        <Route path="/register/" component={RegistrationForm} /> */}
-
-        <Route path="/user/myoffers/" component={MyOffers} />
 
 
-        <Route path="/user/rates/" component={Rates} />
-        <Route path="/user/createaccount/" component={CreateAccount} />
-        <Route path="/user/postoffer/" component={PostOffer} />
 
       </div>
     );

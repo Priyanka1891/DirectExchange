@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Input, Alert, Select, Button, Row, Col, DatePicker, InputNumber, Switch } from 'antd';
-import Headers from '../Header';
-import Footer from '../Footer';
 import { Redirect } from 'react-router';
 import Swal from 'sweetalert2';
 import {ratesTable} from '../../config/ratesInfo';
@@ -127,9 +125,7 @@ class PostOffer extends Component{
            <div>
 
         {this.state.redirectPage}
-                <div>
-                    <Headers selectedKey={['2']} />
-                </div>
+
                 <div>
                     <Form
                         {...frontFormLayout}
@@ -368,9 +364,7 @@ class PostOffer extends Component{
 
                     </Form>
                 </div>
-                <div>
-                    <Footer/>
-                </div>
+
 
            </div>
           );

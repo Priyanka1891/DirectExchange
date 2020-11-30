@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
 import { Form, Input, Alert, Select, Button, Row, Col, DatePicker } from 'antd';
-import Headers from '../Header';
-import Footer from '../Footer';
 import { Redirect } from 'react-router';
 import Swal from 'sweetalert2';
 
@@ -57,9 +55,7 @@ class CreateAccount extends Component{
            <div>
 
             {this.state.redirectPage}
-                <div>
-                    <Headers selectedKey={['2']} />
-                </div>
+
                 <div>
                     <Form
                         {...frontFormLayout}
@@ -206,9 +202,7 @@ class CreateAccount extends Component{
                         </Form.Item>
                     </Form>
                 </div>
-                <div>
-                    <Footer/>
-                </div>
+
 
            </div>
           );

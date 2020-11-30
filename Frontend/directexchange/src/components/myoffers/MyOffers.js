@@ -27,7 +27,9 @@ class MyOffers extends React.Component {
             .then(response => {
                 console.log("Search Result : ", response.data);
                 if (response.data != undefined) {
-
+                    this.setState({
+                        offers: response.data
+                    });
                 } else {
 
                 }
@@ -41,7 +43,24 @@ class MyOffers extends React.Component {
     render() {
         return (
             <Card title="My Offers">
-                <Card.Grid style={gridStyle}>Content</Card.Grid>
+                {this.state.offers && this.state.offers.map((value, index) => {
+                    return <Card.Grid style={gridStyle}>
+                        {value.allowCounterOffers}
+                        {value.allowSplitExchanges}
+                        {value.amountToRemitSourceCurrency}
+                        {value.destinationCountry}
+                        {value.destinationCurrency}
+                        {value.exchangeRate}
+                        {value.expirationDate}
+                        {value.id}
+                        {value.offerStatus}
+                        {value.receivingAccountNumber}
+                        {value.sourceCountry}
+                        {value.sourceCurrency}
+                        {value.receivingBankName}
+                    </Card.Grid>
+                })}
+
                 <Card.Grid style={gridStyle}>Content</Card.Grid>
                 <Card.Grid style={gridStyle}>Content</Card.Grid>
                 <Card.Grid style={gridStyle}>Content</Card.Grid>
