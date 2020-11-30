@@ -9,6 +9,7 @@ import CreateAccount from './users/CreateAccount';
 import PostOffer from './users/PostOffer';
 import MyOffers from './myoffers/MyOffers';
 import Headers from './Header';
+import MatchingOffers from './myoffers/MatchingOffers';
 
 // Main Component
 class Main extends React.Component {
@@ -41,6 +42,9 @@ class Main extends React.Component {
           <Route exact path="/" component={MyOffers} />
 
           <Route path="/user/myoffers/" component={MyOffers} />
+          <Route path="/user/moffers/" component={MatchingOffers} />
+
+
             <Route path="/user/rates/" component={Rates} />
             <Route path="/user/createaccount/" component={CreateAccount} />
             <Route path="/user/postoffer/" component={PostOffer} />

@@ -64,7 +64,10 @@ class MyOffers extends React.Component {
                         <p>{value.sourceCurrency}</p>
                         <p>{value.receivingBankName}</p>
 
-                        <Link to={'matchingoffers/' + value.id}>
+                        <Link to={{
+                            pathname: 'moffers/',
+                            state: value
+                        }}>
                             <Button type="primary">Find Matching Offers</Button>
                         </Link>
                     </Card.Grid>
