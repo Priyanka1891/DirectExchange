@@ -51,6 +51,7 @@ public class ExchangeOffer {
 	
 	@ManyToOne
 	@JoinColumn(name="userName")
+	@JsonIgnore
 	private User user;
 	
 	public ExchangeOffer() {
