@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
 import { Redirect } from 'react-router';
-import firebase from 'firebase';
 
 const { Header } = Layout;
 
@@ -49,15 +48,15 @@ class Headers extends Component {
   }
 
   logoutHandler = () => {
-    firebase.auth().signOut();
-    this.setState({
-      redirectPage: <Redirect to={{ pathname: '/' }} />
-    })
+    // firebase.auth().signOut();
+    // this.setState({
+    //   redirectPage: <Redirect to={{ pathname: '/' }} />
+    // })
   }
   componentDidMount() {
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-      (user) => this.setState({ isSignedIn: !!user })
-    );
+    // this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
+    //   (user) => this.setState({ isSignedIn: !!user })
+    // );
   }
 
   render() {

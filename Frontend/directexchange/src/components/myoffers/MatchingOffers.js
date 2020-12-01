@@ -12,6 +12,8 @@ import {
 import OfferCard from './offerCard';
 //import OfferCardSplit from './OfferCardSplit';
 import SplitMatchFirst from "./splitMatchFirst";
+import UserHeader from '../userHeader';
+ 
 
 const gridStyle = {
     width: '30%',
@@ -404,9 +406,15 @@ class MatchingOffers extends React.Component {
     render() {
         return (
             <div>
+                 <div>
+                        <UserHeader selectedKey={['4']} />
+                    </div>
+                    <br></br>
              {this.state.loaded &&   <div>
-                <Checkbox onChange={this.onChange} checked={this.state.showSplitMatches}>Show Split Matches</Checkbox>
+                <Checkbox style={{marginLeft:'10%'}}onChange={this.onChange} checked={this.state.showSplitMatches}>Show Split Matches</Checkbox>
+                <br></br>
              <div>
+                 <br></br>
                     {/* <h1>Below are your single matches:</h1> */}
                     <Card title="Auto Matching Offers">
                     {this.state.singleMatches.map((value, ind)=>{
