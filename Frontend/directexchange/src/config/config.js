@@ -9,3 +9,7 @@ export const firebaseconfig = {
   appId: "1:950077225374:web:c9047b4892424324acbe8f"
 };
 
+export const urlConfig = {
+  url:"http://localhost:8080",
+}
+

@@ -65,7 +65,7 @@ class MyOffers extends React.Component {
                         <p>{value.receivingBankName}</p>
 
                         <Link to={{
-                            pathname: 'moffers/',
+                            pathname: 'user/moffers/',
                             state: value
                         }}>
                             <Button type="primary">Find Matching Offers</Button>
