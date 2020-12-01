@@ -77,7 +77,6 @@ class SplitMatchFirst extends React.Component {
             proposedOffer:e.target.value
         })
     }
-
     counterOfferClicked = (e) => {
         console.log(this.state.proposedOffer)
 
