@@ -1,8 +1,5 @@
 package edu.sjsu.cmpe275.Term_Project.requestModels;
 
-import javax.persistence.Enumerated;
-import javax.persistence.EnumType;
-
 public class BankAccountRequestModel {
 	
 	private String bankName;

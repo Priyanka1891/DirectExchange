@@ -23,31 +23,37 @@ public class BankAccountService {
 	@Autowired
 	private UserRepository userRepository;
 	
+	/**
+	 * Service to create bank account
+	 * @param bankAccount
+	 * @param userName
+	 * @return
+	 * @throws Exception
+	 */
 	public BankAccount createBankAccount(BankAccount bankAccount, String userName) throws Exception{
 		
-		
 		User user = userRepository.findById(userName).orElse(null);
-		
 		if(user==null) {
 			throw new Exception("User does not exist");
-		}
-		
-		bankAccount.setUser(user);
-		
+		}	
+		bankAccount.setUser(user);	
 		return bankAccountRepository.save(bankAccount);
 		
 	}
 	
+	/**
+	 * Service to validate the number of distinct bank accounts user has created
+	 * @param userName
+	 * @return
+	 * @throws Exception
+	 */
 	public int getDistinctBankAccountsOfUser(String userName) throws Exception{
 		
-		User user = userRepository.findById(userName).orElse(null);
-		
+		User user = userRepository.findById(userName).orElse(null);		
 		if(user==null) {
 			throw new Exception("User does not exist");
-		}
-		
+		}	
 		int count = bankAccountRepository.getCountofDistinctAccounts(user);
-		
 		return count;
 		
 	}

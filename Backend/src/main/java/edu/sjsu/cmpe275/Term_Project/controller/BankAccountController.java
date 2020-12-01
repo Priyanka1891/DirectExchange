@@ -3,12 +3,14 @@ package edu.sjsu.cmpe275.Term_Project.controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.sjsu.cmpe275.Term_Project.constants.Constants;
 import edu.sjsu.cmpe275.Term_Project.entity.BankAccount;
 import edu.sjsu.cmpe275.Term_Project.requestModels.BankAccountRequestModel;
 import edu.sjsu.cmpe275.Term_Project.service.BankAccountService;
@@ -29,7 +31,8 @@ public class BankAccountController {
 	 * @param bankAccountDetails
 	 * @return
 	 */
-	@PostMapping("/bankAccount")
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PostMapping("/createBankAccount")
 	public ResponseEntity createBankAccount(@RequestBody BankAccountRequestModel bankAccountDetailsRequest) {
 		
 		BankAccount bankAccountDetails = new BankAccount(bankAccountDetailsRequest.getBankName(),
@@ -72,11 +75,18 @@ public class BankAccountController {
 	 * @param id
 	 * @return
 	 */
-	@GetMapping("/getDistinctBankAccountsCount/{userName}")
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@GetMapping("/getDistinctBankAccountsCountsOfUser/{userName}")
 	public ResponseEntity getDistinctBankAccounts(@PathVariable String userName) {
 		
 		try {
-			int count = bankAccountService.getDistinctBankAccountsOfUser(userName);
+			int count = 0;
+			
+			if(userName!=null && !userName.equals("")) {
+				count = bankAccountService.getDistinctBankAccountsOfUser(userName);
+			} else {
+				throw new Exception("User Name not provided");
+			}
 			/**
 			 * Return response with status 200
 			 */

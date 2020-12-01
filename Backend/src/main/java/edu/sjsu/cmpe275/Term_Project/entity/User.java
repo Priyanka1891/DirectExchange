@@ -28,7 +28,7 @@ import org.springframework.lang.NonNull;
  */
 @Entity
 @Table(name = "User")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userName")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "userName")
 public class User {
 
 	// @Id
@@ -53,9 +53,11 @@ public class User {
 	private String password;
 	
 	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties({"user"})
 	private List<BankAccount> bankAccounts;
 	
 	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user", fetch = FetchType.LAZY)
+	@JsonIgnoreProperties({"user"})
 	private List<ExchangeOffer> exchangeOffers;
 
 	// public long getId() {

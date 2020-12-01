@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import edu.sjsu.cmpe275.Term_Project.constants.Constants;
 import edu.sjsu.cmpe275.Term_Project.entity.User;
 import edu.sjsu.cmpe275.Term_Project.service.UserService;
 
@@ -49,7 +50,7 @@ public class UserController {
 	 * 
 	 * @Param("authMode") String authMode, @Param("password") String password) {
 	 */
-	@CrossOrigin(origins = "http://localhost:3000")
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
 	@PostMapping("/user/signup")
 	public ResponseEntity createUser(@RequestBody User userRequest) {
 
@@ -90,6 +91,7 @@ public class UserController {
 	 * @param username
 	 * @return
 	 */
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
 	@GetMapping("/user/login/{username}")
 	public ResponseEntity getUser(@PathVariable String username) {
 

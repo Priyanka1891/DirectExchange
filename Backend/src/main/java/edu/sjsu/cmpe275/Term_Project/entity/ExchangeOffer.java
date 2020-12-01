@@ -20,7 +20,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name= "EXCHANGE_OFFER")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class ExchangeOffer {
 
 	@Id
@@ -53,14 +53,14 @@ public class ExchangeOffer {
 	
 	@ManyToOne
 	@JoinColumn(name="userName")
-	@JsonIgnore
+	@JsonIgnoreProperties({"bankAccounts", "exchangeOffers"})
 	private User user;
 	
 	public ExchangeOffer() {
 		
 	}
 	
-	public ExchangeOffer(String sourceCountry, String sourceCurrency, double amountToRemitSourceCurrency,
+	public ExchangeOffer(String sourceCountry, String sourceCurrency, double amountToRemitInSourceCurrency,
 						  String destinationCountry, String destinationCurrency, double exchangeRate,
 						   String expirationDate, String allowCounterOffers, String allowSplitExchanges,
 						   	String receivingBankName, long receivingAccountNumber, String offerStatus) {
@@ -105,12 +105,12 @@ public class ExchangeOffer {
 	public void setSourceCurrency(String sourceCurrency) {
 		this.sourceCurrency = sourceCurrency;
 	}
-
+	
 	public double getAmountToRemitSourceCurrency() {
 		return amountToRemitSourceCurrency;
 	}
 
-	public void setAmountToRemitSourceCurrency(double amountToRemitSourceCurrency) {
+	public void setAmountToRemitInSourceCurrency(double amountToRemitSourceCurrency) {
 		this.amountToRemitSourceCurrency = amountToRemitSourceCurrency;
 	}
 

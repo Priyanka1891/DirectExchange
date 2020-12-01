@@ -10,6 +10,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 /**
@@ -19,7 +20,7 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
  */
 @Entity
 @Table(name = "BANK_ACCOUNT")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
+//@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class BankAccount {
 	
 	@Id
@@ -42,6 +43,7 @@ public class BankAccount {
 	
 	@ManyToOne
 	@JoinColumn(name="userName")
+	@JsonIgnoreProperties({"bankAccounts", "exchangeOffers"})
 	private User user;
 	
 	public BankAccount() {
