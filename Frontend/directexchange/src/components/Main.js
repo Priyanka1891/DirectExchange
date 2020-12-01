@@ -25,6 +25,10 @@ class Main extends React.Component {
     this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
       (user) => this.setState({ isSignedIn: !!user })
     );
+
+    this.setState({
+      isSignedIn:true
+    })
   }
 
   render() {
@@ -51,6 +55,7 @@ class Main extends React.Component {
           </>
         }
 
+        <Route path="/user/moffers/" component={MatchingOffers} />
 
 
 

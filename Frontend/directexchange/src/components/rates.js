@@ -67,3 +67,5 @@ class Rates extends Component{
 }
 
 export default Rates;
+
+
