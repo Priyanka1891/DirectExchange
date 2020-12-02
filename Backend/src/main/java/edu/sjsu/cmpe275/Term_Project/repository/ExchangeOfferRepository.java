@@ -28,6 +28,11 @@ public interface ExchangeOfferRepository extends JpaRepository<ExchangeOffer, Lo
 	public List<ExchangeOffer> getMatchingExchangeOffersBasedOnCountry(String destinationCountry, String destinationCurrency, 
 																		String sourceCountry, String sourceCurrency, User user);
 	
-	@Query(value = "SELECT * FROM exchange_offer WHERE user_name = :user_name", nativeQuery = true)
-	public List<ExchangeOffer> findOffersByUserName(@Param("user_name") String user_name);
+	/**
+	 * Query to get the all offers except user's offers with status as active
+	 * @param offer_status
+	 * @return
+	 */
+	@Query("SELECT e FROM ExchangeOffer e WHERE e.user!=?1 AND e.offerStatus=?2")
+	public List<ExchangeOffer> getAllOffersByStatus(User user, String offerStatus);
 }

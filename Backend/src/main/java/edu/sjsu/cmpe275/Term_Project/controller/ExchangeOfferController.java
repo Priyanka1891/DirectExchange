@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -77,8 +78,9 @@ public class ExchangeOfferController {
 		}
 		
 	}
-		
-	/**
+    
+  
+  /**
 	 * GET API end point for getOffers
 	 * 
 	 * @param username
@@ -96,6 +98,27 @@ public class ExchangeOfferController {
 
 	}
 	
+	/**
+	 * GET API end point for getAllActiveOffers
+	 * 
+	 * @param username
+	 * @return list of exchange offers
+	 */
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@GetMapping("/exchangeOffer/getAllActiveOffers/{username}")
+	public ResponseEntity getAllActiveOffers(@PathVariable String username) {
+		try {
+			List<ExchangeOffer> offers = exchangeOfferService.getAllOffersByStatus(username , "Open");
+			return ResponseEntity.ok(offers);
+		} catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+
+	}
+	
+	
+	
+
 	/**
 	 * GET API End point for exact auto matching offers
 	 * @param autoSplitMatchRequestDetails
@@ -155,5 +178,28 @@ public class ExchangeOfferController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
 		}
 	}
+	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PutMapping("/exchangeOffer/updateOfferStatusToInTransaction/{offer_id}")
+	public ResponseEntity updateOfferStatusToInTransaction(@PathVariable String offer_id) {
+		try {
+			ExchangeOffer offer = exchangeOfferService.updateOfferStatusToInTransaction(offer_id);
+			if (offer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
+			}
+			return ResponseEntity.ok("Offer updated successfully");
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+		
+	}
+	
+//	@CrossOrigin(origins = Constants.FRONT_END_URL)
+//	@PutMapping("/updateOfferStatusToCounterMade/{id}")
+	
+	
+
+	
+	
 	
 }
