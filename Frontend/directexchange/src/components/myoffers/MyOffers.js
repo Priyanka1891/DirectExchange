@@ -1,6 +1,6 @@
 import React, { Component, Fragment, useState } from "react";
 import axios from "axios";
-import { Button, Card } from 'antd';
+import { Button, Card, Divider } from 'antd';
 import firebase from 'firebase';
 import {
     BrowserRouter as Router,
@@ -8,6 +8,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+
 
 const gridStyle = {
     width: '25%',
@@ -49,20 +50,25 @@ class MyOffers extends React.Component {
         return (
             <Card title="My Offers">
                 {this.state.offers && this.state.offers.map((value, index) => {
-                    return <Card.Grid bordered={true} style={gridStyle} extra={<a>{value.offerStatus}</a>}>
-                        <p>{value.allowCounterOffers}</p>
-                        <p>{value.allowSplitExchanges}</p>
-                        <p>{value.amountToRemitSourceCurrency}</p>
-                        <p>{value.destinationCountry}</p>
-                        <p>{value.destinationCurrency}</p>
-                        <p>{value.exchangeRate}</p>
-                        <p>{value.expirationDate}</p>
-                        <p>{value.id}</p>
-                        <p>{value.offerStatus}</p>
-                        <p>{value.receivingAccountNumber}</p>
-                        <p>{value.sourceCountry}</p>
-                        <p>{value.sourceCurrency}</p>
-                        <p>{value.receivingBankName}</p>
+                    return <Card.Grid bordered={true} style={gridStyle}>
+                        <p><b>Offer ID : {value.id}
+                            <Divider type="vertical" /></b>
+                        Offer Status : {value.offerStatus}
+                        </p>
+                        <Divider />
+                        <p><b>Amount</b> : {value.amountToRemitSourceCurrency}</p>
+                        <p><b>Exchange Rate</b> : {value.exchangeRate}</p>
+                        <Divider />
+                        <p>Source Country : {value.sourceCountry}</p>
+                        <p>Destination Country : {value.destinationCountry}</p>
+                        <p>Destination Currency : {value.destinationCurrency}</p>
+                        <Divider />
+                        <p>Counter Offer Allowed? : {value.allowCounterOffers}</p>
+                        <p>Split Allowed? : {value.allowSplitExchanges}</p>
+                        <p>Expiration Date : {value.expirationDate}</p>
+
+                        {/* <p>{value.receivingAccountNumber}</p> */}
+                        <p>Bank : {value.receivingBankName}</p>
 
                         <Link to={{
                             pathname: 'user/moffers/',
