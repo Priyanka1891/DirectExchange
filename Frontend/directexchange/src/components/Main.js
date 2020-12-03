@@ -21,6 +21,7 @@ class Main extends React.Component {
     this.state = {
       redirectPage: '',
       isSignedIn: false,
+      variable:'',
     };
 
   }
@@ -33,6 +34,7 @@ class Main extends React.Component {
       isSignedIn:true
     })
   }
+
 
   render() {
     return (
