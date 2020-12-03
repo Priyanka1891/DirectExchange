@@ -1,5 +1,8 @@
 package edu.sjsu.cmpe275.Term_Project.controller;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.AddressException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
@@ -15,6 +18,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.sjsu.cmpe275.Term_Project.constants.Constants;
 import edu.sjsu.cmpe275.Term_Project.entity.User;
+import edu.sjsu.cmpe275.Term_Project.requestModels.EmailRequestModel;
+import edu.sjsu.cmpe275.Term_Project.service.EmailOfferService;
 import edu.sjsu.cmpe275.Term_Project.service.UserService;
 
 /**
@@ -29,6 +34,9 @@ public class UserController {
 
 	@Autowired
 	private UserService service;
+	
+	@Autowired
+	private EmailOfferService emailService;
 
 	/**
 	 * POST API end point for User
@@ -108,6 +116,30 @@ public class UserController {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}
 
+	}
+
+	/**
+	 * POST API end point for send email
+	 * @param emailRequestModel
+	 * @return
+	 */
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PostMapping("/sendEmail")
+	public ResponseEntity sendEmail(@RequestBody EmailRequestModel emailRequestModel) {
+		
+		try {
+			emailService.sendEmail(emailRequestModel.getFromUser(), emailRequestModel.getToUser(), emailRequestModel.getMessage());
+			return ResponseEntity.ok("Email Sent successfully");
+		} catch (AddressException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+		
 	}
 
 }

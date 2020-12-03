@@ -8,8 +8,12 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.fasterxml.jackson.annotation.OptBoolean;
+
 import edu.sjsu.cmpe275.Term_Project.entity.ExchangeOffer;
+import edu.sjsu.cmpe275.Term_Project.entity.ProposedOffer;
 import edu.sjsu.cmpe275.Term_Project.entity.SplitOffer;
+import edu.sjsu.cmpe275.Term_Project.entity.TransactionDetails;
 import edu.sjsu.cmpe275.Term_Project.entity.User;
 import edu.sjsu.cmpe275.Term_Project.repository.ExchangeOfferRepository;
 import edu.sjsu.cmpe275.Term_Project.repository.UserRepository;
@@ -46,10 +50,35 @@ public class ExchangeOfferService {
 		
 	}
 		
-	public List<ExchangeOffer>  getOffersByUserName(String user_name) throws Exception {
-		System.out.println("Username service " + user_name);
-		List<ExchangeOffer> offers = exchangeOfferRepository.findOffersByUserName(user_name);
-		return offers;
+	// public List<ExchangeOffer>  getOffersByUserName(String user_name) throws Exception {
+	// 	System.out.println("Username service " + user_name);
+	// 	List<ExchangeOffer> offers = exchangeOfferRepository.findOffersByUserName(user_name);
+	// 	return offers;
+  // }
+  
+
+  public List<ExchangeOffer>  getOffersByUserName(String userName) throws Exception {
+		
+		User user = userRepository.findById(userName).orElse(null);
+		
+		if(user==null) {
+			throw new Exception("User does not exist");
+		}
+		
+		return user.getExchangeOffers();
+	}
+	
+	
+	public List<ExchangeOffer>  getAllOffersByStatus(String userName , String offerStatus) throws Exception {
+		
+		User user = userRepository.findById(userName).orElse(null);
+		
+		if(user==null) {
+			throw new Exception("User does not exist");
+		}
+		
+		List<ExchangeOffer> matchingOffersByStatus = exchangeOfferRepository.getAllOffersByStatus(user , offerStatus);
+		return matchingOffersByStatus;
 	}
 	
 	/**
@@ -250,5 +279,55 @@ public class ExchangeOfferService {
 		return responseObject;
 		
 	}
+	
+	
+	
+	/**
+	 * Service to update an offer to in transaction mode
+	 * @param offer id
+	 * @param transaction details
+	 * @return
+	 * @throws Exception
+	 */
+	public ExchangeOffer updateOfferStatusToInTransaction(String offer_id, TransactionDetails trdetails) throws Exception {
+		long id = Long.parseLong(offer_id);
+		ExchangeOffer offer = exchangeOfferRepository.findById(id).orElse(null);
+		if (offer == null) {
+			return offer;
+		}
+		trdetails.setExchange_offer(offer);
+		offer.setOfferStatus("InTransaction");
+		offer.setTransactionDetails(trdetails);
+		exchangeOfferRepository.save(offer);
+		return offer;
+	}
+	
+	
+	/**
+	 * Service to update an offer to in transaction mode
+	 * @param offer id
+	 * @parma proposedOffer
+	 * @return
+	 * @throws Exception
+	 */
+	public ExchangeOffer updateOfferStatusForCounterOffer(String offer_id, ProposedOffer proposedOffer) throws Exception {
+		long id = Long.parseLong(offer_id);
+		ExchangeOffer exchange_offer = exchangeOfferRepository.findById(id).orElse(null);
+		if (exchange_offer == null) {
+			return exchange_offer;
+		}
+		
+//		if (proposedOffer.getSplitUserId1().equals(exchange_offer.getUser().getUserName())) {
+//			throw new Exception("User cannot propose counter offer to its own exchange offer");
+//		}
+		
+		proposedOffer.setExchangeOffer(exchange_offer);
+//		exchange_offer.setOfferStatus("CounterMade");
+		exchange_offer.getProposedOffers().add(proposedOffer);
+		exchangeOfferRepository.save(exchange_offer);
+		return exchange_offer;
+	}
+	
+	
 	
 }

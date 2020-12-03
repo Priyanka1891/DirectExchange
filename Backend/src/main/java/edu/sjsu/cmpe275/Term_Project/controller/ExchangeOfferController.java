@@ -10,15 +10,20 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import edu.sjsu.cmpe275.Term_Project.constants.Constants;
 import edu.sjsu.cmpe275.Term_Project.entity.ExchangeOffer;
+import edu.sjsu.cmpe275.Term_Project.entity.ProposedOffer;
 import edu.sjsu.cmpe275.Term_Project.entity.SplitOffer;
+import edu.sjsu.cmpe275.Term_Project.entity.TransactionDetails;
 import edu.sjsu.cmpe275.Term_Project.entity.User;
 import edu.sjsu.cmpe275.Term_Project.requestModels.AutoSplitMatchRequestModel;
 import edu.sjsu.cmpe275.Term_Project.requestModels.ExchangeOfferRequestModel;
+import edu.sjsu.cmpe275.Term_Project.requestModels.ProposedOfferModel;
+import edu.sjsu.cmpe275.Term_Project.requestModels.TransactionDetailsModel;
 import edu.sjsu.cmpe275.Term_Project.service.ExchangeOfferService;
 
 /**
@@ -77,8 +82,9 @@ public class ExchangeOfferController {
 		}
 		
 	}
-		
-	/**
+    
+  
+  /**
 	 * GET API end point for getOffers
 	 * 
 	 * @param username
@@ -97,12 +103,33 @@ public class ExchangeOfferController {
 	}
 	
 	/**
-	 * GET API End point for exact auto matching offers
+	 * GET API end point for getAllActiveOffers
+	 * 
+	 * @param username
+	 * @return list of exchange offers
+	 */
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@GetMapping("/exchangeOffer/getAllActiveOffers/{username}")
+	public ResponseEntity getAllActiveOffers(@PathVariable String username) {
+		try {
+			List<ExchangeOffer> offers = exchangeOfferService.getAllOffersByStatus(username , "Open");
+			return ResponseEntity.ok(offers);
+		} catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+
+	}
+	
+	
+	
+
+	/**
+	 * POST API End point for exact auto matching offers
 	 * @param autoSplitMatchRequestDetails
 	 * @return
 	 */
 	@CrossOrigin(origins = Constants.FRONT_END_URL)
-	@GetMapping("/getExactMatchingOffers")
+	@PostMapping("/getExactMatchingOffers")
 	public ResponseEntity getExactMatchingOffers(@RequestBody AutoSplitMatchRequestModel autoSplitMatchRequestDetails) {
 		
 		try {
@@ -127,12 +154,12 @@ public class ExchangeOfferController {
 	}
 	
 	/**
-	 * GET API End point for split matching offers
+	 * POST API End point for split matching offers
 	 * @param autoSplitMatchRequestDetails
 	 * @return
 	 */
 	@CrossOrigin(origins = Constants.FRONT_END_URL)
-	@GetMapping("/getSplitMatchingOffers")
+	@PostMapping("/getSplitMatchingOffers")
 	public ResponseEntity getSplitMatchingOffers(@RequestBody AutoSplitMatchRequestModel autoSplitMatchRequestDetails) {
 		
 		try {
@@ -155,5 +182,56 @@ public class ExchangeOfferController {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
 		}
 	}
+	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PutMapping("/exchangeOffer/updateOfferStatusToInTransaction")
+	public ResponseEntity updateOfferStatusToInTransaction(@RequestBody TransactionDetailsModel transaction) {
+		
+		try {
+			System.out.println("DEBUG: " + transaction.getUserName() + " " + transaction.getAmount() + " " + transaction.getPercentOfTotalAmount());
+			TransactionDetails trdetails = new TransactionDetails(transaction.getUserName(), transaction.getAmount(), "", "",
+																  transaction.getPercentOfTotalAmount());
+			
+			ExchangeOffer offer = exchangeOfferService.updateOfferStatusToInTransaction(transaction.getExchangeOfferId(), trdetails);
+			if (offer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
+			}
+			return ResponseEntity.ok(offer);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+		
+	}
+	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PostMapping("exchangeOffer/updateOfferStatusForCounterOffer")
+	public ResponseEntity updateOfferStatusToCounterMade(@RequestBody ProposedOfferModel proposedOffer) {
+		try {
+			ProposedOffer counterOffer = new ProposedOffer(proposedOffer.getAmount(),
+					   proposedOffer.getSplitUserId1() , proposedOffer.getSplitUserId2()  ,
+					   proposedOffer.getSplitUser1Amount(),proposedOffer.getSplitUser2Amount());
+			ExchangeOffer offer =
+				exchangeOfferService.updateOfferStatusForCounterOffer(proposedOffer.getExchangeOfferId(), counterOffer);
+			if (offer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
+			}
+			/**
+			 * Return response with status 200
+			 */
+			return ResponseEntity.ok(offer);
+			
+		} catch(Exception e) {
+			/**
+			 * Return status 400 if input is invalid
+			 */
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+	}
+	
+	
+	
+
+	
+	
 	
 }

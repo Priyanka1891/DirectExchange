@@ -1,5 +1,5 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Route, BrowserRouter } from 'react-router-dom';
 import LoginForm from './Login';
 import firebase from 'firebase';
 import Rates from './rates';
@@ -10,6 +10,9 @@ import PostOffer from './users/PostOffer';
 import MyOffers from './myoffers/MyOffers';
 import Headers from './Header';
 import MatchingOffers from './myoffers/MatchingOffers';
+import BrowseOffers from './BrowseOffers';
+import OfferDetails from './OfferDetails';
+import TransactionDetails from './TransactionDetails';
 
 import TransctionHistory from './reports/transactionHistory';
 import SystemReport from './reports/systemReport';
@@ -48,15 +51,18 @@ class Main extends React.Component {
         {this.state.isSignedIn &&
           <>
           <Route exact path="/" component={Headers} />
-          <Route exact path="/" component={MyOffers} />
+          {/* <Route exact path="/" component={MyOffers} /> */}
 
           <Route path="/user/myoffers/" component={MyOffers} />
           <Route path="/user/moffers/" component={MatchingOffers} />
-
+          <Route path="/user/browseoffers/" component={BrowseOffers} />
+          <Route path="/offer/details" component={OfferDetails} />
+          <Route exact path="/" component={BrowseOffers} />
 
             <Route path="/user/rates/" component={Rates} />
             <Route path="/user/createaccount/" component={CreateAccount} />
             <Route path="/user/postoffer/" component={PostOffer} />
+          <Route path="/offer/transaction/" component={TransactionDetails} />
           </>
         }
             <Route path="/user/rates/" component={Rates} />

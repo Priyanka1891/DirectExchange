@@ -24,10 +24,27 @@ public interface ExchangeOfferRepository extends JpaRepository<ExchangeOffer, Lo
 	 * @param sourceCurrency
 	 * @return
 	 */
-	@Query("SELECT e FROM ExchangeOffer e WHERE e.destinationCountry=?1 AND e.destinationCurrency=?2 AND e.sourceCountry=?3 AND e.sourceCurrency=?4 AND e.user!=?5")
+	@Query("SELECT e FROM ExchangeOffer e WHERE e.destinationCountry=?1 AND e.destinationCurrency=?2 AND e.sourceCountry=?3 AND e.sourceCurrency=?4 AND e.user!=?5 AND e.offerStatus='Open'")
 	public List<ExchangeOffer> getMatchingExchangeOffersBasedOnCountry(String destinationCountry, String destinationCurrency, 
 																		String sourceCountry, String sourceCurrency, User user);
 	
-	@Query(value = "SELECT * FROM exchange_offer WHERE user_name = :user_name", nativeQuery = true)
-	public List<ExchangeOffer> findOffersByUserName(@Param("user_name") String user_name);
+	/**
+	 * Query to get the all offers except user's offers with status as active
+	 * @param offer_status
+	 * @return
+	 */
+	@Query("SELECT e FROM ExchangeOffer e WHERE e.user!=?1 AND e.offerStatus=?2")
+	public List<ExchangeOffer> getAllOffersByStatus(User user, String offerStatus);
+
+	/**
+	 * Query to get the probable split matching offers of user based on destination and source country	
+	 * @param destinationCountry
+	 * @param destinationCurrency
+	 * @param sourceCountry
+	 * @param sourceCurrency
+	 * @return
+	 */
+	@Query("SELECT e FROM ExchangeOffer e WHERE e.destinationCountry=?1 AND e.destinationCurrency=?2 AND e.sourceCountry=?3 AND e.sourceCurrency=?4 AND e.user!=?5 AND e.offerStatus='Open' AND e.allowSplitExchanges='Allow'")
+	public List<ExchangeOffer> getSplitMatchingExchangeOffersBasedOnCountry(String destinationCountry, String destinationCurrency, 
+																		String sourceCountry, String sourceCurrency, User user);
 }
