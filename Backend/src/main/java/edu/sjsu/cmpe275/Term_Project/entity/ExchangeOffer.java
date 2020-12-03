@@ -67,9 +67,12 @@ public class ExchangeOffer {
 	private List<ProposedOffer> proposedOffers;
 	
 	
-	@OneToOne(cascade = {CascadeType.ALL}, mappedBy = "exchange_offer", fetch = FetchType.LAZY)
-	private TransactionDetails transactionDetails;
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "exchange_offer", fetch = FetchType.LAZY)
+	private List<TransactionDetails> transactionDetails;
 	
+
+	
+
 	public ExchangeOffer() {
 		
 	}
@@ -216,14 +219,15 @@ public class ExchangeOffer {
 		this.proposedOffers = proposedOffers;
 	}
 
-	public TransactionDetails getTransactionDetails() {
+
+	public List<TransactionDetails> getTransactionDetails() {
 		return transactionDetails;
 	}
 
-	public void setTransactionDetails(TransactionDetails transactionDetails) {
+	public void setTransactionDetails(List<TransactionDetails> transactionDetails) {
 		this.transactionDetails = transactionDetails;
 	}
-
+	
 	public void setAmountToRemitSourceCurrency(double amountToRemitSourceCurrency) {
 		this.amountToRemitSourceCurrency = amountToRemitSourceCurrency;
 	}

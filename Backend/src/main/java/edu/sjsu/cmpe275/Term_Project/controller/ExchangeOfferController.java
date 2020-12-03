@@ -120,6 +120,18 @@ public class ExchangeOfferController {
 
 	}
 	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@GetMapping("/exchangeOffer/getOffer/{id}")
+	public ResponseEntity getOffer(@PathVariable long id) {
+		try {	
+			ExchangeOffer offer = exchangeOfferService.getOfferById(id);
+			return ResponseEntity.ok(offer);
+		} catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+
+	}
+	
 	
 	
 
@@ -190,6 +202,7 @@ public class ExchangeOfferController {
 		try {
 			System.out.println("DEBUG: " + transaction.getUserName() + " " + transaction.getAmount() + " " + transaction.getPercentOfTotalAmount());
 			TransactionDetails trdetails = new TransactionDetails(transaction.getUserName(), transaction.getAmount(), "", "",
+																  transaction.getBankName(), transaction.getAccountNumber(),
 																  transaction.getPercentOfTotalAmount());
 			
 			ExchangeOffer offer = exchangeOfferService.updateOfferStatusToInTransaction(transaction.getExchangeOfferId(), trdetails);

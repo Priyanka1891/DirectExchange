@@ -3,7 +3,7 @@ package edu.sjsu.cmpe275.Term_Project.entity;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-//import javax.persistence.ManyToOne;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
@@ -30,7 +30,7 @@ public class TransactionDetails {
 	@GeneratedValue
 	private long id;
 	
-	@OneToOne
+	@ManyToOne
 	@JsonIgnore
 	private ExchangeOffer exchange_offer;
 	
@@ -48,17 +48,24 @@ public class TransactionDetails {
 	
 	private Boolean isTransferred=false;
 	
+	private String bankName;
+
+	private long accountNumber;
 	
 	public TransactionDetails() {
 		
 	}
 
-	public TransactionDetails(String Username, double amount, String createDate, String expiryDate, double percentOfTotalAmount) {
+	public TransactionDetails(String Username, double amount, String createDate, String expiryDate, 
+			String bankName,  long accountNumber, double percentOfTotalAmount) {
 		this.Username = Username;
 		this.amount = amount;
 		this.createDate = createDate;
 		this.expiryDate = expiryDate;
-		this.percentOfTotalAmount = percentOfTotalAmount;	
+		this.bankName = bankName;
+		this.accountNumber = accountNumber;
+		this.percentOfTotalAmount = percentOfTotalAmount;
+				
 	}
 	
 	public long getId() {
@@ -123,5 +130,21 @@ public class TransactionDetails {
 
 	public void setExpiryDate(String expiryDate) {
 		this.expiryDate = expiryDate;
+	}
+	
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+	public long getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
 	}
 }

@@ -81,6 +81,14 @@ public class ExchangeOfferService {
 		return matchingOffersByStatus;
 	}
 	
+	public ExchangeOffer getOfferById(long id) throws Exception {
+		ExchangeOffer offer = exchangeOfferRepository.findById(id).orElse(null);	
+		if(offer==null) {
+			throw new Exception("Offer not found");
+		}
+		return offer;
+	}
+	
 	/**
 	 * Service to get exact matching offers
 	 * @param destinationCountry
@@ -295,9 +303,16 @@ public class ExchangeOfferService {
 		if (offer == null) {
 			return offer;
 		}
+		
+		TransactionDetails recv_trdetails = new TransactionDetails(offer.getUser().getUserName(), trdetails.getAmount(), "", "",
+															  offer.getReceivingBankName(), offer.getReceivingAccountNumber(),
+															  trdetails.getPercentOfTotalAmount());
+		
 		trdetails.setExchange_offer(offer);
+		recv_trdetails.setExchange_offer(offer);
 		offer.setOfferStatus("InTransaction");
-		offer.setTransactionDetails(trdetails);
+		offer.getTransactionDetails().add(trdetails);
+		offer.getTransactionDetails().add(recv_trdetails);
 		exchangeOfferRepository.save(offer);
 		return offer;
 	}

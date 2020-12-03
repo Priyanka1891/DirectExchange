@@ -59,6 +59,22 @@ public class TransactionDetailsModel {
 		this.userName = userName;
 	}
 	
+	public String getBankName() {
+		return bankName;
+	}
+
+	public void setBankName(String bankName) {
+		this.bankName = bankName;
+	}
+
+	public long getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(long accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+	
 	private String userName;
 
 	private String exchangeOfferId;
@@ -72,5 +88,9 @@ public class TransactionDetailsModel {
 	private double percentOfTotalAmount;
 	
 	private Boolean isTransferred=false;
+	
+	private String bankName;
+
+	private long accountNumber;
 
 }
