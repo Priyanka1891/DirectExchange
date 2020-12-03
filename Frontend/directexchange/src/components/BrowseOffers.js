@@ -1,6 +1,6 @@
 import React, { Component, Fragment, useState } from "react";
 import axios from "axios";
-import { Button, Card, Divider, Pagination } from 'antd';
+import { Input, Row, Col, Button, Card, Divider, Pagination, Form, Select } from 'antd';
 import firebase from 'firebase';
 import {
     BrowserRouter as Router,
@@ -9,13 +9,17 @@ import {
     Link
 } from "react-router-dom";
 import { MailOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
 
+const { Title } = Typography;
 
 
 const gridStyle = {
     width: '25%',
     textAlign: 'center',
 };
+
+const style = { background: '#0092ff', padding: '8px 0' };
 
 
 class BrowseOffers extends React.Component {
@@ -48,11 +52,95 @@ class BrowseOffers extends React.Component {
             });
     }
 
+    onSourceCurrencyChange = (e) => {
+        if (e) {
+            this.setState({
+                sourcecurrency: e.toUpperCase()
+            }, () => {
+                this.getExchangeRate();
+            })
+        }
+        else {
+            this.setState({
+                sourcecurrency: ''
+            }, () => {
+                this.getExchangeRate();
+            })
+        }
+
+    }
+
+    onChange = (e) => {
+    }
+    onDestinationCurrencyChange = (e) => {
+        if (e) {
+            this.setState({
+                destinationcurrency: e.toUpperCase()
+            }, () => {
+                this.getExchangeRate();
+            })
+        }
+        else {
+            this.setState({
+                destinationcurrency: ''
+            }, () => {
+                this.getExchangeRate();
+            })
+        }
+
+    }
 
     render() {
         return (
             <>
                 <Card title="Browse Offers">
+
+                    <Row gutter={{ xs: 8, xs: 8 }}>
+                        <Col className="gutter-row" span={4}>
+                            <Form.Item
+                                name="sourcecurrency"
+                                label="Source Currency"
+                                rules={[
+                                    {
+                                        required: false,
+                                    },
+                                ]}
+                            >
+                                <Select onChange={this.onSourceCurrencyChange}>
+                                    <Option value="EUR">EUR</Option>
+                                    <Option value="GBP">GBP</Option>
+                                    <Option value="INR">INR</Option>
+                                    <Option value="RMB">RMB</Option>
+                                    <Option value="USD">USD</Option>
+                                </Select>
+                            </Form.Item>
+
+                        </Col>
+                        <Col className="gutter-row" span={4}>
+                            <Form.Item
+                                name="destinationcurrency"
+                                label="Destination Currency"
+                                rules={[
+                                    {
+                                        required: false,
+                                    },
+                                ]}
+                            >
+                                <Select onChange={this.onDestinationCurrencyChange}>
+                                    <Option value="EUR">EUR</Option>
+                                    <Option value="GBP">GBP</Option>
+                                    <Option value="INR">INR</Option>
+                                    <Option value="RMB">RMB</Option>
+                                    <Option value="USD">USD</Option>
+                                </Select>
+                            </Form.Item>
+                        </Col>
+                    </Row>
+
+
+
+
+
                     {this.state.offers && this.state.offers.map((value, index) => {
                         return <>
                             <Card.Grid bordered={true} style={gridStyle}>
@@ -75,7 +163,7 @@ class BrowseOffers extends React.Component {
                                 {/* <p>{value.receivingAccountNumber}</p> */}
                                 <p>Bank : {value.receivingBankName}</p>
                                 <Divider orientation="left">User Details</Divider>
-                                <p>{value.user.name}<Divider type="vertical" /> <MailOutlined /> {value.user.userName}</p>
+                                <p>{value.user.name}<Divider type="vertical" /> <MailOutlined /> Ratings </p>
                                 <Divider dashed />
                                 <Link to={{
                                     pathname: 'offer/details/',
