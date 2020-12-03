@@ -11,6 +11,9 @@ import MyOffers from './myoffers/MyOffers';
 import Headers from './Header';
 import MatchingOffers from './myoffers/MatchingOffers';
 
+import TransctionHistory from './reports/transactionHistory';
+import SystemReport from './reports/systemReport';
+
 // Main Component
 class Main extends React.Component {
   constructor() {
@@ -54,8 +57,16 @@ class Main extends React.Component {
             <Route path="/user/postoffer/" component={PostOffer} />
           </>
         }
+            <Route path="/user/rates/" component={Rates} />
+            <Route path="/user/postoffer/" component={PostOffer} />
+
+            <Route path="/user/createaccount/" component={CreateAccount} />
 
         <Route path="/user/moffers/" component={MatchingOffers} />
+        <Route path="/user/transactions/" component={TransctionHistory} />
+        <Route path="/user/systemreport/" component={SystemReport} />
+
+
 
 
 
