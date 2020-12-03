@@ -2,12 +2,17 @@ import React, { Component } from 'react';
 import { Form, Input, Alert, Select, Button, Row, Col, DatePicker } from 'antd';
 import { Redirect } from 'react-router';
 import Swal from 'sweetalert2';
+import UserHeader from '../userHeader';
+import {urlConfig} from '../../config/config';
+
+import axios from 'axios';
 
 const { MonthPicker } = DatePicker;
 
 const { Option } = Select;
 
-const userName = localStorage.getItem('userName');
+//const userName = localStorage.getItem('userName');//
+const userName = "ambika@sjsu.edu";
 class CreateAccount extends Component{
     formRef = React.createRef();
 
@@ -28,6 +33,25 @@ class CreateAccount extends Component{
         values.userName = userName;
         console.log(values);
 
+        axios
+        .post(urlConfig + "/createBankAccount", values)
+        .then(response => {
+            console.log("Search Result : ", response.data);
+            if (response.data != undefined) {
+              Swal.fire('Success', 'Account Created', 'success');
+              this.setState({
+                redirectPage: <Redirect to={{ pathname: '/user/createaccount/' }} />
+                })
+               
+            } else {
+
+            }
+            
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+        
         //api call
     };
     disabledDate = (current) => {
@@ -56,7 +80,13 @@ class CreateAccount extends Component{
 
             {this.state.redirectPage}
 
+<div>
+<UserHeader selectedKey={['4']} />
+
+</div>
                 <div>
+
+
                     <Form
                         {...frontFormLayout}
                         ref={this.formRef}
@@ -189,7 +219,7 @@ class CreateAccount extends Component{
                             >
                                 <Option value="sending">Sending</Option>
                                 <Option value="receiving">Receiving</Option>
-                                <Option value="both">Supports Both</Option>
+                                <Option value="both">Both</Option>
                             </Select>
                         </Form.Item>
 

@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Table, Tag, Space } from 'antd';
 import {ratesTable} from '../config/ratesInfo';
+import UserHeader from './userHeader';
 
 const columns = [
     {
@@ -53,6 +54,10 @@ class Rates extends Component{
     render(){
         return (
            <div>
+             <div>
+                  <UserHeader selectedKey={['6']} />
+                  </div>
+                 <br></br>
 
                <div>
                 <h1 style={{paddingTop:'2%', textAlign:'center'}} ><strong>Prevailing Rates Today</strong></h1>

@@ -1,6 +1,13 @@
 import React, { Component, Fragment, useState } from "react";
 
-import { Button, Card, Checkbox, Input, Row, Col } from 'antd';
+import { Button, Card, message, Input, Row, Col } from 'antd';
+import {    Link
+} from "react-router-dom";
+import axios from 'axios';
+import {urlConfig} from '../../config/config';
+
+
+const { TextArea } = Input;
 
 
 const gridStyle = {
@@ -23,6 +30,7 @@ class OfferCard extends React.Component {
             sourceCurrency:this.props.value.sourceCurrency,
             userAmountToRemit:this.props.userAmountToRemit,
             proposedOffer:'',
+            message:'',
 
         }
     }
@@ -40,6 +48,45 @@ class OfferCard extends React.Component {
         //check if it lies within the range
     }
 
+    sendMessage = (e) => {
+        let object = {
+            fromUser:'a',
+            toUser:'b',
+            message:this.state.message
+        }
+
+        axios
+        .post(urlConfig + "/sendEmail", object)
+        .then(response => {
+            console.log("Search Result : ", response.data);
+            if (response.data != undefined) {
+                message.success('Successfully sent email to the user')
+                this.setState({
+                    
+                });
+            } else {
+
+            }
+
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+    }
+
+    messageChange = (e) => {
+        if(e){
+            this.setState({
+                message:e.target.value
+            })
+        }
+        else{
+            this.setState({
+                message:''
+            })
+        }
+    }
+
     render(){
         return(
             <Card.Grid bordered={true} style={gridStyle} extra={<a>{this.state.offerStatus}</a>}>
@@ -55,7 +102,25 @@ class OfferCard extends React.Component {
                                   <p>Source Country: <strong>{this.state.sourceCountry}</strong></p>
                                   <p>Source Currency: <strong>{this.state.sourceCurrency}</strong></p>
                                   {/* <p>{value.receivingBankName}</p> */}
-                                  <Button type="primary" style={{background:'green'}} disabled={this.state.amountToRemit === this.state.userAmountToRemit? false: true}>Accept Offer</Button>
+                                  <Row>
+                                      <Col md={8}>
+
+                                      </Col>
+                                  <Link to={{ pathname: 'user/details/', state: this.props.value }}>
+                                   <Button type="primary">View User details</Button>
+                                  </Link>
+                                  </Row>
+                                  <p></p>
+
+                                  <Row>
+                                      <Col md={14}>
+                                      <TextArea onChange={this.messageChange} value={this.state.message} rows={4} />
+                                      </Col>
+                                      <Col md={10}>
+                                   <Button type="primary" onClick={this.sendMessage} danger>Send Message</Button>
+                                   </Col>
+                                   </Row>
+                                  {/* <Button type="primary" style={{background:'green'}} disabled={this.state.amountToRemit === this.state.userAmountToRemit? false: true}>Accept Offer</Button>
                                   <p></p>
                                   <Row>
                                       <Col md={12}>
@@ -75,7 +140,7 @@ class OfferCard extends React.Component {
 
                                  <Button type="primary" disabled={this.state.allowCounterOffers.toUpperCase() === "allow".toUpperCase()?false:true} onClick={(e)=>this.counterOfferClicked(e)} danger>Propose Counter Offer</Button>
                                  </Col>
-                                 </Row>
+                                 </Row> */}
                                  </Card.Grid>
                                 
                                  
