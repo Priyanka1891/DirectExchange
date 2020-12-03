@@ -14,8 +14,6 @@ import BrowseOffers from './BrowseOffers';
 import OfferDetails from './OfferDetails';
 import TransactionDetails from './TransactionDetails';
 
-import TransctionHistory from './reports/transactionHistory';
-import SystemReport from './reports/systemReport';
 
 // Main Component
 class Main extends React.Component {
@@ -71,8 +69,6 @@ class Main extends React.Component {
             <Route path="/user/createaccount/" component={CreateAccount} />
 
         <Route path="/user/moffers/" component={MatchingOffers} />
-        <Route path="/user/transactions/" component={TransctionHistory} />
-        <Route path="/user/systemreport/" component={SystemReport} />
 
 
 
