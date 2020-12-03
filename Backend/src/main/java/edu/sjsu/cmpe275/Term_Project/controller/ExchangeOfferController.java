@@ -124,12 +124,12 @@ public class ExchangeOfferController {
 	
 
 	/**
-	 * GET API End point for exact auto matching offers
+	 * POST API End point for exact auto matching offers
 	 * @param autoSplitMatchRequestDetails
 	 * @return
 	 */
 	@CrossOrigin(origins = Constants.FRONT_END_URL)
-	@GetMapping("/getExactMatchingOffers")
+	@PostMapping("/getExactMatchingOffers")
 	public ResponseEntity getExactMatchingOffers(@RequestBody AutoSplitMatchRequestModel autoSplitMatchRequestDetails) {
 		
 		try {
@@ -154,12 +154,12 @@ public class ExchangeOfferController {
 	}
 	
 	/**
-	 * GET API End point for split matching offers
+	 * POST API End point for split matching offers
 	 * @param autoSplitMatchRequestDetails
 	 * @return
 	 */
 	@CrossOrigin(origins = Constants.FRONT_END_URL)
-	@GetMapping("/getSplitMatchingOffers")
+	@PostMapping("/getSplitMatchingOffers")
 	public ResponseEntity getSplitMatchingOffers(@RequestBody AutoSplitMatchRequestModel autoSplitMatchRequestDetails) {
 		
 		try {
