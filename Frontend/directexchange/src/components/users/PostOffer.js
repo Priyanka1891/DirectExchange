@@ -3,12 +3,17 @@ import { Form, Input, Alert, Select, Button, Row, Col, DatePicker, InputNumber, 
 import { Redirect } from 'react-router';
 import Swal from 'sweetalert2';
 import {ratesTable} from '../../config/ratesInfo';
+import UserHeader from '../userHeader';
+import axios from 'axios';
+import {urlConfig} from '../../config/config';
 
 const { MonthPicker } = DatePicker;
 
 const { Option } = Select;
 
-let username = localStorage.getItem('username');
+//let username = localStorage.getItem('username');
+const userName = "ambika@sjsu.edu";
+
 class PostOffer extends Component{
     formRef = React.createRef();
 
@@ -25,7 +30,24 @@ class PostOffer extends Component{
         };
     }
 
-    componentDidMount() {
+    async componentDidMount() {
+
+        //get query to check if user is eligible to post offer
+     let res =   await axios
+        .get(urlConfig + "/exchangeOffer/getOffers/" + localStorage.getItem('userName'))
+        .then(response => {
+            console.log("Search Result : ", response.data);
+            if (response.data != undefined) {
+                this.setState({
+                });
+            } else {
+
+            }
+
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
 
     }
 
@@ -43,7 +65,33 @@ class PostOffer extends Component{
     }
 
     onFinish = values => {
-        let userId = 0;
+
+        values.userName = userName;
+        values.offerStatus = "open";
+        console.log(values);
+
+        /*
+
+        */
+
+        axios
+        .post(urlConfig + "/createExchangeOffer", values)
+        .then(response => {
+            console.log("Search Result : ", response.data);
+            if (response.data != undefined) {
+                Swal.fire('Success', 'Offer Posted', 'success');
+              this.setState({
+                redirectPage: <Redirect to={{ pathname: '/user/postoffer/' }} />
+                })
+            } else {
+
+            }
+            
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+        
 
        /* if(!this.state.showExchangeRate){
             for(let i = 0 ; i<ratesTable.length; i++){
@@ -117,7 +165,7 @@ class PostOffer extends Component{
         const tailFormLayout = {
             wrapperCol: {
                 offset: 8,
-                span: 10,
+                span: 12,
             },
         };
 
@@ -125,7 +173,10 @@ class PostOffer extends Component{
            <div>
 
         {this.state.redirectPage}
+        <div>
+<UserHeader selectedKey={['5']} />
 
+</div>
                 <div>
                     <Form
                         {...frontFormLayout}
@@ -144,7 +195,7 @@ class PostOffer extends Component{
                     >
                     
                         <Form.Item
-                            name="sourcecountry"
+                            name="sourceCountry"
                             label="Source Country"
                             rules={[
                                 {
@@ -172,7 +223,7 @@ class PostOffer extends Component{
                             </Select>
                         </Form.Item>
                         <Form.Item
-                            name="sourcecurrency"
+                            name="sourceCurrency"
                             label="Source Currency"
                             rules={[
                                 {
@@ -194,7 +245,7 @@ class PostOffer extends Component{
                         </Form.Item>
 
                         <Form.Item
-                            name="remit"
+                            name="amountToRemitSourceCurrency"
                             label="Amount to remit(source currency)"
                             rules={[
                                 // {
@@ -206,7 +257,7 @@ class PostOffer extends Component{
 
                         </Form.Item>
                         <Form.Item
-                            name="destcountry"
+                            name="destinationCountry"
                             label="Destination Country"
                             rules={[
                                 {
@@ -234,7 +285,7 @@ class PostOffer extends Component{
                             </Select>
                         </Form.Item>
                         <Form.Item
-                            name="destcurrency"
+                            name="destinationCurrency"
                             label="Destination Currency"
                             rules={[
                                 {
@@ -256,7 +307,7 @@ class PostOffer extends Component{
                         </Form.Item>
 
                         <Form.Item
-                            name="exchangerate"
+                            name="exchangeRate"
                             label="Exchange Rate"
                             rules={[
                                 // {
@@ -274,7 +325,7 @@ class PostOffer extends Component{
                         {/* <Form.Item label="Use Prevailing Rate">
                                <Switch onChange = {this.prevRateChange}/>
                        </Form.Item> */}
-                        <Form.Item name="datepicker" label="Expiration Date"
+                        <Form.Item name="expirationDate" label="Expiration Date"
                             rules={[
                                 {
                                     required: true,
@@ -284,7 +335,7 @@ class PostOffer extends Component{
                              />
                         </Form.Item>
                         <Form.Item
-                            name="bankname"
+                            name="receivingBankName"
                             label="Receiving Bank Name"
                             rules={[
                                 {
@@ -300,7 +351,7 @@ class PostOffer extends Component{
                         </Form.Item>
 
                         <Form.Item
-                            name="accountnumber"
+                            name="receivingAccountNumber"
                             label="Receiving Account Number"
                             rules={[
                                 {
@@ -315,7 +366,7 @@ class PostOffer extends Component{
                             <Input type="tel" style={{ width: '100%' }} />
                         </Form.Item>
                         <Form.Item
-                            name="counteroffers"
+                            name="allowCounterOffers"
                             label="Counter Offers"
                             rules={[
                                 // {
@@ -333,7 +384,7 @@ class PostOffer extends Component{
                         </Form.Item>
 
                         <Form.Item
-                            name="splitexchange"
+                            name="allowSplitExchanges"
                             label="Split Exchange"
                             rules={[
                                 // {

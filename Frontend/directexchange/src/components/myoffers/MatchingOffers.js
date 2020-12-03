@@ -13,14 +13,15 @@ import OfferCard from './offerCard';
 //import OfferCardSplit from './OfferCardSplit';
 import SplitMatchFirst from "./splitMatchFirst";
 import UserHeader from '../userHeader';
- 
+import {urlConfig} from '../../config/config';
 
 const gridStyle = {
     width: '30%',
     textAlign: 'center',
 };
 
-
+//const userName = localStorage.getItem('userName');
+const userName = "ambika@sjsu.edu"
 class MatchingOffers extends React.Component {
 
     constructor() {
@@ -37,13 +38,71 @@ class MatchingOffers extends React.Component {
     }
 
     // Listen to the Firebase Auth state and set the local state.
-    componentDidMount() {
+    async componentDidMount() {
 
         console.log(this.props.location.state);
 
         //api call to get single matches
         //api call to get split matches
+      
 
+        try{
+        let object = {
+            destinationCountry:this.props.location.state.destinationCountry,
+            destinationCurrency:this.props.location.state.destinationCurrency,
+            sourceCountry:this.props.location.state.sourceCountry,
+            sourceCurrency: this.props.location.state.sourceCurrency,
+            userName:userName,
+            amountToRemitInSourceCurrency:this.props.location.state.amountToRemitSourceCurrency,
+            exchangeRate:this.props.location.state.exchangeRate,
+        }
+       
+       let res1 = await axios
+        .post(urlConfig + "/getExactMatchingOffers/",
+            object
+            
+        )
+        .then(response => {
+         
+            if (response.data != undefined) {
+                this.setState({
+                    singleMatches:response.data,
+                })
+              
+            } else {
+
+            }
+
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+
+      let res2= await  axios
+        .post(urlConfig + "/getSplitMatchingOffers/" , object)
+        .then(response => {
+         
+            if (response.data != undefined) {
+                this.setState({
+                    splitMatches:response.data,
+                }, ()=>{
+                    this.setState({
+                        loaded:true
+                    })
+                })
+               
+            } else {
+
+            }
+
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+    }
+    catch(e){
+        console.log(e);
+    }
        
 
         let data = [
@@ -365,13 +424,13 @@ class MatchingOffers extends React.Component {
         ]
 
         this.setState({
-            singleMatches:data,
-            splitMatches:splitData
-        }, ()=>{
-            this.setState({
-                loaded:true
-            })
-        })
+             singleMatches:data,
+             splitMatches:splitData
+         }, ()=>{
+             this.setState({
+                 loaded:true
+             })
+         })
     }
 
     onChange = (e) => {
@@ -411,7 +470,7 @@ class MatchingOffers extends React.Component {
                     </div>
                     <br></br>
              {this.state.loaded &&   <div>
-                <Checkbox style={{marginLeft:'10%'}}onChange={this.onChange} checked={this.state.showSplitMatches}>Show Split Matches</Checkbox>
+                <Checkbox style={{marginLeft:'10%'}} onChange={this.onChange} checked={this.state.showSplitMatches}>Show Split Matches</Checkbox>
                 <br></br>
              <div>
                  <br></br>

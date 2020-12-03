@@ -1,14 +1,19 @@
 import React, { Component, Fragment, useState } from "react";
 
-import { Button, Card, Checkbox, Input, Row, Col } from 'antd';
-
+import { Button, Card, Input, Row, Col } from 'antd';
+import {
+   
+    Link
+} from "react-router-dom";
 
 const gridStyle = {
     width: '30%',
     textAlign: 'center',
 };
 
+
 import OfferCardSplit from './OfferCardSplit';
+const { TextArea } = Input;
 
 
 class SplitMatchFirst extends React.Component {
@@ -91,6 +96,10 @@ class SplitMatchFirst extends React.Component {
         return(
             <div style={{marginLeft:'4%', marginRight:'4%'}}> 
             <Card title="Split Matching Offer">
+            <Link to={{ pathname: '/user/details/', state: this.props.offers }}>
+                                   <Button type="primary">View User details</Button>
+                                  </Link>
+                                  <p></p>
                 {
                     this.props.offers.length && this.state.loaded && this.props.offers.map((value, ind)=>{
                         return (
@@ -102,7 +111,7 @@ class SplitMatchFirst extends React.Component {
                     })
                 }
                 <p></p>
-                              <Button type="primary" style={{background:'green'}} disabled={this.props.amountToRemit === this.state.userAmountToRemit? false: true}>Accept Offer</Button>
+                              {/* <Button type="primary" style={{background:'green'}} disabled={this.props.amountToRemit === this.state.userAmountToRemit? false: true}>Accept Offer</Button>
                                   <p></p>
                                   <Row>
                                       <Col md={12}>
@@ -122,7 +131,10 @@ class SplitMatchFirst extends React.Component {
 
                                  <Button type="primary" disabled={this.state.allowCounterOffers} onClick={(e)=>this.counterOfferClicked(e)} danger>Propose Counter Offer</Button>
                                  </Col>
-                                 </Row>
+                                 </Row> */}
+
+                                 
+                                 
                                  
             </Card>
             <br></br>
