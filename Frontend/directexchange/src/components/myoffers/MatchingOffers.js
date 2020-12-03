@@ -58,7 +58,7 @@ class MatchingOffers extends React.Component {
         }
        
        let res1 = await axios
-        .post(urlConfig + "/getExactMatchingOffers/",
+        .post(urlConfig.url + "/getExactMatchingOffers/",
             object
             
         )
@@ -79,7 +79,7 @@ class MatchingOffers extends React.Component {
         });
 
       let res2= await  axios
-        .post(urlConfig + "/getSplitMatchingOffers/" , object)
+        .post(urlConfig.url + "/getSplitMatchingOffers/" , object)
         .then(response => {
          
             if (response.data != undefined) {

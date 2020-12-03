@@ -15,6 +15,9 @@ const gridStyle = {
     textAlign: 'center',
 };
 
+const userName = localStorage.getItem('userName');
+//const userName = "ambika@sjsu.edu";
+
 class OfferCard extends React.Component {
 
     constructor(props){
@@ -49,22 +52,27 @@ class OfferCard extends React.Component {
     }
 
     sendMessage = (e) => {
+
+        try{
         let object = {
-            fromUser:'a',
-            toUser:'b',
+            fromUser:userName,
+            toUser:this.props.value.user.userName,
             message:this.state.message
         }
 
         axios
-        .post(urlConfig + "/sendEmail", object)
+        .post(urlConfig.url + "/sendEmail", object)
         .then(response => {
             console.log("Search Result : ", response.data);
             if (response.data != undefined) {
                 message.success('Successfully sent email to the user')
                 this.setState({
-                    
+                    message:''
                 });
             } else {
+                this.setState({
+                    message:''
+                });
 
             }
 
@@ -72,6 +80,10 @@ class OfferCard extends React.Component {
         .catch(errors => {
             console.log("Error" + errors);
         });
+    }
+    catch(e){
+        
+    }
     }
 
     messageChange = (e) => {
@@ -90,12 +102,12 @@ class OfferCard extends React.Component {
     render(){
         return(
             <Card.Grid bordered={true} style={gridStyle} extra={<a>{this.state.offerStatus}</a>}>
-                                  <p>Counter Offer Allowed: <strong>{this.state.allowCounterOffers}</strong></p>
+                                  {/* <p>Counter Offer Allowed: <strong>{this.state.allowCounterOffers}</strong></p> */}
                                   <p>Amount to Remit: <strong>{this.state.amountToRemitSourceCurrency}</strong></p>
                                   <p>Destination Country: <strong>{this.state.destinationCountry}</strong></p>
                                   <p>Destination Currency: <strong>{this.state.destinationCurrency}</strong></p>
                                   {/* <p>{value.exchangeRate}</p> */}
-                                  <p>Expiry Date: <strong>{this.state.expirationDate}</strong></p>
+                                  {/* <p>Expiry Date: <strong>{this.state.expirationDate}</strong></p> */}
                                   {/* <p>{value.id}</p> */}
                                   <p>Status Of Offer: <strong>{this.state.offerStatus}</strong></p>
                                   {/* <p>{value.receivingAccountNumber}</p> */}

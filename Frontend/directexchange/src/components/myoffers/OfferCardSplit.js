@@ -9,6 +9,7 @@ const gridStyle = {
     width: '50%',
     textAlign: 'center',
 };
+const userName = localStorage.getItem('userName');
 
 class OfferCardSplit extends React.Component {
 
@@ -43,30 +44,40 @@ class OfferCardSplit extends React.Component {
     }
 
     sendMessage = (e) => {
+
+        try{
         let object = {
-            fromUser:'a',
-            toUser:'b',
+            fromUser:userName,
+            toUser:this.props.value.user.userName,
             message:this.state.message
         }
 
         axios
-        .post(urlConfig + "/sendEmail", object)
+        .post(urlConfig.url + "/sendEmail", object)
         .then(response => {
             console.log("Search Result : ", response.data);
             if (response.data != undefined) {
                 message.success('Successfully sent email to the user')
 
                 this.setState({
-                    
+                        message:''
                 });
             } else {
-
+                this.setState({
+                    message:''
+            });
             }
 
         })
         .catch(errors => {
             console.log("Error" + errors);
         });
+    }
+    catch(e){
+        this.setState({
+            message:''
+    });
+    }
     }
 
     messageChange = (e) => {

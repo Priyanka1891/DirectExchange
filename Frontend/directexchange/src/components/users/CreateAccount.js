@@ -11,8 +11,8 @@ const { MonthPicker } = DatePicker;
 
 const { Option } = Select;
 
-//const userName = localStorage.getItem('userName');//
-const userName = "ambika@sjsu.edu";
+const userName = localStorage.getItem('userName');//
+//const userName = "ambika@sjsu.edu";
 class CreateAccount extends Component{
     formRef = React.createRef();
 
@@ -34,7 +34,7 @@ class CreateAccount extends Component{
         console.log(values);
 
         axios
-        .post(urlConfig + "/createBankAccount", values)
+        .post(urlConfig.url + "/createBankAccount", values)
         .then(response => {
             console.log("Search Result : ", response.data);
             if (response.data != undefined) {
@@ -81,7 +81,7 @@ class CreateAccount extends Component{
             {this.state.redirectPage}
 
 <div>
-<UserHeader selectedKey={['4']} />
+        <UserHeader selectedKey={['7']} />
 
 </div>
                 <div>

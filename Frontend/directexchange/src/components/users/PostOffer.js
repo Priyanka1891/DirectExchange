@@ -11,8 +11,8 @@ const { MonthPicker } = DatePicker;
 
 const { Option } = Select;
 
-//let username = localStorage.getItem('username');
-const userName = "ambika@sjsu.edu";
+let username = localStorage.getItem('username');
+//const userName = "ambika@sjsu.edu";
 
 class PostOffer extends Component{
     formRef = React.createRef();
@@ -27,19 +27,25 @@ class PostOffer extends Component{
             exchangeRateValue:'',
             sourcecurrency:'',
             destcurrency:'',
+            disablePostOffer:true
         };
     }
 
     async componentDidMount() {
 
         //get query to check if user is eligible to post offer
+        console.log(urlConfig.url + '/getDistinctBankAccountsCountsOfUser')
      let res =   await axios
-        .get(urlConfig + "/exchangeOffer/getOffers/" + localStorage.getItem('userName'))
+        .get(urlConfig.url + '/getDistinctBankAccountsCountsOfUser/' + userName)
         .then(response => {
             console.log("Search Result : ", response.data);
             if (response.data != undefined) {
-                this.setState({
-                });
+                if(response.data > 1){
+                    this.setState({
+                        disablePostOffer:false
+                    });
+                }
+               
             } else {
 
             }
@@ -73,9 +79,9 @@ class PostOffer extends Component{
         /*
 
         */
-
+        console.log(urlConfig.url + "/createExchangeOffer");
         axios
-        .post(urlConfig + "/createExchangeOffer", values)
+        .post(urlConfig.url + "/createExchangeOffer", values)
         .then(response => {
             console.log("Search Result : ", response.data);
             if (response.data != undefined) {
@@ -165,7 +171,7 @@ class PostOffer extends Component{
         const tailFormLayout = {
             wrapperCol: {
                 offset: 8,
-                span: 12,
+                span: 14,
             },
         };
 
@@ -177,6 +183,10 @@ class PostOffer extends Component{
 <UserHeader selectedKey={['5']} />
 
 </div>
+<p></p>
+{
+    this.state.disablePostOffer && <h4 style={{textAlign:'center', color:'blue'}}>You need to have atleast two bank account with us in different countries to post offer.</h4>
+}
                 <div>
                     <Form
                         {...frontFormLayout}
@@ -408,7 +418,7 @@ class PostOffer extends Component{
                         >
 
 
-                            <Button type="primary" htmlType="submit" style={{width:'20%', paddingBottom:'2%'}}>
+                            <Button type="primary" htmlType="submit" style={{width:'20%', paddingBottom:'2%'}} disabled={this.state.disablePostOffer}>
                                 Post Offer
                             </Button>
                         </Form.Item>
