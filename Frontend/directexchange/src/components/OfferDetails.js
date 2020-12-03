@@ -69,7 +69,7 @@ class OfferDetails extends React.Component {
 
 
                     this.props.history.push({
-                        pathname: '/transactionDetails',
+                        pathname: '/offer/transaction/',
                         data: response.data // your data array of objects
                     })
                 } else {

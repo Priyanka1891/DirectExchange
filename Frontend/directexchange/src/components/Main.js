@@ -12,6 +12,7 @@ import Headers from './Header';
 import MatchingOffers from './myoffers/MatchingOffers';
 import BrowseOffers from './BrowseOffers';
 import OfferDetails from './OfferDetails';
+import TransactionDetails from './TransactionDetails';
 
 // Main Component
 class Main extends React.Component {
@@ -56,6 +57,7 @@ class Main extends React.Component {
             <Route path="/user/rates/" component={Rates} />
             <Route path="/user/createaccount/" component={CreateAccount} />
             <Route path="/user/postoffer/" component={PostOffer} />
+          <Route path="/offer/transaction/" component={TransactionDetails} />
           </>
         }
 
