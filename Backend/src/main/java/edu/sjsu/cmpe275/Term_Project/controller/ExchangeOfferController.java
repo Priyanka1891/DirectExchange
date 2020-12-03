@@ -16,10 +16,14 @@ import org.springframework.web.bind.annotation.RestController;
 
 import edu.sjsu.cmpe275.Term_Project.constants.Constants;
 import edu.sjsu.cmpe275.Term_Project.entity.ExchangeOffer;
+import edu.sjsu.cmpe275.Term_Project.entity.ProposedOffer;
 import edu.sjsu.cmpe275.Term_Project.entity.SplitOffer;
+import edu.sjsu.cmpe275.Term_Project.entity.TransactionDetails;
 import edu.sjsu.cmpe275.Term_Project.entity.User;
 import edu.sjsu.cmpe275.Term_Project.requestModels.AutoSplitMatchRequestModel;
 import edu.sjsu.cmpe275.Term_Project.requestModels.ExchangeOfferRequestModel;
+import edu.sjsu.cmpe275.Term_Project.requestModels.ProposedOfferModel;
+import edu.sjsu.cmpe275.Term_Project.requestModels.TransactionDetailsModel;
 import edu.sjsu.cmpe275.Term_Project.service.ExchangeOfferService;
 
 /**
@@ -180,22 +184,50 @@ public class ExchangeOfferController {
 	}
 	
 	@CrossOrigin(origins = Constants.FRONT_END_URL)
-	@PutMapping("/exchangeOffer/updateOfferStatusToInTransaction/{offer_id}")
-	public ResponseEntity updateOfferStatusToInTransaction(@PathVariable String offer_id) {
+	@PutMapping("/exchangeOffer/updateOfferStatusToInTransaction")
+	public ResponseEntity updateOfferStatusToInTransaction(@RequestBody TransactionDetailsModel transaction) {
+		
 		try {
-			ExchangeOffer offer = exchangeOfferService.updateOfferStatusToInTransaction(offer_id);
+			System.out.println("DEBUG: " + transaction.getUserName() + " " + transaction.getAmount() + " " + transaction.getPercentOfTotalAmount());
+			TransactionDetails trdetails = new TransactionDetails(transaction.getUserName(), transaction.getAmount(), "", "",
+																  transaction.getPercentOfTotalAmount());
+			
+			ExchangeOffer offer = exchangeOfferService.updateOfferStatusToInTransaction(transaction.getExchangeOfferId(), trdetails);
 			if (offer == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
 			}
-			return ResponseEntity.ok("Offer updated successfully");
+			return ResponseEntity.ok(offer);
 		} catch (Exception e) {
 			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
 		}
 		
 	}
 	
-//	@CrossOrigin(origins = Constants.FRONT_END_URL)
-//	@PutMapping("/updateOfferStatusToCounterMade/{id}")
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PostMapping("exchangeOffer/updateOfferStatusForCounterOffer")
+	public ResponseEntity updateOfferStatusToCounterMade(@RequestBody ProposedOfferModel proposedOffer) {
+		try {
+			ProposedOffer counterOffer = new ProposedOffer(proposedOffer.getAmount(),
+					   proposedOffer.getSplitUserId1() , proposedOffer.getSplitUserId2()  ,
+					   proposedOffer.getSplitUser1Amount(),proposedOffer.getSplitUser2Amount());
+			ExchangeOffer offer =
+				exchangeOfferService.updateOfferStatusForCounterOffer(proposedOffer.getExchangeOfferId(), counterOffer);
+			if (offer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
+			}
+			/**
+			 * Return response with status 200
+			 */
+			return ResponseEntity.ok(offer);
+			
+		} catch(Exception e) {
+			/**
+			 * Return status 400 if input is invalid
+			 */
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+	}
+	
 	
 	
 

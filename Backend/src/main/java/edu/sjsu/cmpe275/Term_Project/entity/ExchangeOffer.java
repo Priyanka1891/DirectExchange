@@ -1,11 +1,17 @@
 package edu.sjsu.cmpe275.Term_Project.entity;
 
 
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
@@ -55,6 +61,14 @@ public class ExchangeOffer {
 	@JoinColumn(name="userName")
 	@JsonIgnoreProperties({"bankAccounts", "exchangeOffers"})
 	private User user;
+	
+	
+	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "exchangeOffer", fetch = FetchType.LAZY)
+	private List<ProposedOffer> proposedOffers;
+	
+	
+	@OneToOne(cascade = {CascadeType.ALL}, mappedBy = "exchange_offer", fetch = FetchType.LAZY)
+	private TransactionDetails transactionDetails;
 	
 	public ExchangeOffer() {
 		
@@ -192,6 +206,26 @@ public class ExchangeOffer {
 
 	public void setUser(User user) {
 		this.user = user;
+	}
+	
+	public List<ProposedOffer> getProposedOffers() {
+		return proposedOffers;
+	}
+
+	public void setProposedOffers(List<ProposedOffer> proposedOffers) {
+		this.proposedOffers = proposedOffers;
+	}
+
+	public TransactionDetails getTransactionDetails() {
+		return transactionDetails;
+	}
+
+	public void setTransactionDetails(TransactionDetails transactionDetails) {
+		this.transactionDetails = transactionDetails;
+	}
+
+	public void setAmountToRemitSourceCurrency(double amountToRemitSourceCurrency) {
+		this.amountToRemitSourceCurrency = amountToRemitSourceCurrency;
 	}
 	
 	
