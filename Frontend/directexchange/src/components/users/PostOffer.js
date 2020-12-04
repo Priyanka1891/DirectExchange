@@ -11,8 +11,8 @@ const { MonthPicker } = DatePicker;
 
 const { Option } = Select;
 
-let userName = localStorage.getItem('username');
-//const userName = "ambika@sjsu.edu";
+//let userName = localStorage.getItem('username');
+const userName = "ambika@sjsu.edu";
 
 class PostOffer extends Component{
     formRef = React.createRef();
@@ -27,7 +27,7 @@ class PostOffer extends Component{
             exchangeRateValue:'',
             sourcecurrency:'',
             destcurrency:'',
-            disablePostOffer:false
+            disablePostOffer:true
         };
     }
 
@@ -35,7 +35,7 @@ class PostOffer extends Component{
 
         //get query to check if user is eligible to post offer
         console.log(urlConfig.url + '/getDistinctBankAccountsCountsOfUser')
-        try{
+        
      let res =   await axios
         .get(urlConfig.url + '/getDistinctBankAccountsCountsOfUser/' + userName)
         .then(response => {
@@ -55,10 +55,6 @@ class PostOffer extends Component{
         .catch(errors => {
             console.log("Error" + errors);
         });
-    }
-    catch(e){
-
-    }
     
 
     }
@@ -78,6 +74,7 @@ class PostOffer extends Component{
 
     onFinish = values => {
 
+        console.log(values)
         values.userName = userName;
         values.offerStatus = "open";
         values.exchangerate=this.state.exchangeRateValue;
@@ -190,9 +187,11 @@ class PostOffer extends Component{
 
 </div>
 <p></p>
+<div>
 {
     this.state.disablePostOffer && <h4 style={{textAlign:'center', color:'blue'}}>You need to have atleast two bank account with us in different countries to post offer.</h4>
 }
+</div>
                 <div>
                     <Form
                         {...frontFormLayout}
