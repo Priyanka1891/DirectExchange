@@ -25,7 +25,9 @@ class OfferDetails extends React.Component {
     constructor() {
         super();
         this.state = {
-            showModal: false
+            showModal: false,
+            accountNum:0,
+            bankName:''
         }
     }
 
@@ -47,6 +49,35 @@ class OfferDetails extends React.Component {
         //Show modal
         this.setState({ showModal: false });
     }
+
+    setBankName = (e) => {
+        if(e){
+            this.setState({
+                bankName:e.target.value
+            })
+        }
+        else{
+            this.setState({
+                bankName:''
+            })
+        }
+    }
+
+    setAccountNum = (e) => {
+        if(e){ 
+            this.setState({
+                accountNum:e.target.value
+            }) 
+
+        }
+        else{
+            this.setState({
+                accountNum:0
+            })
+        }
+
+    }
+
     acceptOfferHandler = (e) => {
 
         console.log('Insideacceptoffer');
@@ -54,8 +85,10 @@ class OfferDetails extends React.Component {
             "userName": localStorage.getItem('userName'),
             "amount": this.state.offerDetails.amountToRemitSourceCurrency,
             "percentOfTotalAmount": 5,
-            "exchangeOfferId": this.state.offerDetails.id
-        }
+            "exchangeOfferId": this.state.offerDetails.id,
+            "bankName":this.state.bankName,
+            "accountNumber":this.state.accountNum,
+            }
         axios
             .put("http://localhost:8080" + "/exchangeOffer/updateOfferStatusToInTransaction/", data)
             .then(response => {
@@ -158,19 +191,19 @@ class OfferDetails extends React.Component {
                         onCancel={() => this.closeModal()}
                     >
                         <Form.Item
-                            label="Account Number"
-                            name="username"
-                            rules={[{ required: true, message: 'Please input your account number!' }]}
+                            label="Bank Name"
+                            name="bankName"
+                            rules={[{ required: true, message: 'Please input your bank name!' }]}
                         >
-                            <Input type="text" />
+                            <Input type="text" value={this.state.bankName} onChange={this.setBankName} />
                         </Form.Item>
                         <Divider />
                         <Form.Item
-                            label="Routing Number"
-                            name="username"
-                            rules={[{ required: true, message: 'Please input your routing number!' }]}
+                            label="Account Number"
+                            name="accountNumber"
+                            rules={[{ required: true, message: 'Please input your account number!' }]}
                         >
-                            <Input type="text" />
+                            <Input type="text" value={this.state.accountNum} onChange={this.setAccountNum}/>
                         </Form.Item>
                     </Modal>
                 </>
