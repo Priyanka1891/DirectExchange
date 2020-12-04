@@ -27,7 +27,7 @@ class PostOffer extends Component{
             exchangeRateValue:'',
             sourcecurrency:'',
             destcurrency:'',
-            disablePostOffer:true
+            disablePostOffer:false
         };
     }
 
@@ -35,6 +35,7 @@ class PostOffer extends Component{
 
         //get query to check if user is eligible to post offer
         console.log(urlConfig.url + '/getDistinctBankAccountsCountsOfUser')
+        try{
      let res =   await axios
         .get(urlConfig.url + '/getDistinctBankAccountsCountsOfUser/' + userName)
         .then(response => {
@@ -54,6 +55,11 @@ class PostOffer extends Component{
         .catch(errors => {
             console.log("Error" + errors);
         });
+    }
+    catch(e){
+
+    }
+    
 
     }
 
@@ -74,11 +80,11 @@ class PostOffer extends Component{
 
         values.userName = userName;
         values.offerStatus = "open";
+        values.exchangerate=this.state.exchangeRateValue;
+        values.exchangeRate = this.state.exchangeRateValue;
         console.log(values);
 
-        /*
-
-        */
+       
         console.log(urlConfig.url + "/createExchangeOffer");
         axios
         .post(urlConfig.url + "/createExchangeOffer", values)
@@ -198,8 +204,8 @@ class PostOffer extends Component{
                         initialValues={{
                             ["exchangerate"]: this.state.exchangeRateValue,
 
-                            ["splitexchange"]: '1',
-                            ["counteroffers"]: '1' 
+                            ["allowSplitExchanges"]: 'allow',
+                            ["allowCounterOffers"]: 'allow' 
 
                           }}
                     >
@@ -388,8 +394,8 @@ class PostOffer extends Component{
 
                                 onChange={this.onMembershipChange}
                             >
-                                <Option value="1">Allow</Option>
-                                <Option value="2">Deny</Option>
+                                <Option value="allow">Allow</Option>
+                                <Option value="deny">Deny</Option>
                             </Select>
                         </Form.Item>
 
@@ -404,10 +410,10 @@ class PostOffer extends Component{
                         >
                             <Select
 
-                                onChange={this.onMembershipChange}
+                                onChange={this.onSpiltExchange}
                             >
-                                <Option value="1">Allow</Option>
-                                <Option value="2">Deny</Option>
+                                <Option value="allow">Allow</Option>
+                                <Option value="deny">Deny</Option>
                             </Select>
                         </Form.Item>
                        
