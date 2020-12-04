@@ -12,7 +12,8 @@ import Headers from './Header';
 import MatchingOffers from './myoffers/MatchingOffers';
 import BrowseOffers from './BrowseOffers';
 import OfferDetails from './OfferDetails';
-import TransactionDetails from './TransactionDetails';
+//import TransactionDetails from './TransactionDetails';
+import TransactionDetails from './transaction/transaction';
 
 
 // Main Component
