@@ -11,8 +11,8 @@ const { MonthPicker } = DatePicker;
 
 const { Option } = Select;
 
-//let userName = localStorage.getItem('username');
-const userName = "ambika@sjsu.edu";
+let userName = localStorage.getItem('username');
+//const userName = "ambika@sjsu.edu";
 
 class PostOffer extends Component{
     formRef = React.createRef();
