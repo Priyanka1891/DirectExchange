@@ -10,14 +10,22 @@ import {
 } from "react-router-dom";
 import { MailOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
-import UserHeader from './userHeader';
-
+import UserHeader from './userHeader';  
 
 const gridStyle = {
     width: '25%',
     textAlign: 'center',
 };
 
+const validateMessages = {
+    required: '${label} is required!',
+    types: {
+        number: '${label} is not a valid number!',
+    },
+    number: {
+        range: '${label} must be between ${min} and ${max}',
+    }
+}
 
 class OfferDetails extends React.Component {
 
@@ -25,7 +33,9 @@ class OfferDetails extends React.Component {
     constructor() {
         super();
         this.state = {
-            showModal: false
+            showModal: false,
+            showCounterModal: false,
+            updatedAmount: ""
         }
     }
 
@@ -47,6 +57,15 @@ class OfferDetails extends React.Component {
         //Show modal
         this.setState({ showModal: false });
     }
+
+    toggleCounterModal = (e) => {
+        //Show modal
+        this.setState(prevState => ({
+            showCounterModal: !prevState.showCounterModal
+        }));
+    }
+
+
     acceptOfferHandler = (e) => {
 
         console.log('Insideacceptoffer');
@@ -83,6 +102,10 @@ class OfferDetails extends React.Component {
             });
     }
 
+    handleChangeAmount = (e) => {
+        this.setState({ updatedAmount: e.target.value })
+    }
+
     counterOfferHandler = (e) => {
         console.log('Insideacceptoffer');
         var data = {
@@ -91,7 +114,7 @@ class OfferDetails extends React.Component {
             "splitUser1Amount": this.state.offerDetails.amountToRemitSourceCurrency,
             "splitUser2Amount": 0,
             "exchangeOfferId": this.state.offerDetails.id,
-            "amount": this.state.offerDetails.amountToRemitSourceCurrency
+            "amount": this.state.updatedAmount
         }
 
         axios
@@ -113,14 +136,12 @@ class OfferDetails extends React.Component {
     }
 
     render() {
+
         return (
             <>
-            <div>
-            <div>
-                        <UserHeader selectedKey={['3']} />
-                    </div>
-            
-
+                <div>  
+                    <UserHeader selectedKey={['3']} />  
+                </div>
                 {this.state.offerDetails &&
                     <>
                         <Card style={{ width: "30%" }} title="Offer Details">
@@ -147,11 +168,12 @@ class OfferDetails extends React.Component {
                             <Divider dashed />
                         <Button type="primary" onClick={this.onAcceptClick} >Accept</Button> <Divider type="vertical"> </Divider>
                         {/* <Button Disabled type="primary">Reject</Button> */}
-                        <Button type="primary" onClick={this.counterOfferHandler}>Counter</Button>
+                        <Button type="primary" onClick={this.toggleCounterModal}>Counter Offer</Button>
                         </Card>
 
                     <Modal
                         title="Provide Bank Details"
+                        centered
                         style={{ top: 20, width: "450px" }}
                         visible={this.state.showModal}
                         onOk={() => this.acceptOfferHandler()}
@@ -173,9 +195,30 @@ class OfferDetails extends React.Component {
                             <Input type="text" />
                         </Form.Item>
                     </Modal>
+
+                    <Modal
+                        title="Counter Offer Details"
+                        centered
+                        style={{ top: 20, width: "450px" }}
+                        visible={this.state.showCounterModal}
+                        onOk={() => this.counterOfferHandler()}
+                        onCancel={() => this.toggleCounterModal()}
+                    >
+                        <b>Current Offer Amount</b> : {this.state.offerDetails.amountToRemitSourceCurrency}
+                        <Divider />
+                        <Form validateMessages={validateMessages}>
+                            <Form.Item
+                                label="Updated Amount"
+                                name="updatedAmount"
+                                rules={[{ required: true, message: 'Please input your correct amount!', type: 'number', min: 0, max: this.state.offerDetails.amountToRemitSourceCurrency }]}
+                            >
+                                <Input type="text" onChange={this.handleChangeAmount} value={this.state.updatedAmount} />
+                            </Form.Item>
+                        </Form>
+                        <Divider />
+                    </Modal>
                 </>
                 }
-                </div>
             </>
         )
     }

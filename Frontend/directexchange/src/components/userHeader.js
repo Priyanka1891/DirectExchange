@@ -90,7 +90,7 @@ class Headers extends Component {
             
             <Menu.Item key="1" onClick={this.clickedMyoffers}>My Offers</Menu.Item> 
             <Menu.Item key="2" onClick={this.clickedBrowseOffers}>Browse Offers</Menu.Item> 
-            <Menu.Item key="3" onClick={this.clickedCounterOffers}>Counter Offers</Menu.Item> 
+            {/* <Menu.Item key="3" onClick={this.clickedCounterOffers}>Counter Offers</Menu.Item>  */}
             {/* <Menu.Item key="4" onClick={this.clickedMatchingOffers}>Matching Offers</Menu.Item>  */}
             <Menu.Item key="5" onClick={this.clickedPostOffers}>Post Offers</Menu.Item> 
             <Menu.Item key="6" onClick={this.clickedShowRates}>Exchange Rates</Menu.Item> 
