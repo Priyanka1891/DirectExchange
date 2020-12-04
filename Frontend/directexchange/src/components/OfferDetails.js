@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import { MailOutlined } from '@ant-design/icons';
 import { useHistory } from "react-router-dom";
+import UserHeader from './userHeader';
 
 
 const gridStyle = {
@@ -114,6 +115,12 @@ class OfferDetails extends React.Component {
     render() {
         return (
             <>
+            <div>
+            <div>
+                        <UserHeader selectedKey={['3']} />
+                    </div>
+            
+
                 {this.state.offerDetails &&
                     <>
                         <Card style={{ width: "30%" }} title="Offer Details">
@@ -168,6 +175,7 @@ class OfferDetails extends React.Component {
                     </Modal>
                 </>
                 }
+                </div>
             </>
         )
     }

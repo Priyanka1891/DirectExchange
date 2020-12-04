@@ -63,12 +63,12 @@ class Main extends React.Component {
           <Route path="/offer/transaction/" component={TransactionDetails} />
           </>
         }
-            <Route path="/user/rates/" component={Rates} />
+            {/* <Route path="/user/rates/" component={Rates} />
             <Route path="/user/postoffer/" component={PostOffer} />
 
             <Route path="/user/createaccount/" component={CreateAccount} />
 
-        <Route path="/user/moffers/" component={MatchingOffers} />
+        <Route path="/user/moffers/" component={MatchingOffers} /> */}
 
 
 

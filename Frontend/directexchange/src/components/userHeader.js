@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { Layout, Menu } from 'antd';
 import { Redirect } from 'react-router';
+import firebase from 'firebase';
 
 const { Header } = Layout;
+
 
 class Headers extends Component {
 
@@ -10,7 +12,7 @@ class Headers extends Component {
     super(props);
     this.state = {
       redirectPage: '',
-      isSignedIn: false,
+      isSignedIn: true,
     };
   }
 
@@ -24,14 +26,14 @@ class Headers extends Component {
 
   clickedBrowseOffers = () => {
     this.setState({
-      redirectPage: <Redirect to={{ pathname: '/user/browse' }} />
+      redirectPage: <Redirect to={{ pathname: '/user/browseoffers' }} />
     })
   }
 
 
   clickedCounterOffers = () => {
     this.setState({
-      redirectPage: <Redirect to={{ pathname: '/user/counter' }} />
+      redirectPage: <Redirect to={{ pathname: '/offer/details' }} />
     })
   }
 
@@ -60,10 +62,10 @@ class Headers extends Component {
 
   }
   logoutHandler = () => {
-    // firebase.auth().signOut();
-    // this.setState({
-    //   redirectPage: <Redirect to={{ pathname: '/' }} />
-    // })
+    firebase.auth().signOut();
+     this.setState({
+       redirectPage: <Redirect to={{ pathname: '/' }} />
+     })
   }
   componentDidMount() {
     // this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
@@ -89,7 +91,7 @@ class Headers extends Component {
             <Menu.Item key="1" onClick={this.clickedMyoffers}>My Offers</Menu.Item> 
             <Menu.Item key="2" onClick={this.clickedBrowseOffers}>Browse Offers</Menu.Item> 
             <Menu.Item key="3" onClick={this.clickedCounterOffers}>Counter Offers</Menu.Item> 
-            <Menu.Item key="4" onClick={this.clickedMatchingOffers}>Matching Offers</Menu.Item> 
+            {/* <Menu.Item key="4" onClick={this.clickedMatchingOffers}>Matching Offers</Menu.Item>  */}
             <Menu.Item key="5" onClick={this.clickedPostOffers}>Post Offers</Menu.Item> 
             <Menu.Item key="6" onClick={this.clickedShowRates}>Exchange Rates</Menu.Item> 
             <Menu.Item key="7" onClick={this.clickedCreateAccount}>Create Bank Account</Menu.Item> 

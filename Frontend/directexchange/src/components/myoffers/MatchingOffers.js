@@ -86,9 +86,7 @@ class MatchingOffers extends React.Component {
                 this.setState({
                     splitMatches:response.data,
                 }, ()=>{
-                    this.setState({
-                        loaded:true
-                    })
+
                 })
                
             } else {
@@ -99,338 +97,342 @@ class MatchingOffers extends React.Component {
         .catch(errors => {
             console.log("Error" + errors);
         });
+
+        this.setState({
+            loaded:true
+        })
     }
     catch(e){
         console.log(e);
     }
        
 
-        let data = [
-            {
-                "id": 7,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 75000.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Allow",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            },
-            {
-                "id": 13,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 75099.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Allow",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            },
-            {
-                "id": 12,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 74900.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Allow",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            },
-            {
-                "id": 11,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 74200.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Allow",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            },
-            {
-                "id": 9,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 73000.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Allow",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            },
-            {
-                "id": 7,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 75000.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Allow",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            },
-            {
-                "id": 13,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 75099.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Allow",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            },
-            {
-                "id": 12,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 74900.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Allow",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            },
-            {
-                "id": 11,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 74200.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Allow",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            },
-            {
-                "id": 9,
-                "sourceCountry": "India",
-                "sourceCurrency": "INR",
-                "amountToRemitSourceCurrency": 73000.0,
-                "destinationCountry": "US",
-                "destinationCurrency": "USD",
-                "exchangeRate": 0.013,
-                "expirationDate": "2020-11-30",
-                "allowCounterOffers": "Deny",
-                "allowSplitExchanges": "Allow",
-                "receivingBankName": "US Bank",
-                "receivingAccountNumber": 1000000234789,
-                "offerStatus": "Open"
-            }
-        ]
+        // let data = [
+        //     {
+        //         "id": 7,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 75000.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Allow",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     },
+        //     {
+        //         "id": 13,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 75099.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Allow",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     },
+        //     {
+        //         "id": 12,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 74900.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Allow",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     },
+        //     {
+        //         "id": 11,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 74200.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Allow",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     },
+        //     {
+        //         "id": 9,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 73000.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Allow",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     },
+        //     {
+        //         "id": 7,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 75000.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Allow",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     },
+        //     {
+        //         "id": 13,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 75099.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Allow",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     },
+        //     {
+        //         "id": 12,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 74900.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Allow",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     },
+        //     {
+        //         "id": 11,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 74200.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Allow",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     },
+        //     {
+        //         "id": 9,
+        //         "sourceCountry": "India",
+        //         "sourceCurrency": "INR",
+        //         "amountToRemitSourceCurrency": 73000.0,
+        //         "destinationCountry": "US",
+        //         "destinationCurrency": "USD",
+        //         "exchangeRate": 0.013,
+        //         "expirationDate": "2020-11-30",
+        //         "allowCounterOffers": "Deny",
+        //         "allowSplitExchanges": "Allow",
+        //         "receivingBankName": "US Bank",
+        //         "receivingAccountNumber": 1000000234789,
+        //         "offerStatus": "Open"
+        //     }
+        // ]
 
-        let splitData = [
-            [
-                {
-                    "id": 16,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 40000.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                },
-                {
-                    "id": 17,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 34840.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                }
-            ],
-            [
-                {
-                    "id": 15,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 36000.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                },
-                {
-                    "id": 16,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 36000.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                },
-            ],
-            [
-                {
-                    "id": 18,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 50000.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                },
-                {
-                    "id": 20,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 26070.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                }
-            ],
-            [
-                {
-                    "id": 19,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 50000.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                },
-                {
-                    "id": 20,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 50000.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                },
-            ],
-            [
-                {
-                    "id": 14,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 37222.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                },
-                {
-                    "id": 15,
-                    "sourceCountry": "India",
-                    "sourceCurrency": "INR",
-                    "amountToRemitSourceCurrency": 37222.0,
-                    "destinationCountry": "US",
-                    "destinationCurrency": "USD",
-                    "exchangeRate": 0.013,
-                    "expirationDate": "2020-11-30",
-                    "allowCounterOffers": "Allow",
-                    "allowSplitExchanges": "Allow",
-                    "receivingBankName": "US Bank",
-                    "receivingAccountNumber": 1000000234789,
-                    "offerStatus": "Open"
-                },
+        // let splitData = [
+        //     [
+        //         {
+        //             "id": 16,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 40000.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         },
+        //         {
+        //             "id": 17,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 34840.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         }
+        //     ],
+        //     [
+        //         {
+        //             "id": 15,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 36000.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         },
+        //         {
+        //             "id": 16,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 36000.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         },
+        //     ],
+        //     [
+        //         {
+        //             "id": 18,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 50000.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         },
+        //         {
+        //             "id": 20,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 26070.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         }
+        //     ],
+        //     [
+        //         {
+        //             "id": 19,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 50000.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         },
+        //         {
+        //             "id": 20,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 50000.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         },
+        //     ],
+        //     [
+        //         {
+        //             "id": 14,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 37222.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         },
+        //         {
+        //             "id": 15,
+        //             "sourceCountry": "India",
+        //             "sourceCurrency": "INR",
+        //             "amountToRemitSourceCurrency": 37222.0,
+        //             "destinationCountry": "US",
+        //             "destinationCurrency": "USD",
+        //             "exchangeRate": 0.013,
+        //             "expirationDate": "2020-11-30",
+        //             "allowCounterOffers": "Allow",
+        //             "allowSplitExchanges": "Allow",
+        //             "receivingBankName": "US Bank",
+        //             "receivingAccountNumber": 1000000234789,
+        //             "offerStatus": "Open"
+        //         },
                 
-            ],
+        //     ],
             
-        ]
+        // ]
 
-        this.setState({
-             singleMatches:data,
-             splitMatches:splitData
-         }, ()=>{
-             this.setState({
-                 loaded:true
-             })
-         })
+        // this.setState({
+        //      singleMatches:data,
+        //      splitMatches:splitData
+        //  }, ()=>{
+        //      this.setState({
+        //          loaded:true
+        //      })
+        //  })
     }
 
     onChange = (e) => {
@@ -466,7 +468,7 @@ class MatchingOffers extends React.Component {
         return (
             <div>
                  <div>
-                        <UserHeader selectedKey={['4']} />
+                        <UserHeader selectedKey={['1']} />
                     </div>
                     <br></br>
              {this.state.loaded &&   <div>

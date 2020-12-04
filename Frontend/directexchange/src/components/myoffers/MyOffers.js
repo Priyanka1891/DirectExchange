@@ -8,6 +8,7 @@ import {
     Route,
     Link
 } from "react-router-dom";
+import UserHeader from '../userHeader';
 
 
 const gridStyle = {
@@ -48,6 +49,10 @@ class MyOffers extends React.Component {
 
     render() {
         return (
+            <div>
+                    <div>
+                        <UserHeader selectedKey={['1']} />
+                    </div>
             <Card title="My Offers">
                 {this.state.offers && this.state.offers.map((value, index) => {
                     return <Card.Grid bordered={true} style={gridStyle}>
@@ -80,6 +85,8 @@ class MyOffers extends React.Component {
                 })}
 
             </Card>
+            </div>
+
         )
     }
 }

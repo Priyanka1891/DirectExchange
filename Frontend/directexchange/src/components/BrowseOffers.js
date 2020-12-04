@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import { MailOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
+import UserHeader from './userHeader';
+
 
 const { Title } = Typography;
 
@@ -93,6 +95,10 @@ class BrowseOffers extends React.Component {
     render() {
         return (
             <>
+            <div>
+            <div>
+                        <UserHeader selectedKey={['2']} />
+                    </div>
                 <Card title="Browse Offers">
 
                     <Row gutter={{ xs: 8, xs: 8 }}>
@@ -177,6 +183,7 @@ class BrowseOffers extends React.Component {
 
                 </Card>
                 <Pagination defaultCurrent={1} total={50} />
+                </div>
             </>
         )
     }
