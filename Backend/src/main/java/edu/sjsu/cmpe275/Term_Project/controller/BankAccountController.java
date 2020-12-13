@@ -1,5 +1,7 @@
 package edu.sjsu.cmpe275.Term_Project.controller;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -99,5 +101,35 @@ public class BankAccountController {
 		}
 
 	}
-	
+
+	/**
+	 * GET API end point for getting bank accounts of user
+	 * 
+	 * @param id
+	 * @return
+	 */
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@GetMapping("/getBankAccountsOfUser/{userName}")
+	public ResponseEntity getBankAccounts(@PathVariable String userName) {
+
+		try {
+			List<BankAccount> res;
+			if (userName != null && !userName.equals("")) {
+				res = bankAccountService.getBankAccountsOfUser(userName);
+			} else {
+				throw new Exception("User Name not provided");
+			}
+			/**
+			 * Return response with status 200
+			 */
+			return ResponseEntity.ok(res);
+		} catch (Exception e) {
+			/**
+			 * Return status 400 if input is invalid
+			 */
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+
+	}
+
 }

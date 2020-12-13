@@ -1,5 +1,7 @@
 package edu.sjsu.cmpe275.Term_Project.service;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -57,5 +59,23 @@ public class BankAccountService {
 		return count;
 		
 	}
-	
+
+	/**
+	 * Service to validate the number of distinct bank accounts user has created
+	 * 
+	 * @param userName
+	 * @return
+	 * @throws Exception
+	 */
+	public List<BankAccount> getBankAccountsOfUser(String userName) throws Exception {
+
+		User user = userRepository.findById(userName).orElse(null);
+		if (user == null) {
+			throw new Exception("User does not exist");
+		}
+		List<BankAccount> response = bankAccountRepository.getDistinctAccounts(user);
+		return response;
+
+	}
+
 }

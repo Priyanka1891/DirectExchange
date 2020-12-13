@@ -1,6 +1,6 @@
 import React, { Component, Fragment, useState } from "react";
 import axios from "axios";
-import { Button, Card, Divider, Pagination, Modal, Input, Form } from 'antd';
+import { Button, Card, Divider, Pagination, Modal, Input, Form, Select } from 'antd';
 import firebase from 'firebase';
 import {
     BrowserRouter as Router,
@@ -36,7 +36,8 @@ class OfferDetails extends React.Component {
             accountNum:0,
             bankName: '',
             showCounterModal: false,
-            updatedAmount: ""
+            updatedAmount: "",
+            bankAccounts: null
         }
     }
 
@@ -47,6 +48,24 @@ class OfferDetails extends React.Component {
         if (this.props.location.state) {
             this.setState({ offerDetails: this.props.location.state });
         }
+
+        axios
+            .get("http://localhost:8080" + "/getBankAccountsOfUser/" + localStorage.getItem('userName'))
+            .then(response => {
+                console.log("Bank Accounts : ", response.data);
+                if (response.data != undefined) {
+                    this.setState({
+                        bankAccounts: response.data
+
+                    });
+                } else {
+                    //No Accounts found
+                }
+
+            })
+            .catch(errors => {
+                console.log("Error" + errors);
+            });
     }
 
     onAcceptClick = (e) => {
@@ -90,13 +109,19 @@ class OfferDetails extends React.Component {
     acceptOfferHandler = (e) => {
 
         console.log('Insideacceptoffer');
+
+
+        var bankObj = this.state.bankAccounts.find(obj => {
+            return obj.id === this.state.selectedBankId;
+        })
+        console.log(bankObj);
         var data = {
             "userName": localStorage.getItem('userName'),
             "amount": this.state.offerDetails.amountToRemitSourceCurrency,
             "percentOfTotalAmount": 5,
             "exchangeOfferId": this.state.offerDetails.id,
-            "bankName":this.state.bankName,
-            "accountNumber":this.state.accountNum,
+            "bankName": bankObj.bankName,
+            "accountNumber": bankObj.accountNumber,
             }
         axios
             .put("http://localhost:8080" + "/exchangeOffer/updateOfferStatusToInTransaction/", data)
@@ -129,6 +154,14 @@ class OfferDetails extends React.Component {
         this.setState(prevState => ({
             showCounterModal: !prevState.showCounterModal
         }));
+    }
+    
+    onBankChange = (e) => {
+        //Show modal
+        this.setState({
+            selectedBankId: e
+        });
+        console.log('bank', e);
     }
 
     handleChangeAmount = (e) => {
@@ -167,6 +200,8 @@ class OfferDetails extends React.Component {
             .catch(errors => {
                 console.log("Error" + errors);
             });
+
+
     }
 
     render() {
@@ -214,7 +249,24 @@ class OfferDetails extends React.Component {
                         onOk={() => this.acceptOfferHandler()}
                         onCancel={() => this.closeModal()}
                     >
-                        <Form.Item
+                    <Form.Item
+                                name="bankAccount"
+                                label="Bank Account"
+                                rules={[
+                                    {
+                                        required: false,
+                                    },
+                                ]}
+                            >
+                                {this.state.bankAccounts &&
+                                    <Select onChange={this.onBankChange} name="dstCurrency" style={{ "max-width": "200px" }}>
+                                        {this.state.bankAccounts.map(item => (
+                                            <Option value={item.id}>{item.bankName}</Option>
+                                        ))}
+                                    </Select>
+                                }
+                            </Form.Item>
+                            {/* <Form.Item
                             label="Bank Name"
                             name="bankName"
                             rules={[{ required: true, message: 'Please input your bank name!' }]}
@@ -228,7 +280,7 @@ class OfferDetails extends React.Component {
                             rules={[{ required: true, message: 'Please input your account number!' }]}
                         >
                             <Input type="text" value={this.state.accountNum} onChange={this.setAccountNum}/>
-                        </Form.Item>
+                        </Form.Item> */}
                     </Modal>
                         <Modal
                             title="Counter Offer Details"
