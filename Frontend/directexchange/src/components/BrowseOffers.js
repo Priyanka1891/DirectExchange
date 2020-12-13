@@ -172,7 +172,7 @@ class BrowseOffers extends React.Component {
                                 <p>{value.user.name}<Divider type="vertical" /> <MailOutlined /> Ratings </p>
                                 <Divider dashed />
                                 <Link to={{
-                                    pathname: 'offer/details/',
+                                    pathname: '/offer/details/',
                                     state: value
                                 }}>
                                     <Button type="primary">Show Offer Details</Button>

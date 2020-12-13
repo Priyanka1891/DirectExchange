@@ -18,6 +18,13 @@ const gridStyle = {
     textAlign: 'center',
 };
 
+const validateMessages = {
+    required: '${label} is required!',
+    types: {
+        number: '${label} is not a valid number!',
+    },
+    
+}
 
 class OfferDetails extends React.Component {
 
@@ -27,7 +34,9 @@ class OfferDetails extends React.Component {
         this.state = {
             showModal: false,
             accountNum:0,
-            bankName:''
+            bankName: '',
+            showCounterModal: false,
+            updatedAmount: ""
         }
     }
 
@@ -115,7 +124,16 @@ class OfferDetails extends React.Component {
                 console.log("Error" + errors);
             });
     }
+    toggleCounterModal = (e) => {
+        //Show modal
+        this.setState(prevState => ({
+            showCounterModal: !prevState.showCounterModal
+        }));
+    }
 
+    handleChangeAmount = (e) => {
+        this.setState({ updatedAmount: e.target.value })
+    }
     counterOfferHandler = (e) => {
         console.log('Insideacceptoffer');
         var data = {
@@ -124,7 +142,7 @@ class OfferDetails extends React.Component {
             "splitUser1Amount": this.state.offerDetails.amountToRemitSourceCurrency,
             "splitUser2Amount": 0,
             "exchangeOfferId": this.state.offerDetails.id,
-            "amount": this.state.offerDetails.amountToRemitSourceCurrency
+            "amount": this.state.updatedAmount
         }
 
         axios
@@ -134,7 +152,13 @@ class OfferDetails extends React.Component {
                 if (response.data != undefined) {
                     this.setState({
                         offers: response.data
+
                     });
+                    this.props.history.push({
+                        pathname: '/transactionDetails',
+                        pathname: '/offer/transaction/',
+                        data: response.data // your data array of objects
+                    })
                 } else {
 
                 }
@@ -180,7 +204,7 @@ class OfferDetails extends React.Component {
                             <Divider dashed />
                         <Button type="primary" onClick={this.onAcceptClick} >Accept</Button> <Divider type="vertical"> </Divider>
                         {/* <Button Disabled type="primary">Reject</Button> */}
-                        <Button type="primary" onClick={this.counterOfferHandler}>Counter</Button>
+                            <Button type="primary" onClick={this.toggleCounterModal}>Counter</Button>
                         </Card>
 
                     <Modal
@@ -206,6 +230,26 @@ class OfferDetails extends React.Component {
                             <Input type="text" value={this.state.accountNum} onChange={this.setAccountNum}/>
                         </Form.Item>
                     </Modal>
+                        <Modal
+                            title="Counter Offer Details"
+                            centered
+                            style={{ top: 20, width: "450px" }}
+                            visible={this.state.showCounterModal}
+                            onOk={() => this.counterOfferHandler()}
+                            onCancel={() => this.toggleCounterModal()}
+                        >
+                            <b>Current Offer Amount</b> : {this.state.offerDetails.amountToRemitSourceCurrency}
+                            <Divider />
+                            <Form validateMessages={validateMessages}>
+                                <Form.Item
+                                    label="Updated Amount"
+                                    name="updatedAmount"
+                                >
+                                    <Input type="text" onChange={this.handleChangeAmount} value={this.state.updatedAmount} />
+                                </Form.Item>
+                            </Form>
+                            <Divider />
+                        </Modal>
                 </>
                 }
                 </div>

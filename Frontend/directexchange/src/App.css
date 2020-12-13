@@ -1,5 +1,13 @@
 @import '~antd/dist/antd.css';
 
+
+
+
+.site-card-border-less-wrapper {
+  padding: 30px;
+  background: #ececec;
+}
+
 .App {
   text-align: center;
 }
