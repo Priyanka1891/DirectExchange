@@ -1,6 +1,6 @@
 import React, { Component, Fragment, useState } from "react";
 import axios from "axios";
-import { Button, Card, Divider, Pagination, Modal, Input, Form, Select } from 'antd';
+import { Button, Card, Divider, Pagination, Modal, Input, Form, Select, InputNumber } from 'antd';
 import firebase from 'firebase';
 import {
     BrowserRouter as Router,
@@ -20,8 +20,8 @@ const gridStyle = {
 
 const validateMessages = {
     required: '${label} is required!',
-    types: {
-        number: '${label} is not a valid number!',
+    number: {
+        range: '${label} must +- 10% of original amount!',
     },
     
 }
@@ -165,7 +165,7 @@ class OfferDetails extends React.Component {
     }
 
     handleChangeAmount = (e) => {
-        this.setState({ updatedAmount: e.target.value })
+        this.setState({ updatedAmount: e })
     }
     counterOfferHandler = (e) => {
         console.log('Insideacceptoffer');
@@ -296,8 +296,9 @@ class OfferDetails extends React.Component {
                                 <Form.Item
                                     label="Updated Amount"
                                     name="updatedAmount"
+                                    rules={[{ type: 'number', min: (this.state.offerDetails.amountToRemitSourceCurrency * 0.90), max: (this.state.offerDetails.amountToRemitSourceCurrency * 1.10) }]} 
                                 >
-                                    <Input type="text" onChange={this.handleChangeAmount} value={this.state.updatedAmount} />
+                                    <InputNumber onChange={this.handleChangeAmount} value={this.state.updatedAmount} />
                                 </Form.Item>
                             </Form>
                             <Divider />
