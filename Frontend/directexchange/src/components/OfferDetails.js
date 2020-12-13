@@ -1,6 +1,6 @@
 import React, { Component, Fragment, useState } from "react";
 import axios from "axios";
-import { Button, Card, Divider, Pagination, Modal, Input, Form, Select, InputNumber } from 'antd';
+import { Button, Card, Divider, Pagination, Modal, Input, Form, Select, InputNumber, Space } from 'antd';
 import firebase from 'firebase';
 import {
     BrowserRouter as Router,
@@ -23,17 +23,18 @@ const validateMessages = {
     number: {
         range: '${label} must +- 10% of original amount!',
     },
-    
+
 }
 
 class OfferDetails extends React.Component {
+    formRef = React.createRef();
 
 
     constructor() {
         super();
         this.state = {
             showModal: false,
-            accountNum:0,
+            accountNum: 0,
             bankName: '',
             showCounterModal: false,
             updatedAmount: "",
@@ -79,32 +80,35 @@ class OfferDetails extends React.Component {
     }
 
     setBankName = (e) => {
-        if(e){
+        if (e) {
             this.setState({
-                bankName:e.target.value
+                bankName: e.target.value
             })
         }
-        else{
+        else {
             this.setState({
-                bankName:''
+                bankName: ''
             })
         }
     }
 
     setAccountNum = (e) => {
-        if(e){ 
+        if (e) {
             this.setState({
-                accountNum:e.target.value
-            }) 
+                accountNum: e.target.value
+            })
 
         }
-        else{
+        else {
             this.setState({
-                accountNum:0
+                accountNum: 0
             })
         }
 
     }
+
+
+
 
     acceptOfferHandler = (e) => {
 
@@ -122,7 +126,7 @@ class OfferDetails extends React.Component {
             "exchangeOfferId": this.state.offerDetails.id,
             "bankName": bankObj.bankName,
             "accountNumber": bankObj.accountNumber,
-            }
+        }
         axios
             .put("http://localhost:8080" + "/exchangeOffer/updateOfferStatusToInTransaction/", data)
             .then(response => {
@@ -155,7 +159,7 @@ class OfferDetails extends React.Component {
             showCounterModal: !prevState.showCounterModal
         }));
     }
-    
+
     onBankChange = (e) => {
         //Show modal
         this.setState({
@@ -207,66 +211,66 @@ class OfferDetails extends React.Component {
     render() {
         return (
             <>
-            <div>
-            <div>
+                <div>
+                    <div>
                         <UserHeader selectedKey={['3']} />
                     </div>
-            
 
-                {this.state.offerDetails &&
-                    <>
-                        <Card style={{ width: "30%" }} title="Offer Details">
-                            <p><b>Offer ID : {this.state.offerDetails.id}
-                                <Divider type="vertical" /></b>
+
+                    {this.state.offerDetails &&
+                        <>
+                            <Card style={{ width: "30%" }} title="Offer Details">
+                                <p><b>Offer ID : {this.state.offerDetails.id}
+                                    <Divider type="vertical" /></b>
                         Offer Status : {this.state.offerDetails.offerStatus}
-                            </p>
-                            <Divider />
-                            <p><b>Amount</b> : {this.state.offerDetails.amountToRemitSourceCurrency}</p>
-                            <p><b>Exchange Rate</b> : {this.state.offerDetails.exchangeRate}</p>
-                            <Divider />
-                            <p>Source Country : {this.state.offerDetails.sourceCountry}</p>
-                            <p>Destination Country : {this.state.offerDetails.destinationCountry}</p>
-                            <p>Destination Currency : {this.state.offerDetails.destinationCurrency}</p>
-                            <Divider />
-                            <p>Counter Offer Allowed? : {this.state.offerDetails.allowCounterOffers}</p>
-                            <p>Split Allowed? : {this.state.offerDetails.allowSplitExchanges}</p>
-                            <p>Expiration Date : {this.state.offerDetails.expirationDate}</p>
+                                </p>
+                                <Divider />
+                                <p><b>Amount</b> : {this.state.offerDetails.amountToRemitSourceCurrency}</p>
+                                <p><b>Exchange Rate</b> : {this.state.offerDetails.exchangeRate}</p>
+                                <Divider />
+                                <p>Source Country : {this.state.offerDetails.sourceCountry}</p>
+                                <p>Destination Country : {this.state.offerDetails.destinationCountry}</p>
+                                <p>Destination Currency : {this.state.offerDetails.destinationCurrency}</p>
+                                <Divider />
+                                <p>Counter Offer Allowed? : {this.state.offerDetails.allowCounterOffers}</p>
+                                <p>Split Allowed? : {this.state.offerDetails.allowSplitExchanges}</p>
+                                <p>Expiration Date : {this.state.offerDetails.expirationDate}</p>
 
-                            {/* <p>{this.state.offerDetails.receivingAccountNumber}</p> */}
-                            <p>Bank : {this.state.offerDetails.receivingBankName}</p>
-                            <Divider orientation="left">User Details</Divider>
-                            <p>{this.state.offerDetails.user.name}<Divider type="vertical" /> <MailOutlined /> {this.state.offerDetails.user.userName}</p>
-                            <Divider dashed />
-                        <Button type="primary" onClick={this.onAcceptClick} >Accept</Button> <Divider type="vertical"> </Divider>
-                        {/* <Button Disabled type="primary">Reject</Button> */}
-                            <Button type="primary" onClick={this.toggleCounterModal}>Counter</Button>
-                        </Card>
+                                {/* <p>{this.state.offerDetails.receivingAccountNumber}</p> */}
+                                <p>Bank : {this.state.offerDetails.receivingBankName}</p>
+                                <Divider orientation="left">User Details</Divider>
+                                <p>{this.state.offerDetails.user.name}<Divider type="vertical" /> <MailOutlined /> {this.state.offerDetails.user.userName}</p>
+                                <Divider dashed />
+                                <Button type="primary" onClick={this.onAcceptClick} >Accept</Button> <Divider type="vertical"> </Divider>
+                                {/* <Button Disabled type="primary">Reject</Button> */}
+                                <Button type="primary" onClick={this.toggleCounterModal}>Counter</Button>
+                            </Card>
 
-                    <Modal
-                        title="Provide Bank Details"
-                        style={{ top: 20, width: "450px" }}
-                        visible={this.state.showModal}
-                        onOk={() => this.acceptOfferHandler()}
-                        onCancel={() => this.closeModal()}
-                    >
-                    <Form.Item
-                                name="bankAccount"
-                                label="Bank Account"
-                                rules={[
-                                    {
-                                        required: false,
-                                    },
-                                ]}
+                            <Modal
+                                title="Provide Bank Details"
+                                style={{ top: 20, width: "450px" }}
+                                visible={this.state.showModal}
+                                onOk={() => this.acceptOfferHandler()}
+                                onCancel={() => this.closeModal()}
                             >
-                                {this.state.bankAccounts &&
-                                    <Select onChange={this.onBankChange} name="dstCurrency" style={{ "max-width": "200px" }}>
-                                        {this.state.bankAccounts.map(item => (
-                                            <Option value={item.id}>{item.bankName}</Option>
-                                        ))}
-                                    </Select>
-                                }
-                            </Form.Item>
-                            {/* <Form.Item
+                                <Form.Item
+                                    name="bankAccount"
+                                    label="Bank Account"
+                                    rules={[
+                                        {
+                                            required: false,
+                                        },
+                                    ]}
+                                >
+                                    {this.state.bankAccounts &&
+                                        <Select onChange={this.onBankChange} name="dstCurrency" style={{ "max-width": "200px" }}>
+                                            {this.state.bankAccounts.map(item => (
+                                                <Option value={item.id}>{item.bankName}</Option>
+                                            ))}
+                                        </Select>
+                                    }
+                                </Form.Item>
+                                {/* <Form.Item
                             label="Bank Name"
                             name="bankName"
                             rules={[{ required: true, message: 'Please input your bank name!' }]}
@@ -281,30 +285,51 @@ class OfferDetails extends React.Component {
                         >
                             <Input type="text" value={this.state.accountNum} onChange={this.setAccountNum}/>
                         </Form.Item> */}
-                    </Modal>
-                        <Modal
-                            title="Counter Offer Details"
-                            centered
-                            style={{ top: 20, width: "450px" }}
-                            visible={this.state.showCounterModal}
-                            onOk={() => this.counterOfferHandler()}
-                            onCancel={() => this.toggleCounterModal()}
-                        >
-                            <b>Current Offer Amount</b> : {this.state.offerDetails.amountToRemitSourceCurrency}
-                            <Divider />
-                            <Form validateMessages={validateMessages}>
-                                <Form.Item
-                                    label="Updated Amount"
-                                    name="updatedAmount"
-                                    rules={[{ type: 'number', min: (this.state.offerDetails.amountToRemitSourceCurrency * 0.90), max: (this.state.offerDetails.amountToRemitSourceCurrency * 1.10) }]} 
-                                >
-                                    <InputNumber onChange={this.handleChangeAmount} value={this.state.updatedAmount} />
-                                </Form.Item>
+                            </Modal>
+                            <Modal
+                                title="Counter Offer Details"
+                                centered
+                                style={{ top: 20, width: "450px" }}
+                                visible={this.state.showCounterModal}
+                            // onOk={() => this.counterOfferHandler()}
+                                onCancel={() => this.toggleCounterModal()}
+                            footer={null}
+                            >
+                                <b>Current Offer Amount</b> : {this.state.offerDetails.amountToRemitSourceCurrency}
+                                <Divider />
+                            <Form validateMessages={validateMessages}
+                                ref={this.formRef}
+                                scrollToFirstError
+                                onFinish={this.counterOfferHandler}>
+                                    <Form.Item
+                                        label="Updated Amount"
+                                        name="updatedAmount"
+                                    rules={[
+                                        {
+                                            type: 'number',
+                                            min: (this.state.offerDetails.amountToRemitSourceCurrency * 0.90),
+                                            max: (this.state.offerDetails.amountToRemitSourceCurrency * 1.10)
+                                        }, {
+                                            required: true,
+                                            message: 'Please enter amount'
+                                        }]}
+                                    >
+                                        <InputNumber onChange={this.handleChangeAmount} value={this.state.updatedAmount} />
+                                    </Form.Item>
+                                <Space>
+
+                                    <Button style={{ float: "right" }} type="primary" htmlType="submit">
+                                        Submit
+                                    </Button>
+
+                                    <Button danger style={{ float: "right" }} type="primary" onClick={this.toggleCounterModal}>
+                                        Cancel
+                                    </Button>
+                                </Space>
                             </Form>
-                            <Divider />
-                        </Modal>
-                </>
-                }
+                            </Modal>
+                        </>
+                    }
                 </div>
             </>
         )
