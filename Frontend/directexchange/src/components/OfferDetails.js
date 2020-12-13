@@ -118,7 +118,7 @@ class OfferDetails extends React.Component {
         var bankObj = this.state.bankAccounts.find(obj => {
             return obj.id === this.state.selectedBankId;
         })
-        console.log(bankObj);
+        console.log("inverseRate", (1 / this.state.offerDetails.exchangeRate).toFixed(2));
         var data = {
             "userName": localStorage.getItem('userName'),
             "amount": this.state.offerDetails.amountToRemitSourceCurrency,
@@ -126,6 +126,7 @@ class OfferDetails extends React.Component {
             "exchangeOfferId": this.state.offerDetails.id,
             "bankName": bankObj.bankName,
             "accountNumber": bankObj.accountNumber,
+            "inverseExRate": (1 / this.state.offerDetails.exchangeRate).toFixed(2)
         }
         axios
             .put("http://localhost:8080" + "/exchangeOffer/updateOfferStatusToInTransaction/", data)
@@ -179,7 +180,7 @@ class OfferDetails extends React.Component {
             "splitUser1Amount": this.state.offerDetails.amountToRemitSourceCurrency,
             "splitUser2Amount": 0,
             "exchangeOfferId": this.state.offerDetails.id,
-            "amount": this.state.updatedAmount
+            "amount": this.state.updatedAmount,
         }
 
         axios
