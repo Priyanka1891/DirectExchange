@@ -6,27 +6,11 @@ import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 import axios from "axios";
 
-// Configure FirebaseUI.
-const uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: 'popup',
-     // We will display Google and Facebook as auth providers.
-    signInOptions: [
-      firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,  
-      firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-      firebase.auth.FacebookAuthProvider.PROVIDER_ID
-    ],
-};
-
-var actionCodeSettings = {
-    url: 'http://localhost:3000/'
-};
-
 const initialState = {
     isSignedIn: false,
     redirectPage: '',
     showError: false,
-    emailVerificationSent: false
+    emailVerificationSent : false
 };
 
 class Login extends Component {
@@ -34,45 +18,86 @@ class Login extends Component {
         super();
         this.state = initialState;
         this.sendEmailVerification = this.sendEmailVerification.bind(this);
-
+        // this.verificationDone = this.verificationDone.bind(this);
     }
 
+    uiConfig = {
+        // Popup signin flow rather than redirect flow.
+        signInFlow: 'popup',
+        // signInSuccessUrl : 'http://localhost:3000/',
+         // We will display Google and Facebook as auth providers.
+        signInOptions: [
+          firebase.auth.EmailAuthProvider.EMAIL_PASSWORD_SIGN_IN_METHOD,  
+          firebase.auth.GoogleAuthProvider.PROVIDER_ID,
+          firebase.auth.FacebookAuthProvider.PROVIDER_ID
+        ],
+        callbacks: {
+            // Avoid redirects after sign-in.
+            signInSuccessWithAuthResult: () => false
+        }
+    };
+
+    actionCodeSettings = {
+        url: 'http://localhost:3000/?user_verified=true'
+    };
+    
+
     // Listen to the Firebase Auth state and set the local state.
-    componentDidMount() {
+    componentDidMount() { 
         this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
             (user) => {
-                this.setState({ isSignedIn: !!user });
-                console.log('user', user);
                 if (user) {
-
-                    localStorage.setItem("userName", user.email);
-
-
-                    console.log('user', user);
                     var data = {
-                        userName: user.email,
                         name: user.displayName,
-                        isVerified: user.emailVerified,
-                        //authMode :
-                        //password 
+                        userName: user.email
+                        // emailVerified: user.emailVerified
                     }
-                    console.log('data', data);
-                    axios
-                        .post("http://localhost:8080" + "/user/signup", data)
-                        .then(response => {
-                            console.log("Search Result : ", response.data);
-                            if (response.data != undefined) {
-                               
-                            } else {
+                    console.log(this.props);
+                    const isEmailVerified =  this.props.location.search.includes("verified=true");
 
+                    if (isEmailVerified) {
+                        data = {...data, isVerified : true};
+                        axios.put("http://localhost:8080" + "/user/updateuser", data)
+                            .then(response => {
+                                console.log("Verification status updated: ", response);
+                            })
+                            .catch(errors => {
+                                console.log("Error" + errors);
+                            });
+                    }
+                    
+                    axios.get("http://localhost:8080" + "/user/login/" + data.userName)
+                        .then(response => {
+                            console.log(response);
+                            if (!response.data.isVerified && !isEmailVerified) {
+                                this.sendEmailVerification();
+                                    this.setState(
+                                        {
+                                            emailVerificationSent : true
+                                        }
+                                );  
+                            } else {
+                                this.setState({ isSignedIn: !!user });
+                                localStorage.setItem("userName", user.email);
                             }
                             
                         })
-                        .catch(errors => {
-                            console.log("Error" + errors);
-                        });
-                        
-
+                        .catch((response,errors) => {
+                            console.log(response, errors)
+                            axios.post("http://localhost:8080" + "/user/signup", data)
+                                .then(response => {
+                                    console.log("Search Result : ", response);
+                                    this.sendEmailVerification();
+                                    this.setState(
+                                        {
+                                            emailVerificationSent : true
+                                        }
+                                    );   
+                                })
+                                .catch(errors => {
+                                    console.log("Error" + errors);
+                                });
+                        });                         
                 }
                 
             }
@@ -82,28 +107,15 @@ class Login extends Component {
 
     // Make sure we un-register Firebase observers when the component unmounts.
     componentWillUnmount() {
-        this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-            (user) => {
-                localStorage.setItem("userName", user.email);
-            })
         this.unregisterAuthObserver();
     }
   
     noop = () => { }
+
     sendEmailVerification = () => {
-
-
-
-
-        if (!this.state.emailVerificationSent) {
-            return;
-        }
         var user = firebase.auth().currentUser;
-        user.sendEmailVerification(actionCodeSettings).then(function () {
+        user.sendEmailVerification(this.actionCodeSettings).then(function () {
             console.log("Sent email");
-            this.setState({
-                emailVerificationSent: true
-            });
             firebase.auth().signOut();
         }).catch(function (error) {
             console.log(error)
@@ -111,14 +123,14 @@ class Login extends Component {
     }
 
     render() {
-        if (!this.state.isSignedIn) {
+        if (!this.state.isSignedIn && !this.state.emailVerificationSent) {
             return (
                 <div>
                     <div>
                         <Headers selectedKey={['3']} />
                     </div>
                     <div style={{ marginLeft: "50%", marginTop: "7%" }}>
-                        <StyledFirebaseAuth uiConfig={uiConfig} firebaseAuth={firebase.auth()}/>
+                        <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
                     </div>
                     <div>
                         <Footer />
@@ -127,8 +139,11 @@ class Login extends Component {
                 </div>
             );
         }
-        { this.sendEmailVerification() };
-        if (this.state.emailVerificationSent || this.state.isSignedIn) {
+        if (this.state.isSignedIn) {
+           return( <div><Redirect to={{ pathname: '/' }} ></Redirect> </div>)
+        }
+
+        if (this.state.emailVerificationSent) {
             return (
                 <div>
                     <div>
@@ -142,6 +157,9 @@ class Login extends Component {
                 </div>
             );
         }
+        //  else {
+        //     return(<div> Redirect to verified profile page</div>)
+        // }
     }
 }
 
