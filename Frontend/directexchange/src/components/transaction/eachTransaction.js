@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Card } from 'antd';
+import { Card, Button } from 'antd';
 
 
 class EachTransaction extends Component{
@@ -8,7 +8,7 @@ class EachTransaction extends Component{
     constructor(){
         super();
        this.state = {
-           dataSource:this.props.transaction,
+           dataSource:this.props,
             
        } 
 
@@ -30,12 +30,12 @@ class EachTransaction extends Component{
         return (
            <div>
                <div>
-               <Card>
-                        <p>Amount to Transfer</p>
-                        <p>Currency</p>
-                        <p>Destination Country</p>
-                        <Button onClick={this.pay}></Button>
-                </Card>
+               <Card.Grid>
+                        <p>Amount to Transfer: </p>
+                        <p>Currency: </p>
+                        <p>Destination Country: </p>
+                        <Button onClick={this.pay} style={{background:'green'}}>Pay</Button>
+                </Card.Grid>
              </div>
 
 

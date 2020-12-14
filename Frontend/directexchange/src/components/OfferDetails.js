@@ -336,6 +336,12 @@ class OfferDetails extends React.Component {
                             rules={[{ required: true, message: 'Please input your account number!' }]}
                         >
                             <Input type="text" value={this.state.accountNum} onChange={this.setAccountNum}/>
+<<<<<<< HEAD
+                        </Form.Item>
+                    </Modal>
+                </>
+                }
+=======
                         </Form.Item> */}
                             </Modal>
                             <Modal
@@ -382,6 +388,7 @@ class OfferDetails extends React.Component {
                             </Modal>
                         </>
                     }
+>>>>>>> refs/remotes/origin/main
                 </div>
             </>
         )
