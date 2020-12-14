@@ -11,7 +11,7 @@ const { MonthPicker } = DatePicker;
 
 const { Option } = Select;
 
-let userName = localStorage.getItem('username');
+let userName = localStorage.getItem('userName');
 //const userName = "ambika@sjsu.edu";
 
 class PostOffer extends Component{

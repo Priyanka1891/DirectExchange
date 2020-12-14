@@ -75,6 +75,8 @@ public class TransactionDetailsModel {
 		this.accountNumber = accountNumber;
 	}
 	
+	
+
 	private String userName;
 
 	private String exchangeOfferId;
@@ -85,6 +87,18 @@ public class TransactionDetailsModel {
 	
 	private String expiryDate;
 	
+	private float inverseExRate;
+	
+	public float getInverseExRate() {
+		return inverseExRate;
+	}
+
+	public void setInverseExRate(float inverseExRate) {
+		this.inverseExRate = inverseExRate;
+	}
+
+
+
 	private double percentOfTotalAmount;
 	
 	private Boolean isTransferred=false;

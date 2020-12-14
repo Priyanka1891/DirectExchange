@@ -38,10 +38,11 @@ class CreateAccount extends Component{
         .then(response => {
             console.log("Search Result : ", response.data);
             if (response.data != undefined) {
-              Swal.fire('Success', 'Account Created', 'success');
-              this.setState({
-                redirectPage: <Redirect to={{ pathname: '/user/createaccount/' }} />
-                })
+                Swal.fire('Success', 'Account Created', 'success')
+                //   this.setState({
+                //     redirectPage: <Redirect to={{ pathname: '/user/createaccount/' }} />
+                //     })
+                location.reload();
                
             } else {
 

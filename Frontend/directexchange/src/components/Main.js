@@ -12,7 +12,9 @@ import Headers from './Header';
 import MatchingOffers from './myoffers/MatchingOffers';
 import BrowseOffers from './BrowseOffers';
 import OfferDetails from './OfferDetails';
-import TransactionDetails from './TransactionDetails';
+//import TransactionDetails from './TransactionDetails';
+import TransactionDetails from './transaction/transaction';
+import MyCounterOffers from './myoffers/MyCounterOffers';
 
 
 // Main Component
@@ -48,7 +50,7 @@ class Main extends React.Component {
         {/* If user is logged in */}
         {this.state.isSignedIn &&
           <>
-          <Route exact path="/" component={Headers} />
+          {/* <Route exact path="/" component={Headers} /> */}
           {/* <Route exact path="/" component={MyOffers} /> */}
 
           <Route path="/user/myoffers/" component={MyOffers} />
@@ -61,6 +63,8 @@ class Main extends React.Component {
             <Route path="/user/createaccount/" component={CreateAccount} />
             <Route path="/user/postoffer/" component={PostOffer} />
           <Route path="/offer/transaction/" component={TransactionDetails} />
+          <Route path="/offer/mycounteroffers/" component={MyCounterOffers} />
+
           </>
         }
             {/* <Route path="/user/rates/" component={Rates} />

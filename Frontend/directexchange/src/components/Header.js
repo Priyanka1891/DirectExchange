@@ -37,7 +37,9 @@ class Headers extends Component {
   }
 
   logoutHandler = () => {
+    localStorage.removeItem('userName');
     firebase.auth().signOut();
+
     this.setState({
       redirectPage: <Redirect to={{ pathname: '/' }} />
     })

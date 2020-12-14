@@ -77,7 +77,7 @@ public class ExchangeOffer {
 		
 	}
 	
-	public ExchangeOffer(String sourceCountry, String sourceCurrency, double amountToRemitInSourceCurrency,
+	public ExchangeOffer(String sourceCountry, String sourceCurrency, double amountToRemitSourceCurrency,
 						  String destinationCountry, String destinationCurrency, double exchangeRate,
 						   String expirationDate, String allowCounterOffers, String allowSplitExchanges,
 						   	String receivingBankName, long receivingAccountNumber, String offerStatus) {

@@ -20,8 +20,8 @@ const gridStyle = {
     textAlign: 'center',
 };
 
-//const userName = localStorage.getItem('userName');
-const userName = "ambika@sjsu.edu"
+const userName = localStorage.getItem('userName');
+//const userName = "ambika@sjsu.edu"
 class MatchingOffers extends React.Component {
 
     constructor() {
@@ -56,7 +56,8 @@ class MatchingOffers extends React.Component {
             amountToRemitInSourceCurrency:this.props.location.state.amountToRemitSourceCurrency,
             exchangeRate:this.props.location.state.exchangeRate,
         }
-       
+            console.log(object)
+
        let res1 = await axios
         .post(urlConfig.url + "/getExactMatchingOffers/",
             object
@@ -97,6 +98,8 @@ class MatchingOffers extends React.Component {
         .catch(errors => {
             console.log("Error" + errors);
         });
+
+            console.log(res1, res2);
 
         this.setState({
             loaded:true
