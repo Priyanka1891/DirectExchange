@@ -14,6 +14,6 @@ import edu.sjsu.cmpe275.Term_Project.entity.User;
  */
 public interface UserRepository extends JpaRepository<User, String> {
 
-    @Query("From User where username = ?1")
+    @Query("From User where user_name = ?1")
     User findUserByUsername(String username);
 }
