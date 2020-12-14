@@ -14,6 +14,7 @@ import BrowseOffers from './BrowseOffers';
 import OfferDetails from './OfferDetails';
 //import TransactionDetails from './TransactionDetails';
 import TransactionDetails from './transaction/transaction';
+import MyCounterOffers from './myoffers/MyCounterOffers';
 
 
 // Main Component
@@ -51,6 +52,7 @@ class Main extends React.Component {
           <Route path="/user/createaccount/" component={CreateAccount} />
           <Route path="/user/postoffer/" component={PostOffer} />
           <Route path="/offer/transaction/" component={TransactionDetails} />
+          <Route path="/offer/counteroffers/" component={MyCounterOffers} />
           </>
 
 
