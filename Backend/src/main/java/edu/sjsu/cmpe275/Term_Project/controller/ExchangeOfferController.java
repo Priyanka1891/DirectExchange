@@ -221,7 +221,7 @@ public class ExchangeOfferController {
 	@PostMapping("exchangeOffer/updateOfferStatusForCounterOffer")
 	public ResponseEntity updateOfferStatusToCounterMade(@RequestBody ProposedOfferModel proposedOffer) {
 		try {
-			ProposedOffer counterOffer = new ProposedOffer(proposedOffer.getAmount(),
+			ProposedOffer counterOffer = new ProposedOffer(
 					   proposedOffer.getSplitUserId1() , proposedOffer.getSplitUserId2()  ,
 					   proposedOffer.getSplitUser1Amount(),proposedOffer.getSplitUser2Amount());
 			ExchangeOffer offer =

@@ -1,7 +1,6 @@
 import React, { Component, Fragment, useState } from "react";
 import axios from "axios";
 import { Button, Card, Rate, Divider, Pagination, Modal, Input, Form, Select, InputNumber, Space, Row, Col } from 'antd';
-import firebase from 'firebase';
 import {
     BrowserRouter as Router,
     Switch,
@@ -177,13 +176,12 @@ class OfferDetails extends React.Component {
         var data = {
             "splitUserId1": this.state.offerDetails.user.userName,
             "splitUserId2": null,
-            // "splitUser1Amount": this.state.updatedAmount,
             "splitUser1Amount": this.state.updatedAmount,
             "splitUser2Amount": 0,
             "exchangeOfferId": this.state.offerDetails.id,
-            "amount": this.state.updatedAmount,
+            // "amount": this.state.amountToRemitSourceCurrency,
         }
-
+        // console.log(data);
         axios
             .post("http://localhost:8080" + "/exchangeOffer/updateOfferStatusForCounterOffer", data)
             .then(response => {
