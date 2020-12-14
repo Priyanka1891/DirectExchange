@@ -79,6 +79,8 @@ class Login extends Component {
                             } else {
                                 this.setState({ isSignedIn: !!user });
                                 localStorage.setItem("userName", user.email);
+                                location.reload();
+
                             }
                             
                         })

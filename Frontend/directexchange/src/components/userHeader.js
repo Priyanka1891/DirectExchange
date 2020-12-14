@@ -91,7 +91,8 @@ class Headers extends Component {
     firebase.auth().signOut();
      this.setState({
        redirectPage: <Redirect to={{ pathname: '/' }} />
-     })
+     });
+    location.reload();
   }
 
 
