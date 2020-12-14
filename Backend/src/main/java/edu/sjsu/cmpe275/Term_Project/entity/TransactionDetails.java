@@ -1,5 +1,7 @@
 package edu.sjsu.cmpe275.Term_Project.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -15,12 +17,6 @@ import com.fasterxml.jackson.annotation.JsonIgnore;
  *
  */
 
-//Transaction Details ID
-//Transaction ID (Child)
-//Username
-//Amount
-//% of total amount
-//IsTransferred? Boolean
 
 @Entity
 @Table(name= "Transaction_Details")
@@ -40,9 +36,17 @@ public class TransactionDetails {
 	
 	private double amount;
 	
-	private String createDate;
+	private Date createDate;
+	
+	private String Country;
+	
+	private String Currency;
+	
+	private String status="InTransaction";
 	
 	private String expiryDate;
+	
+	private float Rate;
 	
 	private double percentOfTotalAmount;
 	
@@ -57,14 +61,17 @@ public class TransactionDetails {
 	}
 
 	public TransactionDetails(String Username, double amount, String createDate, String expiryDate, 
-			String bankName,  long accountNumber, double percentOfTotalAmount) {
+			String bankName,  long accountNumber, double percentOfTotalAmount, float rate, String country, String currency) {
 		this.Username = Username;
 		this.amount = amount;
-		this.createDate = createDate;
+		this.createDate = new Date();
 		this.expiryDate = expiryDate;
 		this.bankName = bankName;
 		this.accountNumber = accountNumber;
 		this.percentOfTotalAmount = percentOfTotalAmount;
+		this.Rate = rate;
+		this.Country = country;
+		this.Currency = currency;
 				
 	}
 	
@@ -116,11 +123,11 @@ public class TransactionDetails {
 		this.percentOfTotalAmount = percentOfTotalAmount;
 	}
 	
-	public String getCreateDate() {
+	public Date getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(String createDate) {
+	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
 	}
 
@@ -147,4 +154,42 @@ public class TransactionDetails {
 	public void setAccountNumber(long accountNumber) {
 		this.accountNumber = accountNumber;
 	}
+
+	
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	
+
+	public String getCountry() {
+		return Country;
+	}
+
+	public void setCountry(String country) {
+		Country = country;
+	}
+
+	public String getCurrency() {
+		return Currency;
+	}
+
+	public void setCurrency(String currency) {
+		Currency = currency;
+	}
+
+	public float getRate() {
+		return Rate;
+	}
+
+	public void setRate(float rate) {
+		Rate = rate;
+	}
+
+	
 }

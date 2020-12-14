@@ -1,5 +1,7 @@
 package edu.sjsu.cmpe275.Term_Project.entity;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -29,6 +31,8 @@ public class ProposedOffer {
 	private String splitUserId1;
 	
 	private String splitUserId2;
+	
+//	private Date createDate;
 	
 	private double splitUser1Amount;
 	

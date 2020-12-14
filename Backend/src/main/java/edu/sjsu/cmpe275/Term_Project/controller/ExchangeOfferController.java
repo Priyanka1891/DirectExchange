@@ -198,12 +198,13 @@ public class ExchangeOfferController {
 	@CrossOrigin(origins = Constants.FRONT_END_URL)
 	@PutMapping("/exchangeOffer/updateOfferStatusToInTransaction")
 	public ResponseEntity updateOfferStatusToInTransaction(@RequestBody TransactionDetailsModel transaction) {
-		
+//		System.out.println(transaction);
 		try {
-			System.out.println("DEBUG: " + transaction.getUserName() + " " + transaction.getAmount() + " " + transaction.getPercentOfTotalAmount());
+			System.out.println("DEBUG: " + transaction.getUserName() + " " + transaction.getAmount() + " " + 
+						transaction.getPercentOfTotalAmount() + " " +  transaction.getInverseExRate());
 			TransactionDetails trdetails = new TransactionDetails(transaction.getUserName(), transaction.getAmount(), "", "",
 																  transaction.getBankName(), transaction.getAccountNumber(),
-																  transaction.getPercentOfTotalAmount());
+																  transaction.getPercentOfTotalAmount(), transaction.getInverseExRate(),"","");
 			
 			ExchangeOffer offer = exchangeOfferService.updateOfferStatusToInTransaction(transaction.getExchangeOfferId(), trdetails);
 			if (offer == null) {

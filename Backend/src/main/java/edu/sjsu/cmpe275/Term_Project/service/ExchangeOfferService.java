@@ -305,10 +305,14 @@ public class ExchangeOfferService {
 		}
 		
 		TransactionDetails recv_trdetails = new TransactionDetails(offer.getUser().getUserName(), trdetails.getAmount(), "", "",
-															  offer.getReceivingBankName(), offer.getReceivingAccountNumber(),
-															  trdetails.getPercentOfTotalAmount());
+				trdetails.getBankName(), trdetails.getAccountNumber(),											  
+				trdetails.getPercentOfTotalAmount(), (float)offer.getExchangeRate(), offer.getDestinationCountry(), offer.getDestinationCurrency());
 		
 		trdetails.setExchange_offer(offer);
+		trdetails.setBankName(offer.getReceivingBankName());
+		trdetails.setAccountNumber(offer.getReceivingAccountNumber());
+		trdetails.setCountry(offer.getSourceCountry());
+		trdetails.setCurrency(offer.getSourceCurrency());
 		recv_trdetails.setExchange_offer(offer);
 		offer.setOfferStatus("InTransaction");
 		offer.getTransactionDetails().add(trdetails);
