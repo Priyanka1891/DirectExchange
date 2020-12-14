@@ -2,6 +2,8 @@ import React from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
 import LoginForm from './Login';
 import Rates from './rates';
+import axios from "axios";
+import { urlConfig } from '../config/config';
 
 
 //import users components
@@ -19,19 +21,40 @@ import MyCounterOffers from './myoffers/MyCounterOffers';
 
 // Main Component
 const initialState = {
-  userName : null
+  userName: null,
+  enablePostOffer: false
 };
 
 class Main extends React.Component {
   constructor() {
     super();
     this.state = initialState;
+
   }
 
   componentDidMount = () => {
     this.setState({
       userName: localStorage.getItem("userName")
     })
+    axios
+      .get(urlConfig.url + '/getDistinctBankAccountsCountsOfUser/' + localStorage.getItem("userName"))
+      .then(response => {
+        console.log("Search Result : ", response.data);
+        if (response.data != undefined) {
+          if (response.data > 1) {
+            this.setState({
+              enablePostOffer: true
+            });
+          }
+
+        } else {
+
+        }
+
+      })
+      .catch(errors => {
+        console.log("Error" + errors);
+      });
   }
 
   render() {
@@ -42,18 +65,29 @@ class Main extends React.Component {
     return (
       <div>
           <>
-          <Route path="/user/myoffers/" component={MyOffers} />
-          <Route path="/user/moffers/" component={MatchingOffers} />
-          <Route path="/user/browseoffers/" component={BrowseOffers} />
-          <Route path="/offer/details" component={OfferDetails} />
-          <Route exact path="/" component={BrowseOffers} key={Date.now()} />
+          {!this.state.enablePostOffer &&
+            <>
+              <Route path="/" component={CreateAccount} />
+            </>
 
-          <Route path="/user/rates/" component={Rates} />
-          <Route path="/user/createaccount/" component={CreateAccount} />
-          <Route path="/user/postoffer/" component={PostOffer} />
-          <Route path="/offer/transaction/" component={TransactionDetails} />
-          <Route path="/offer/counteroffers/" component={MyCounterOffers} />
-          </>
+          }
+          {this.state.enablePostOffer &&
+            <>
+            <Route path="/user/myoffers/" component={MyOffers} />
+            <Route path="/user/moffers/" component={MatchingOffers} />
+            <Route path="/user/browseoffers/" component={BrowseOffers} />
+            <Route path="/offer/details" component={OfferDetails} />
+            <Route exact path="/" component={BrowseOffers} key={Date.now()} />
+
+            <Route path="/user/rates/" component={Rates} />
+            <Route path="/user/createaccount/" component={CreateAccount} />
+            <Route path="/user/postoffer/" component={PostOffer} />
+            <Route path="/offer/transaction/" component={TransactionDetails} />
+            <Route path="/offer/counteroffers/" component={MyCounterOffers} />
+            </>
+          }
+
+        </>
 
 
 

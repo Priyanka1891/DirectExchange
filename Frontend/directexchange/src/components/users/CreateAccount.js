@@ -3,7 +3,7 @@ import { Form, Input, Alert, Select, Button, Row, Col, DatePicker } from 'antd';
 import { Redirect } from 'react-router';
 import Swal from 'sweetalert2';
 import UserHeader from '../userHeader';
-import {urlConfig} from '../../config/config';
+import { urlConfig } from '../../config/config';
 
 import axios from 'axios';
 
@@ -13,7 +13,7 @@ const { Option } = Select;
 
 const userName = localStorage.getItem('userName');//
 //const userName = "ambika@sjsu.edu";
-class CreateAccount extends Component{
+class CreateAccount extends Component {
     formRef = React.createRef();
 
     constructor() {
@@ -34,25 +34,25 @@ class CreateAccount extends Component{
         console.log(values);
 
         axios
-        .post(urlConfig.url + "/createBankAccount", values)
-        .then(response => {
-            console.log("Search Result : ", response.data);
-            if (response.data != undefined) {
-                Swal.fire('Success', 'Account Created', 'success')
-                //   this.setState({
-                //     redirectPage: <Redirect to={{ pathname: '/user/createaccount/' }} />
-                //     })
-                location.reload();
-               
-            } else {
+            .post(urlConfig.url + "/createBankAccount", values)
+            .then(response => {
+                console.log("Search Result : ", response.data);
+                if (response.data != undefined) {
+                    Swal.fire('Success', 'Account Created', 'success')
+                    //   this.setState({
+                    //     redirectPage: <Redirect to={{ pathname: '/user/createaccount/' }} />
+                    //     })
+                    location.reload();
 
-            }
-            
-        })
-        .catch(errors => {
-            console.log("Error" + errors);
-        });
-        
+                } else {
+
+                }
+
+            })
+            .catch(errors => {
+                console.log("Error" + errors);
+            });
+
         //api call
     };
     disabledDate = (current) => {
@@ -60,7 +60,7 @@ class CreateAccount extends Component{
 
     }
 
-    render(){
+    render() {
         const frontFormLayout = {
             labelCol: {
                 span: 8,
@@ -76,26 +76,33 @@ class CreateAccount extends Component{
             },
         };
 
-        return ( 
-           <div>
+        return (
+            <div>
 
-            {this.state.redirectPage}
+                {this.state.redirectPage}
 
-<div>
-        <UserHeader selectedKey={['7']} />
-
-</div>
                 <div>
+                    <UserHeader selectedKey={['7']} />
 
-
+                </div>
+                <div>
+                    <div>
+                        <Alert
+                            message="Mandatory Information"
+                            description="Two bank accounts are necessary to perform any operations"
+                            type="info"
+                            showIcon
+                            closable
+                        />
+                    </div>
                     <Form
                         {...frontFormLayout}
                         ref={this.formRef}
                         name="CreateAccount"
                         onFinish={this.onFinish}
                         scrollToFirstError
-                        style={{ paddingTop: '2%', marginBottom:'10%' }}
-                       
+                        style={{ paddingTop: '2%', marginBottom: '10%' }}
+
                     >
                         <Form.Item
                             name="bankName"
@@ -118,7 +125,7 @@ class CreateAccount extends Component{
                             rules={[
                                 {
                                     required: true,
-                                    message:'Please select country'
+                                    message: 'Please select country'
                                 },
                             ]}
                         >
@@ -137,7 +144,7 @@ class CreateAccount extends Component{
                                 <Option value="finland">Finland</Option>
                                 <Option value="italy">Italy</Option>
                                 <Option value="france">France</Option>
-                               
+
                             </Select>
                         </Form.Item>
                         <Form.Item
@@ -159,7 +166,7 @@ class CreateAccount extends Component{
                             name="ownerName"
                             label="Owner Name"
                             rules={[
-                                
+
                                 {
                                     required: true,
                                     message: 'Please input your name!',
@@ -181,7 +188,7 @@ class CreateAccount extends Component{
                             <Input.TextArea />
 
                         </Form.Item>
-                       
+
                         <Form.Item
                             name="primaryCurrency"
                             label="Primary Currency"
@@ -235,13 +242,13 @@ class CreateAccount extends Component{
                 </div>
 
 
-           </div>
-          );
-        }
-        
-        
-        
+            </div>
+        );
+    }
+
+
+
 }
-        
-        
+
+
 export default CreateAccount;
