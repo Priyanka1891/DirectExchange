@@ -61,6 +61,12 @@ class Headers extends Component {
       })
 
   }
+  clickedMyCounterOffers = () => {
+    this.setState({
+      redirectPage: <Redirect to={{ pathname: '/offer/mycounteroffers' }} />
+    })
+
+  }
   logoutHandler = () => {
     firebase.auth().signOut();
      this.setState({
@@ -95,6 +101,7 @@ class Headers extends Component {
             <Menu.Item key="5" onClick={this.clickedPostOffers}>Post Offers</Menu.Item> 
             <Menu.Item key="6" onClick={this.clickedShowRates}>Exchange Rates</Menu.Item> 
             <Menu.Item key="7" onClick={this.clickedCreateAccount}>Create Bank Account</Menu.Item> 
+            <Menu.Item key="9" onClick={this.clickedMyCounterOffers}>My Counter Offers</Menu.Item> 
 
 
 
