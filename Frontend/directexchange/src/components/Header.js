@@ -44,11 +44,6 @@ class Headers extends Component {
       redirectPage: <Redirect to={{ pathname: '/' }} />
     })
   }
-  componentDidMount() {
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-      (user) => this.setState({ isSignedIn: !!user })
-    );
-  }
 
   render() {
     return (
@@ -68,9 +63,9 @@ class Headers extends Component {
             {/* <Menu.Item key="1" onClick={this.clickedWelcome}>Welcome</Menu.Item> */}
             {/* <Menu.Item key="2" onClick={this.clickedJoinUs}>Register</Menu.Item> */}
             {/* <Menu.Item key="3" onClick={this.clickedSignin}>Sign in</Menu.Item> */}
-            {this.state.isSignedIn &&
-              <Menu.Item key="4" style={{ float: "right" }} onClick={this.logoutHandler}>Logout</Menu.Item>
-            }
+    
+              {/* <Menu.Item key="4" style={{ float: "right" }} onClick={this.logoutHandler}>Logout</Menu.Item> */}
+            
           </Menu>
         </Header>
       </div>

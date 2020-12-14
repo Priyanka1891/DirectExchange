@@ -1,8 +1,8 @@
 import React from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
 import LoginForm from './Login';
-import firebase from 'firebase';
 import Rates from './rates';
+
 
 //import users components
 import CreateAccount from './users/CreateAccount';
@@ -18,59 +18,46 @@ import MyCounterOffers from './myoffers/MyCounterOffers';
 
 
 // Main Component
+const initialState = {
+  userName : null
+};
+
 class Main extends React.Component {
   constructor() {
     super();
-    this.state = {
-      redirectPage: '',
-      isSignedIn: false,
-      variable:'',
-    };
-
+    this.state = initialState;
   }
-  componentDidMount() {
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-      (user) => this.setState({ isSignedIn: !!user })
-    );
 
+  componentDidMount = () => {
     this.setState({
-      isSignedIn:true
+      userName: localStorage.getItem("userName")
     })
   }
 
-
   render() {
+    if (!this.state.userName) {
+      return (<Route exact path="/" component={LoginForm} key={Date.now()}/>);
+    }
+
     return (
       <div>
-        {/* If user is not logged in */}
-        {!this.state.isSignedIn &&
-          <Route exact path="/" component={LoginForm} />
-        }
-
-        {/* If user is logged in */}
-        {this.state.isSignedIn &&
           <>
-          {/* <Route exact path="/" component={Headers} /> */}
-          {/* <Route exact path="/" component={MyOffers} /> */}
-
           <Route path="/user/myoffers/" component={MyOffers} />
           <Route path="/user/moffers/" component={MatchingOffers} />
           <Route path="/user/browseoffers/" component={BrowseOffers} />
           <Route path="/offer/details" component={OfferDetails} />
-          <Route exact path="/" component={BrowseOffers} />
+          <Route exact path="/" component={BrowseOffers} key={Date.now()} />
 
-            <Route path="/user/rates/" component={Rates} />
-            <Route path="/user/createaccount/" component={CreateAccount} />
-            <Route path="/user/postoffer/" component={PostOffer} />
+          <Route path="/user/rates/" component={Rates} />
+          <Route path="/user/createaccount/" component={CreateAccount} />
+          <Route path="/user/postoffer/" component={PostOffer} />
           <Route path="/offer/transaction/" component={TransactionDetails} />
-          <Route path="/offer/mycounteroffers/" component={MyCounterOffers} />
-          <Route path="/user/reports" component={PostOffer} />
-            <Route path="/user/transHistory" component={PostOffer} />
-
-
+          <Route path="/offer/counteroffers/" component={MyCounterOffers} />
           </>
-        }
-           
+
+
+
+
 
 
       </div>

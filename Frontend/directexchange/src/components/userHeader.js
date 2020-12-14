@@ -79,24 +79,26 @@ class Headers extends Component {
       redirectPage: <Redirect to={{ pathname: '/user/reports' }} />
     })
   }
+  
+  countOffers = (e) => {
+    this.setState({
+      redirectPage: <Redirect to={{ pathname: '/offer/counteroffers' }} />
+    })
+  }
 
   logoutHandler = () => {
+    localStorage.removeItem('userName');
     firebase.auth().signOut();
      this.setState({
        redirectPage: <Redirect to={{ pathname: '/' }} />
      })
   }
-  componentDidMount() {
-    // this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-    //   (user) => this.setState({ isSignedIn: !!user })
-    // );
-  }
+
 
   render() {
     return (
       <div>
         {this.state.redirectPage}
-        
         <Header>
           <div />
 
@@ -117,11 +119,12 @@ class Headers extends Component {
             <Menu.Item key="8" onClick={this.clickedTransactions}>Transactions</Menu.Item> 
             <Menu.Item key="9" onClick={this.clickedTransactionsHistory}>Transaction History</Menu.Item> 
             <Menu.Item key="10" onClick={this.clickedReports}>System Reports</Menu.Item> 
+            <Menu.Item key="11" onClick={this.countOffers}>My Counter Offers</Menu.Item> 
 
 
-            {this.state.isSignedIn &&
+            {/* {this.state.isSignedIn && */}
               <Menu.Item key="8" style={{ float: "right" }} onClick={this.logoutHandler}>Logout</Menu.Item>
-            }
+ 
           </Menu>
         </Header>
       </div>
