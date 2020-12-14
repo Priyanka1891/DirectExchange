@@ -82,6 +82,10 @@ class Login extends Component {
 
     // Make sure we un-register Firebase observers when the component unmounts.
     componentWillUnmount() {
+        this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
+            (user) => {
+                localStorage.setItem("userName", user.email);
+            })
         this.unregisterAuthObserver();
     }
   
