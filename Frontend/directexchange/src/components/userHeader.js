@@ -12,7 +12,7 @@ class Headers extends Component {
     super(props);
     this.state = {
       redirectPage: '',
-      isSignedIn: true,
+      isSignedIn: false,
     };
   }
 
@@ -61,6 +61,25 @@ class Headers extends Component {
       })
 
   }
+
+  clickedTransactions = (e) => {
+    this.setState({
+      redirectPage: <Redirect to={{ pathname: '/user/transactions' }} />
+    })
+  }
+
+  clickedTransactionsHistory = (e) => {
+    this.setState({
+      redirectPage: <Redirect to={{ pathname: '/user/transHistory' }} />
+    })
+  }
+
+  clickedReports = (e) => {
+    this.setState({
+      redirectPage: <Redirect to={{ pathname: '/user/reports' }} />
+    })
+  }
+
   logoutHandler = () => {
     firebase.auth().signOut();
      this.setState({
@@ -95,7 +114,9 @@ class Headers extends Component {
             <Menu.Item key="5" onClick={this.clickedPostOffers}>Post Offers</Menu.Item> 
             <Menu.Item key="6" onClick={this.clickedShowRates}>Exchange Rates</Menu.Item> 
             <Menu.Item key="7" onClick={this.clickedCreateAccount}>Create Bank Account</Menu.Item> 
-
+            <Menu.Item key="8" onClick={this.clickedTransactions}>Transactions</Menu.Item> 
+            <Menu.Item key="9" onClick={this.clickedTransactionsHistory}>Transaction History</Menu.Item> 
+            <Menu.Item key="10" onClick={this.clickedReports}>System Reports</Menu.Item> 
 
 
             {this.state.isSignedIn &&
