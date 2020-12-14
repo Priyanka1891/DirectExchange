@@ -221,57 +221,57 @@ class OfferDetails extends React.Component {
 
                     {this.state.offerDetails &&
                         <>
-                        <Card style={{ width: "70%", "margin-left": "15%", "margin-top": "3%" }} title="Offer Details">
-                            <Row gutter={[16, 24]}>
-                                <Col className="gutter-row" span={6}>
-                                    <div> Offer ID : {this.state.offerDetails.id}</div>
-                                </Col>
-                                <Col className="gutter-row" span={6}>
-                                    <div>Offer Status : {this.state.offerDetails.offerStatus}</div>
-                                </Col>
-                                <Col className="gutter-row" span={6}>
-                                    <div>Amount : {this.state.offerDetails.amountToRemitSourceCurrency}</div>
-                                </Col>
-                                <Col className="gutter-row" span={6}>
-                                    <div>Exchange Rate: {this.state.offerDetails.exchangeRate}</div>
-                                </Col>
-                                <Col className="gutter-row" span={6}>
-                                    <div>Source Country : {this.state.offerDetails.sourceCountry}</div>
-                                </Col>
-                                <Col className="gutter-row" span={6}>
-                                    <div>Destination Country : {this.state.offerDetails.destinationCountry}</div>
+                            <Card style={{ width: "70%", "margin-left": "15%", "margin-top": "3%" }} title="Offer Details">
+                                <Row gutter={[16, 24]}>
+                                    <Col className="gutter-row" span={6}>
+                                        <div> Offer ID : {this.state.offerDetails.id}</div>
+                                    </Col>
+                                    <Col className="gutter-row" span={6}>
+                                        <div>Offer Status : {this.state.offerDetails.offerStatus}</div>
+                                    </Col>
+                                    <Col className="gutter-row" span={6}>
+                                        <div>Amount : {this.state.offerDetails.amountToRemitSourceCurrency}</div>
+                                    </Col>
+                                    <Col className="gutter-row" span={6}>
+                                        <div>Exchange Rate: {this.state.offerDetails.exchangeRate}</div>
+                                    </Col>
+                                    <Col className="gutter-row" span={6}>
+                                        <div>Source Country : {this.state.offerDetails.sourceCountry}</div>
+                                    </Col>
+                                    <Col className="gutter-row" span={6}>
+                                        <div>Destination Country : {this.state.offerDetails.destinationCountry}</div>
 
-                                </Col><Col className="gutter-row" span={6}>
+                                    </Col><Col className="gutter-row" span={6}>
 
-                                    <div>Destination Currency : {this.state.offerDetails.destinationCurrency}</div>
-                                </Col><Col className="gutter-row" span={6}>
-                                    <div>Counter Offer Allowed? : {this.state.offerDetails.allowCounterOffers}</div>
-                                </Col><Col className="gutter-row" span={6}>
-                                    <div>Split Allowed? : {this.state.offerDetails.allowSplitExchanges}</div>
-                                </Col><Col className="gutter-row" span={6}>
-                                    <div> Expiration Date : {this.state.offerDetails.expirationDate}</div>
-                                </Col>
-                                <Col className="gutter-row" span={6}>
+                                        <div>Destination Currency : {this.state.offerDetails.destinationCurrency}</div>
+                                    </Col><Col className="gutter-row" span={6}>
+                                        <div>Counter Offer Allowed? : {this.state.offerDetails.allowCounterOffers}</div>
+                                    </Col><Col className="gutter-row" span={6}>
+                                        <div>Split Allowed? : {this.state.offerDetails.allowSplitExchanges}</div>
+                                    </Col><Col className="gutter-row" span={6}>
+                                        <div> Expiration Date : {this.state.offerDetails.expirationDate}</div>
+                                    </Col>
+                                    <Col className="gutter-row" span={6}>
 
-                                    <div>Bank : {this.state.offerDetails.receivingBankName}</div>
-                                </Col>
-                                <Col className="gutter-row" span={6}>
-                                    User Details
+                                        <div>Bank : {this.state.offerDetails.receivingBankName}</div>
+                                    </Col>
+                                    <Col className="gutter-row" span={6}>
+                                        User Details
                                 {this.state.offerDetails.user.name}
-                                </Col>
-                                <Col className="gutter-row" span={6}>
-                                    <Rate disabled defaultValue={4} />
-                                </Col>
-                                <Space>
-                                    <Button type="primary" onClick={this.onAcceptClick} >Accept</Button>
-                                    {/* <Button Disabled type="primary">Reject</Button> */}
-                                    <Button type="primary" onClick={this.toggleCounterModal}>Counter</Button>
-                                </Space>
+                                    </Col>
+                                    <Col className="gutter-row" span={6}>
+                                        <Rate disabled defaultValue={4} />
+                                    </Col>
+                                    <Space>
+                                        <Button type="primary" onClick={this.onAcceptClick} >Accept</Button>
+                                        {/* <Button Disabled type="primary">Reject</Button> */}
+                                        <Button type="primary" onClick={this.toggleCounterModal}>Counter</Button>
+                                    </Space>
 
-                            </Row>
-                        </Card>
+                                </Row>
+                            </Card>
 
-                        {/* <Card style={{ width: "30%" }} title="Offer Details">
+                            {/* <Card style={{ width: "30%" }} title="Offer Details">
                                 <p><b>Offer ID : {this.state.offerDetails.id}
                                     <Divider type="vertical" /></b>
                         Offer Status : {this.state.offerDetails.offerStatus}
@@ -349,46 +349,45 @@ class OfferDetails extends React.Component {
                                 centered
                                 style={{ top: 20, width: "450px" }}
                                 visible={this.state.showCounterModal}
-                            // onOk={() => this.counterOfferHandler()}
+                                // onOk={() => this.counterOfferHandler()}
                                 onCancel={() => this.toggleCounterModal()}
-                            footer={null}
+                                footer={null}
                             >
                                 <b>Current Offer Amount</b> : {this.state.offerDetails.amountToRemitSourceCurrency}
                                 <Divider />
-                            <Form validateMessages={validateMessages}
-                                ref={this.formRef}
-                                scrollToFirstError
-                                onFinish={this.counterOfferHandler}>
+                                <Form validateMessages={validateMessages}
+                                    ref={this.formRef}
+                                    scrollToFirstError
+                                    onFinish={this.counterOfferHandler}>
                                     <Form.Item
                                         label="Updated Amount"
                                         name="updatedAmount"
-                                    rules={[
-                                        {
-                                            type: 'number',
-                                            min: (this.state.offerDetails.amountToRemitSourceCurrency * 0.90),
-                                            max: (this.state.offerDetails.amountToRemitSourceCurrency * 1.10)
-                                        }, {
-                                            required: true,
-                                            message: 'Please enter amount'
-                                        }]}
+                                        rules={[
+                                            {
+                                                type: 'number',
+                                                min: (this.state.offerDetails.amountToRemitSourceCurrency * 0.90),
+                                                max: (this.state.offerDetails.amountToRemitSourceCurrency * 1.10)
+                                            }, {
+                                                required: true,
+                                                message: 'Please enter amount'
+                                            }]}
                                     >
                                         <InputNumber onChange={this.handleChangeAmount} value={this.state.updatedAmount} />
                                     </Form.Item>
-                                <Space>
+                                    <Space>
 
-                                    <Button style={{ float: "right" }} type="primary" htmlType="submit">
-                                        Submit
+                                        <Button style={{ float: "right" }} type="primary" htmlType="submit">
+                                            Submit
                                     </Button>
 
-                                    <Button danger style={{ float: "right" }} type="primary" onClick={this.toggleCounterModal}>
-                                        Cancel
+                                        <Button danger style={{ float: "right" }} type="primary" onClick={this.toggleCounterModal}>
+                                            Cancel
                                     </Button>
-                                </Space>
-                            </Form>
+                                    </Space>
+                                </Form>
                             </Modal>
                         </>
                     }
->>>>>>> refs/remotes/origin/main
                 </div>
             </>
         )
