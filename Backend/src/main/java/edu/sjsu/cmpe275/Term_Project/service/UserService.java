@@ -39,5 +39,9 @@ public class UserService {
 	public User findUserByUsername(String username) {
 		return userRepository.findUserByUsername(username);
 	}
+	
+	public User updateUser(User user) throws Exception {
+		return userRepository.save(user);
+	}
 
 }
