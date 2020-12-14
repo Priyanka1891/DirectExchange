@@ -32,7 +32,7 @@ public class ProposedOffer {
 	
 	private String splitUserId2;
 	
-//	private Date createDate;
+	private Date createDate;
 	
 	private double splitUser1Amount;
 	
@@ -52,12 +52,14 @@ public class ProposedOffer {
 		
 	}
 	
-	public ProposedOffer(double amount, String splitUserId1 , String splitUserId2 ,double splitUser1Amount, double splitUser2Amount ) {
+	public ProposedOffer(double amount, String splitUserId1 , String splitUserId2, 
+			double splitUser1Amount, double splitUser2Amount) {
 		this.amount = amount;
 		this.splitUserId1 = splitUserId1;
 		this.splitUserId2 = splitUserId2;
 		this.splitUser1Amount = splitUser1Amount;
 		this.splitUser2Amount = splitUser2Amount;
+		this.createDate =  new Date();
 //		this.proposerUsername = proposerUsername;
 	}
 	
@@ -77,7 +79,23 @@ public class ProposedOffer {
 //		this.proposerUsername = proposerUsername;
 //	}
 
+	public Date getCreateDate() {
+		return createDate;
+	}
+
+	public void setCreateDate(Date createDate) {
+		this.createDate = createDate;
+	}
+
 	public String getStatus() {
+		Date currentDate = new Date();
+		long delta = 5 * 60 * 1000;
+		if ((currentDate.getTime() - delta > this.createDate.getTime()) &&
+			 this.status.equals("Active")) {
+			// TODO :
+			// UpdateProposeoffer(id);
+			return "Expired";
+		}
 		return status;
 	}
 
@@ -148,9 +166,5 @@ public class ProposedOffer {
 	public void setSplitUserId2(String splitUserId2) {
 		this.splitUserId2 = splitUserId2;
 	}
-
 	
-
-	
-
 }
