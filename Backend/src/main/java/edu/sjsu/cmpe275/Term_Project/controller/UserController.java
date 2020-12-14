@@ -141,5 +141,31 @@ public class UserController {
 		}
 		
 	}
+	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PutMapping("/user/updateuser")
+	public ResponseEntity updateUser(@RequestBody User userRequest) {
+
+		try {
+			// User createdUser = null;
+			/**
+			 * Check whether required files are entered or not
+			 */
+
+			/**
+			 * 
+			 * /** Return status 200 after persisting
+			 */
+			User createdUser = service.updateUser(userRequest);
+			return ResponseEntity.ok(createdUser);
+
+		} catch (Exception e) {
+			/**
+			 * Return status 400 if input is invalid
+			 */
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+
+	}
 
 }
