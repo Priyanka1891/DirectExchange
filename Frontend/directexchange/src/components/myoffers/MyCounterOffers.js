@@ -10,6 +10,8 @@ import {
 } from "react-router-dom";
 import UserHeader from '../userHeader';
 import { UserOutlined, LaptopOutlined, NotificationOutlined } from '@ant-design/icons';
+import { urlConfig } from '../../config/config';
+
 
 const { SubMenu } = Menu;
 const { Header, Content, Footer, Sider } = Layout;
@@ -19,6 +21,10 @@ const gridStyle = {
     textAlign: 'center',
 };
 
+const gridStyle1 = {
+    width: '30%',
+    textAlign: 'center',
+};
 
 class MyCounterOffers extends React.Component {
 
@@ -40,12 +46,55 @@ class MyCounterOffers extends React.Component {
 
     }
 
+    acceptOfferHandler = (e) => {
+
+        console.log('Insideacceptoffer');
+
+
+        var bankObj = this.state.bankAccounts.find(obj => {
+            return obj.id === this.state.selectedBankId;
+        })
+        var data = {
+            "userName": localStorage.getItem('userName'),
+            "amount": this.state.selectedOffer.amountToRemitSourceCurrency,
+            "percentOfTotalAmount": 5,
+            "exchangeOfferId": this.state.selectedOffer.id,
+            "bankName": bankObj.bankName,
+            "accountNumber": bankObj.accountNumber,
+            "inverseExRate": (1 / this.state.selectedOffer.exchangeRate).toFixed(2)
+        }
+        axios
+            .put(urlConfig.url + "/exchangeOffer/updateOfferStatusToInTransaction/", data)
+            .then(response => {
+                console.log("Search Result : ", response.data);
+                if (response.data != undefined) {
+                    this.setState({
+                        offers: response.data,
+                        showModal: false
+                    });
+                    //Redirect to transaction page
+
+
+
+                    this.props.history.push({
+                        pathname: '/offer/transaction/',
+                        data: response.data // your data array of objects
+                    })
+                } else {
+
+                }
+
+            })
+            .catch(errors => {
+                console.log("Error" + errors);
+            });
+    }
 
     // Listen to the Firebase Auth state and set the local state.
     componentDidMount() {
 
         axios
-            .get("http://localhost:8080" + "/exchangeOffer/getOffers/" + localStorage.getItem('userName'))
+            .get(urlConfig.url + "/exchangeOffer/getOffers/" + localStorage.getItem('userName'))
             .then(response => {
                 console.log("Search Result : ", response.data);
                 if (response.data != undefined) {
@@ -60,13 +109,31 @@ class MyCounterOffers extends React.Component {
             .catch(errors => {
                 console.log("Error" + errors);
             });
+
+        axios
+            .get(urlConfig.url + "/getBankAccountsOfUser/" + localStorage.getItem('userName'))
+            .then(response => {
+                console.log("Bank Accounts : ", response.data);
+                if (response.data != undefined) {
+                    this.setState({
+                        bankAccounts: response.data
+
+                    });
+                } else {
+                    //No Accounts found
+                }
+
+            })
+            .catch(errors => {
+                console.log("Error" + errors);
+            });
     }
 
     render() {
         return (
             <div>
                 <div>
-                    <UserHeader selectedKey={['9']} />
+                    <UserHeader selectedKey={['11']} />
                 </div>
                 <Content style={{ padding: '0 50px' }}>
                     <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
@@ -88,7 +155,7 @@ class MyCounterOffers extends React.Component {
                             </Card>
                         </Sider>
                         <Content style={{ padding: '0 24px', minHeight: 280 }}>
-                            <Card title="Offer Details" extra={<a href="#">More</a>} >
+                            <Card title="Offer Details">
 
                                 {this.state.selectedOffer != undefined &&
                                     <>
@@ -138,7 +205,7 @@ class MyCounterOffers extends React.Component {
 
                                 {this.state.selectedOffer != undefined && this.state.selectedOffer && this.state.selectedOffer.proposedOffers.map((value, index) => {
                                     return <>
-                                        <Card.Grid bordered={true} style={gridStyle}>
+                                        <Card.Grid bordered={true} style={gridStyle1}>
                                             <p><b>Offer ID : {value.id}
                                                 <Divider type="vertical" /></b>
                         Offer Status : {value.status}
@@ -149,6 +216,11 @@ class MyCounterOffers extends React.Component {
 
                                         <p><b>Exchange Rate</b> : {value.exchangeRate}</p>
                                         <Divider />
+                                            <Space>
+                                                <Button type="primary" onClick={this.onAcceptClick} >Accept</Button>
+                                                {/* <Button Disabled type="primary">Reject</Button> */}
+                                                <Button type="primary" onClick={this.onAcceptClick}>Reject</Button>
+                                            </Space>
                                 </Card.Grid>
                                 </>
                         })}

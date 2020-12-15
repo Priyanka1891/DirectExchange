@@ -1,8 +1,10 @@
 import React from 'react';
 import { Route, BrowserRouter } from 'react-router-dom';
 import LoginForm from './Login';
-import firebase from 'firebase';
 import Rates from './rates';
+import axios from "axios";
+import { urlConfig } from '../config/config';
+
 
 //import users components
 import CreateAccount from './users/CreateAccount';
@@ -18,61 +20,75 @@ import MyCounterOffers from './myoffers/MyCounterOffers';
 
 
 // Main Component
+const initialState = {
+  userName: null,
+  enablePostOffer: false
+};
+
 class Main extends React.Component {
   constructor() {
     super();
-    this.state = {
-      redirectPage: '',
-      isSignedIn: false,
-      variable:'',
-    };
+    this.state = initialState;
 
   }
-  componentDidMount() {
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-      (user) => this.setState({ isSignedIn: !!user })
-    );
 
+  componentDidMount = () => {
     this.setState({
-      isSignedIn:true
+      userName: localStorage.getItem("userName")
     })
-  }
+    axios
+      .get(urlConfig.url + '/getDistinctBankAccountsCountsOfUser/' + localStorage.getItem("userName"))
+      .then(response => {
+        console.log("Search Result : ", response.data);
+        if (response.data != undefined) {
+          if (response.data > 1) {
+            this.setState({
+              enablePostOffer: true
+            });
+          }
 
+        } else {
 
-  render() {
-    return (
-      <div>
-        {/* If user is not logged in */}
-        {!this.state.isSignedIn &&
-          <Route exact path="/" component={LoginForm} />
         }
 
-        {/* If user is logged in */}
-        {this.state.isSignedIn &&
-          <>
-          {/* <Route exact path="/" component={Headers} /> */}
-          {/* <Route exact path="/" component={MyOffers} /> */}
+      })
+      .catch(errors => {
+        console.log("Error" + errors);
+      });
+  }
 
-          <Route path="/user/myoffers/" component={MyOffers} />
-          <Route path="/user/moffers/" component={MatchingOffers} />
-          <Route path="/user/browseoffers/" component={BrowseOffers} />
-          <Route path="/offer/details" component={OfferDetails} />
-          <Route exact path="/" component={BrowseOffers} />
+  render() {
+    if (!this.state.userName) {
+      return (<Route exact path="/" component={LoginForm} key={Date.now()}/>);
+    }
+
+    return (
+      <div>
+          <>
+          {!this.state.enablePostOffer &&
+            <>
+              <Route path="/" component={CreateAccount} />
+            </>
+
+          }
+          {this.state.enablePostOffer &&
+            <>
+            <Route path="/user/myoffers/" component={MyOffers} />
+            <Route path="/user/moffers/" component={MatchingOffers} />
+            <Route path="/user/browseoffers/" component={BrowseOffers} />
+            <Route path="/offer/details" component={OfferDetails} />
+            <Route exact path="/" component={BrowseOffers} key={Date.now()} />
 
             <Route path="/user/rates/" component={Rates} />
             <Route path="/user/createaccount/" component={CreateAccount} />
             <Route path="/user/postoffer/" component={PostOffer} />
-          <Route path="/offer/transaction/" component={TransactionDetails} />
-          <Route path="/offer/mycounteroffers/" component={MyCounterOffers} />
+            <Route path="/offer/transaction/" component={TransactionDetails} />
+            <Route path="/offer/counteroffers/" component={MyCounterOffers} />
+            </>
+          }
 
-          </>
-        }
-            {/* <Route path="/user/rates/" component={Rates} />
-            <Route path="/user/postoffer/" component={PostOffer} />
+        </>
 
-            <Route path="/user/createaccount/" component={CreateAccount} />
-
-        <Route path="/user/moffers/" component={MatchingOffers} /> */}
 
 
 

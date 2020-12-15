@@ -123,14 +123,6 @@ public class ExchangeOffer {
 		this.sourceCurrency = sourceCurrency;
 	}
 	
-	public double getAmountToRemitSourceCurrency() {
-		return amountToRemitSourceCurrency;
-	}
-
-	public void setAmountToRemitInSourceCurrency(double amountToRemitSourceCurrency) {
-		this.amountToRemitSourceCurrency = amountToRemitSourceCurrency;
-	}
-
 	public String getDestinationCountry() {
 		return destinationCountry;
 	}
@@ -226,6 +218,10 @@ public class ExchangeOffer {
 
 	public void setTransactionDetails(List<TransactionDetails> transactionDetails) {
 		this.transactionDetails = transactionDetails;
+	}
+	
+	public double getAmountToRemitSourceCurrency() {
+		return amountToRemitSourceCurrency;
 	}
 	
 	public void setAmountToRemitSourceCurrency(double amountToRemitSourceCurrency) {

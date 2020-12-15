@@ -1,6 +1,6 @@
 import React, { Component, Fragment, useState } from "react";
 import axios from "axios";
-import { Input, Row, Col, Button, Card, Divider, Pagination, Form, Select } from 'antd';
+import { Input, Row, Col, Button, Card, Divider, Pagination, Form, Select, Rate } from 'antd';
 import firebase from 'firebase';
 import {
     BrowserRouter as Router,
@@ -251,7 +251,7 @@ class BrowseOffers extends React.Component {
                                     {/* <p>{value.receivingAccountNumber}</p> */}
                                     <p>Bank : {value.receivingBankName}</p>
                                     <Divider orientation="left">User Details</Divider>
-                                    <p>{value.user.name}<Divider type="vertical" /> <MailOutlined /> Ratings </p>
+                                    <p>{value.user.name}<Divider type="vertical" /> <Rate disabled defaultValue={4} /> </p>
                                     <Divider dashed />
                                     <Link to={{
                                         pathname: '/offer/details/',
