@@ -81,6 +81,7 @@ class Login extends Component {
                             } else {
                                 this.setState({ isSignedIn: !!user });
                                 localStorage.setItem("userName", user.email);
+                                localStorage.setItem("enablePostOffer", true);
                                 location.reload();
 
                             }

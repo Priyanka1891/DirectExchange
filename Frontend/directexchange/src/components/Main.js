@@ -17,7 +17,7 @@ import OfferDetails from './OfferDetails';
 //import TransactionDetails from './TransactionDetails';
 import TransactionDetails from './transaction/transaction';
 import MyCounterOffers from './myoffers/MyCounterOffers';
-
+import TransactionHistory from './reports/transactionHistory';
 
 // Main Component
 const initialState = {
@@ -84,7 +84,10 @@ class Main extends React.Component {
             <Route path="/user/postoffer/" component={PostOffer} />
             <Route path="/offer/transaction/" component={TransactionDetails} />
             <Route path="/offer/counteroffers/" component={MyCounterOffers} />
+            <Route path="/user/transHistory" component={TransactionHistory} />
+
             </>
+
           }
 
         </>

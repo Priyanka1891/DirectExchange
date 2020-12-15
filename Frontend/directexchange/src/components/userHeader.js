@@ -92,7 +92,7 @@ class Headers extends Component {
      this.setState({
        redirectPage: <Redirect to={{ pathname: '/' }} />
      });
-    location.reload();
+  //  location.reload();
   }
 
 

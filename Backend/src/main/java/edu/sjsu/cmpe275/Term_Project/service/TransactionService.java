@@ -92,6 +92,7 @@ public class TransactionService {
 			reporting.setSourceAmount(transaction.getAmount());
 			reporting.setSourceCountry(transaction.getCountry());
 			reporting.setSourceCurrency(transaction.getCurrency());
+			reporting.setTotal(transaction.getAmount() - transaction.getServiceFee());
 			reportings.add(reporting);
 			
 		}

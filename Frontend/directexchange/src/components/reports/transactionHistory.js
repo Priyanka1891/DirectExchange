@@ -3,14 +3,10 @@ import React, { Component } from 'react';
 import { Table, Tag, Space, DatePicker } from 'antd';
 import {urlConfig} from '../../config/config';
 import axios from "axios";
+import UserHeader from '../userHeader';
 
 
 const columns = [
-    {
-        title: 'ID',
-        dataIndex: 'id',
-        key: 'id',
-      },
     {
         title: 'Date',
         dataIndex: 'date',
@@ -18,27 +14,32 @@ const columns = [
       },
       {
         title: 'Source Currency',
-        dataIndex: 'sourcecurrency',
+        dataIndex: 'sourceCurrency',
         key: 'sourcecurrency',
       },
       {
         title: 'Source Amount',
-        dataIndex: 'sourceamount',
+        dataIndex: 'sourceAmount',
         key: 'sourceamount',
       },
       {
         title: 'Destination Currency',
-        dataIndex: 'destcurrency',
+        dataIndex: 'destCurrency',
         key: 'destcurrency',
       },
       {
         title: 'Destination Amount',
-        dataIndex: 'destamount',
+        dataIndex: 'destAmount',
         key: 'destamount',
       },
       {
+        title: 'Exchange Rate',
+        dataIndex: 'rate',
+        key: 'rate',
+      },
+      {
         title: 'Service Fee',
-        dataIndex: 'servicefee',
+        dataIndex: 'serviceFee',
         key: 'servicefee',
       }, {
         title: 'Total Amount',
@@ -62,6 +63,26 @@ class TransctionHistory extends Component{
 
     componentDidMount(){
         //api request to load table
+        axios
+        .get(urlConfig.url + "/transaction/" + localStorage.getItem('userName'))
+        .then(response => {
+            console.log("Search Result : ", response.data);
+            if (response.data != undefined) {
+                this.setState({
+                  dataSource:response.data
+                });
+            } else {
+              this.setState({
+                dataSource:[]
+              })
+
+            }
+
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+
 
         const data = [];
 
@@ -75,8 +96,12 @@ class TransctionHistory extends Component{
         return (
            <div>
              <div>
+                    <UserHeader selectedKey={['9']} />
+                    
                    
                    </div>
+                   <br></br>
+
                    <div>
                    <div>
                 <h1 style={{paddingTop:'2%', textAlign:'center'}} ><strong>Your Transaction History</strong></h1>
