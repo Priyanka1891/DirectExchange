@@ -45,7 +45,7 @@ class BrowseOffers extends React.Component {
     componentDidMount() {
 
         axios
-            .get(urlConfig + "/exchangeOffer/getAllActiveOffers/" + localStorage.getItem('userName'))
+            .get(urlConfig.url + "/exchangeOffer/getAllActiveOffers/" + localStorage.getItem('userName'))
             .then(response => {
                 console.log("Search Result : ", response.data);
                 if (response.data != undefined) {

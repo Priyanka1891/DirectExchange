@@ -51,7 +51,7 @@ class OfferDetails extends React.Component {
         }
 
         axios
-            .get(urlConfig + "/getBankAccountsOfUser/" + localStorage.getItem('userName'))
+            .get(urlConfig.url + "/getBankAccountsOfUser/" + localStorage.getItem('userName'))
             .then(response => {
                 console.log("Bank Accounts : ", response.data);
                 if (response.data != undefined) {
@@ -129,7 +129,7 @@ class OfferDetails extends React.Component {
             "inverseExRate": (1 / this.state.offerDetails.exchangeRate).toFixed(2)
         }
         axios
-            .put(urlConfig + "/exchangeOffer/updateOfferStatusToInTransaction/", data)
+            .put(urlConfig.url + "/exchangeOffer/updateOfferStatusToInTransaction/", data)
             .then(response => {
                 console.log("Search Result : ", response.data);
                 if (response.data != undefined) {
@@ -184,7 +184,7 @@ class OfferDetails extends React.Component {
         }
         console.log(data);
         axios
-            .post(urlConfig + "/exchangeOffer/updateOfferStatusForCounterOffer", data)
+            .post(urlConfig.url + "/exchangeOffer/updateOfferStatusForCounterOffer", data)
             .then(response => {
                 console.log("Search Result : ", response.data);
                 if (response.data != undefined) {

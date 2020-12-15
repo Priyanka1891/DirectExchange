@@ -31,7 +31,7 @@ class MyOffers extends React.Component {
     componentDidMount() {
 
         axios
-            .get(urlConfig + "/exchangeOffer/getOffers/" + localStorage.getItem('userName'))
+            .get(urlConfig.url + "/exchangeOffer/getOffers/" + localStorage.getItem('userName'))
             .then(response => {
                 console.log("Search Result : ", response.data);
                 if (response.data != undefined) {

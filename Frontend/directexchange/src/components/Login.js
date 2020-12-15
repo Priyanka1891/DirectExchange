@@ -40,7 +40,7 @@ class Login extends Component {
     };
 
     actionCodeSettings = {
-        url: urlConfig + '/?user_verified=true'
+        url: urlConfig.url + '/?user_verified=true'
     };
     
 
@@ -59,7 +59,7 @@ class Login extends Component {
 
                     if (isEmailVerified) {
                         data = {...data, isVerified : true};
-                        axios.put(urlConfig + "/user/updateuser", data)
+                        axios.put(urlConfig.url + "/user/updateuser", data)
                             .then(response => {
                                 console.log("Verification status updated: ", response);
                             })
@@ -68,7 +68,7 @@ class Login extends Component {
                             });
                     }
                     
-                    axios.get(urlConfig + "/user/login/" + data.userName)
+                    axios.get(urlConfig.url + "/user/login/" + data.userName)
                         .then(response => {
                             console.log(response);
                             if (!response.data.isVerified && !isEmailVerified) {
@@ -88,7 +88,7 @@ class Login extends Component {
                         })
                         .catch((response,errors) => {
                             console.log(response, errors)
-                            axios.post(urlConfig + "/user/signup", data)
+                            axios.post(urlConfig.url + "/user/signup", data)
                                 .then(response => {
                                     console.log("Search Result : ", response);
                                     this.sendEmailVerification();
