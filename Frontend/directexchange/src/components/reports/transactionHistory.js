@@ -84,11 +84,7 @@ class TransctionHistory extends Component{
         });
 
 
-        const data = [];
-
-          this.setState({
-              dataSource:data
-          })
+       
           
     }
 

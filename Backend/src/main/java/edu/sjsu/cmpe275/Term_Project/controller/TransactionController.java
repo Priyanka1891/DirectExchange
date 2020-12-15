@@ -39,6 +39,20 @@ public class TransactionController {
 	}
 	
 	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@GetMapping("/alltransactions")
+	public ResponseEntity getAllTransactions() {
+		try {	
+			
+			List<TransactionDetails> transactionList = transactionService.getAllTransactions();
+			return ResponseEntity.ok(transactionList);
+		} catch(Exception e) {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+		}
+
+	}
+	
+	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
 	@GetMapping("/transaction/pendingTransactions/{userName}")
 	public ResponseEntity getPendingTransactionsByUserName(@PathVariable String userName) {
 		try {	

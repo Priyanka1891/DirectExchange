@@ -104,6 +104,12 @@ public class TransactionService {
 	}
 	
 	
+	public List<TransactionDetails> getAllTransactions() throws Exception{
+		List<TransactionDetails> transactionList = transactionRepository.findAll();
+		return transactionList;
+
+	}
+	
 	
 	public boolean updateStatus(String userName, List<TransactionDetails> transactionList) throws Exception {
 
@@ -124,15 +130,9 @@ public class TransactionService {
 			}
 		}
 		
-		if ((currentDate.getTime() - delta > currentDate.getTime())) {
-			// TODO :
-			// UpdateProposeoffer(id);
-			//return "Expired";
-		}
+		
 		return true;
-		//return status;		
-		//update offer status
-		//List<ExchangeOffer> exchangeOfferList = transactionRepository.updateOfferStatus(userName);
+		
 		
 
 		

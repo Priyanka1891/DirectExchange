@@ -46,6 +46,8 @@ public interface TransactionRepository extends JpaRepository<TransactionDetails,
 	public List<TransactionDetails> getExpiredTransactions(String userName);
 	
 	
+	public List<TransactionDetails> findAll();
+	
 //	/**
 //	 * Query and method to 
 //	 * @param exchangeOffer
