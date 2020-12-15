@@ -11,5 +11,7 @@ export const firebaseconfig = {
 
 export const urlConfig = {
   url:"http://localhost:8080",
+  urlEmail: "http://localhost:3000",
 }
+
 

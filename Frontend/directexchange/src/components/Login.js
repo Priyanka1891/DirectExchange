@@ -40,7 +40,7 @@ class Login extends Component {
     };
 
     actionCodeSettings = {
-        url: urlConfig.url + '/?user_verified=true'
+        url: urlConfig.urlEmail + '/?user_verified=true'
     };
     
 
