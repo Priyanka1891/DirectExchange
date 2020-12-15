@@ -16,6 +16,7 @@ import edu.sjsu.cmpe275.Term_Project.constants.Constants;
 import edu.sjsu.cmpe275.Term_Project.entity.ExchangeOffer;
 import edu.sjsu.cmpe275.Term_Project.entity.TransactionDetails;
 import edu.sjsu.cmpe275.Term_Project.requestModels.TransactionDetailsModel;
+import edu.sjsu.cmpe275.Term_Project.requestModels.UserReportingModel;
 import edu.sjsu.cmpe275.Term_Project.service.TransactionService;
 
 @RestController
@@ -28,8 +29,9 @@ public class TransactionController {
 	@GetMapping("/transaction/{userName}")
 	public ResponseEntity getTransactionByUserName(@PathVariable String userName) {
 		try {	
-			List<TransactionDetails> transactionList = transactionService.getTransactionsByUserName(userName);
-			return ResponseEntity.ok(transactionList);
+			
+			List<UserReportingModel> reportings = transactionService.getTransactionsByUserName(userName);
+			return ResponseEntity.ok(reportings);
 		} catch(Exception e) {
 			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
 		}

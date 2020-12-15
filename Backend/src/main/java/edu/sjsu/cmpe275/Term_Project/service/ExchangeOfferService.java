@@ -133,6 +133,9 @@ public class ExchangeOfferService {
 		/**
 		 * Calculate the amount to remit in destination currency
 		 */
+		System.out.println(destinationCountry+ destinationCurrency+sourceCountry+sourceCurrency+user);
+		System.out.println(probableMatchingOffers);
+		
 		double amountToRemitInDestinationCurrency =  amountToRemitInSourceCurrency * exchangeRate;
 		
 		/**

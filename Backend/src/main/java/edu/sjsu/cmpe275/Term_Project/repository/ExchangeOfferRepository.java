@@ -2,11 +2,15 @@ package edu.sjsu.cmpe275.Term_Project.repository;
 
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 
 import edu.sjsu.cmpe275.Term_Project.entity.ExchangeOffer;
+import edu.sjsu.cmpe275.Term_Project.entity.TransactionDetails;
 import edu.sjsu.cmpe275.Term_Project.entity.User;
 
 /**
@@ -24,7 +28,7 @@ public interface ExchangeOfferRepository extends JpaRepository<ExchangeOffer, Lo
 	 * @param sourceCurrency
 	 * @return
 	 */
-	@Query("SELECT e FROM ExchangeOffer e WHERE e.destinationCountry=?1 AND e.destinationCurrency=?2 AND e.sourceCountry=?3 AND e.sourceCurrency=?4 AND e.user!=?5 AND e.offerStatus='Open'")
+	@Query("SELECT e FROM ExchangeOffer e WHERE e.destinationCountry=?1 AND e.destinationCurrency=?2 AND e.sourceCountry=?3 AND e.sourceCurrency=?4 AND e.user!=?5 AND e.offerStatus='open'")
 	public List<ExchangeOffer> getMatchingExchangeOffersBasedOnCountry(String destinationCountry, String destinationCurrency, 
 																		String sourceCountry, String sourceCurrency, User user);
 	
@@ -47,4 +51,10 @@ public interface ExchangeOfferRepository extends JpaRepository<ExchangeOffer, Lo
 	@Query("SELECT e FROM ExchangeOffer e WHERE e.destinationCountry=?1 AND e.destinationCurrency=?2 AND e.sourceCountry=?3 AND e.sourceCurrency=?4 AND e.user!=?5 AND e.offerStatus='Open' AND e.allowSplitExchanges='Allow'")
 	public List<ExchangeOffer> getSplitMatchingExchangeOffersBasedOnCountry(String destinationCountry, String destinationCurrency, 
 																		String sourceCountry, String sourceCurrency, User user);
+	
+	@Transactional
+
+    @Modifying(clearAutomatically = true)
+	@Query("UPDATE ExchangeOffer e set e.offerStatus = 'Expired' WHERE e.id =?1")
+	public ExchangeOffer updateOfferStatus(Long id);
 }

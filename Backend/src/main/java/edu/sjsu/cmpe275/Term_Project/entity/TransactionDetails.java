@@ -10,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 /**
  * Entity Object for Exchange Offer
@@ -27,7 +28,8 @@ public class TransactionDetails {
 	private long id;
 	
 	@ManyToOne
-	@JsonIgnore
+	//@JsonIgnore
+	@JsonIgnoreProperties({"user", "proposedOffers","transactionDetails"})
 	private ExchangeOffer exchange_offer;
 	
 
@@ -58,6 +60,26 @@ public class TransactionDetails {
 	
 	private double serviceFee;
 	
+	private int offerid1;
+	
+	private int offerid2;
+	
+	public int getOfferid1() {
+		return offerid1;
+	}
+
+	public void setOfferid1(int offerid1) {
+		this.offerid1 = offerid1;
+	}
+
+	public int getOfferid2() {
+		return offerid2;
+	}
+
+	public void setOfferid2(int offerid2) {
+		this.offerid2 = offerid2;
+	}
+
 	public double getServiceFee() {
 		return serviceFee;
 	}

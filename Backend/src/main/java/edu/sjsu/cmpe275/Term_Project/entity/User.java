@@ -59,6 +59,9 @@ public class User {
 	@OneToMany(cascade = {CascadeType.ALL}, mappedBy = "user", fetch = FetchType.LAZY)
 	@JsonIgnoreProperties({"user"})
 	private List<ExchangeOffer> exchangeOffers;
+	
+	
+	double reputation; 
 
 	// public long getId() {
 	// return id;
@@ -67,6 +70,14 @@ public class User {
 	// public void setId(long id) {
 	// this.id = id;
 	// }
+
+	public double getReputation() {
+		return reputation;
+	}
+
+	public void setReputation(double reputation) {
+		this.reputation = reputation;
+	}
 
 	public String getUserName() {
 		return userName;
