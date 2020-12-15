@@ -46,6 +46,67 @@ class MyCounterOffers extends React.Component {
 
     }
 
+    onAcceptClick = (e) => {
+
+
+
+        var data = {
+            "exchangeOfferId": this.state.selectedOffer.id,
+            "counterOfferId": e,
+            "status": "InTransaction"
+        }
+        console.log('e', data);
+        axios
+            .put(urlConfig.url + "/exchangeOffer/updateCounterOffer/", data)
+            .then(response => {
+                console.log("Search Result : ", response.data);
+                if (response.data != undefined) {
+                    this.setState({
+                        // offers: response.data,
+                        // showModal: false
+                    });
+                    //Redirect to transaction page
+                    this.props.history.push({
+                        pathname: '/offer/transaction/',
+                        data: response.data // your data array of objects
+                    })
+                } else {
+
+                }
+
+            })
+            .catch(errors => {
+                console.log("Error" + errors);
+            });
+    }
+
+    onRejectClick = (e) => {
+        var data = {
+            "exchangeOfferId": this.state.selectedOffer.id,
+            "counterOfferId": e,
+            "status": "Reject"
+        }
+        axios
+            .put(urlConfig.url + "/exchangeOffer/updateCounterOffer/", data)
+            .then(response => {
+                console.log("Search Result : ", response.data);
+                if (response.data != undefined) {
+                    this.setState({
+                        // offers: response.data,
+                        // showModal: false
+                    });
+                    //Redirect to transaction page
+                    location.reload();
+                } else {
+
+                }
+
+            })
+            .catch(errors => {
+                console.log("Error" + errors);
+            });
+    }
+
     acceptOfferHandler = (e) => {
 
         console.log('Insideacceptoffer');
@@ -216,14 +277,34 @@ class MyCounterOffers extends React.Component {
 
                                         <p><b>Exchange Rate</b> : {value.exchangeRate}</p>
                                         <Divider />
+                                            {value.status == "Open" && 
                                             <Space>
-                                                <Button type="primary" onClick={this.onAcceptClick} >Accept</Button>
+                                                <Button type="primary" onClick={this.onAcceptClick.bind(this, value.id)} >Accept</Button>
                                                 {/* <Button Disabled type="primary">Reject</Button> */}
-                                                <Button type="primary" onClick={this.onAcceptClick}>Reject</Button>
+                                                <Button type="primary" onClick={this.onRejectClick.bind(this, value.id)}>Reject</Button>
                                             </Space>
+                                            }
+                                            {value.status == "Expired" &&
+                                                <Space>
+                                                    Offer Expired
+                                            </Space>
+                                            }
+                                            {value.status == "Reject" &&
+                                                <Space>
+                                                    Offer Rejected
+                                            </Space>
+                                            }
                                 </Card.Grid>
                                 </>
                         })}
+                                {this.state.selectedOffer != undefined && this.state.selectedOffer && this.state.selectedOffer.proposedOffers.length == 0 &&
+                                    <p>
+                                        No Counter Offers Found
+                         </p>
+
+
+
+                                }
 
                     </Card>
 

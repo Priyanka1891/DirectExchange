@@ -75,13 +75,30 @@ class MyOffers extends React.Component {
 
                         {/* <p>{value.receivingAccountNumber}</p> */}
                         <p>Bank : {value.receivingBankName}</p>
+                        {value.offerStatus != "InTransaction" &&
+                            <>
+                                <Link to={{
+                                    pathname: '/user/moffers/',
+                                    state: value
+                                }}>
+                        
+                                    <Button type="primary">Find Matching Offers</Button>
+                                </Link>
+                            </>
+                        }
 
+                        {value.offerStatus == "InTransaction" &&
+                            <>
                         <Link to={{
                             pathname: '/user/moffers/',
                             state: value
                         }}>
-                            <Button type="primary">Find Matching Offers</Button>
+
+                                <Button disabled type="primary">Find Matching Offers</Button>
                         </Link>
+                            </>
+                        }
+
                     </Card.Grid>
                 })}
 
