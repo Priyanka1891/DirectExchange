@@ -61,7 +61,7 @@ class MyCounterOffers extends React.Component {
             "exchangeOfferId": this.state.selectedOffer.id,
             "bankName": bankObj.bankName,
             "accountNumber": bankObj.accountNumber,
-            "inverseExRate": (1 / this.state.selectedOffer.exchangeRate).toFixed(2)
+            "ExRate": (1 / this.state.selectedOffer.exchangeRate).toFixed(5)
         }
         axios
             .put(urlConfig.url + "/exchangeOffer/updateOfferStatusToInTransaction/", data)

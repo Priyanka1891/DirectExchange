@@ -118,7 +118,7 @@ class OfferDetails extends React.Component {
         var bankObj = this.state.bankAccounts.find(obj => {
             return obj.id === this.state.selectedBankId;
         })
-        console.log("inverseRate", (1 / this.state.offerDetails.exchangeRate).toFixed(2));
+        console.log("inverseRate", (1 / this.state.offerDetails.exchangeRate).toFixed(5));
         var data = {
             "userName": localStorage.getItem('userName'),
             "amount": this.state.offerDetails.amountToRemitSourceCurrency,
@@ -126,7 +126,7 @@ class OfferDetails extends React.Component {
             "exchangeOfferId": this.state.offerDetails.id,
             "bankName": bankObj.bankName,
             "accountNumber": bankObj.accountNumber,
-            "inverseExRate": (1 / this.state.offerDetails.exchangeRate).toFixed(2)
+            "inverseExRate": (1 / this.state.offerDetails.exchangeRate).toFixed(5)
         }
         axios
             .put(urlConfig.url + "/exchangeOffer/updateOfferStatusToInTransaction/", data)
