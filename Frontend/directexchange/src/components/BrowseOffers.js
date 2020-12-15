@@ -13,6 +13,8 @@ import { Typography } from 'antd';
 import UserHeader from './userHeader';
 import filter from '@mcabreradev/filter';
 import JwPagination from 'jw-react-pagination';
+import { urlConfig } from '../config/config';
+
 
 const { Title } = Typography;
 
@@ -43,7 +45,7 @@ class BrowseOffers extends React.Component {
     componentDidMount() {
 
         axios
-            .get("http://localhost:8080" + "/exchangeOffer/getAllActiveOffers/" + localStorage.getItem('userName'))
+            .get(urlConfig + "/exchangeOffer/getAllActiveOffers/" + localStorage.getItem('userName'))
             .then(response => {
                 console.log("Search Result : ", response.data);
                 if (response.data != undefined) {

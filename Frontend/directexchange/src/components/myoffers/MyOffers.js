@@ -9,6 +9,7 @@ import {
     Link
 } from "react-router-dom";
 import UserHeader from '../userHeader';
+import { urlConfig } from "../../config/config";
 
 
 const gridStyle = {
@@ -30,7 +31,7 @@ class MyOffers extends React.Component {
     componentDidMount() {
 
         axios
-            .get("http://localhost:8080" + "/exchangeOffer/getOffers/" + localStorage.getItem('userName'))
+            .get(urlConfig + "/exchangeOffer/getOffers/" + localStorage.getItem('userName'))
             .then(response => {
                 console.log("Search Result : ", response.data);
                 if (response.data != undefined) {

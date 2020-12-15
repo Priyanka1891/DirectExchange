@@ -5,6 +5,8 @@ import { Redirect } from 'react-router';
 import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
 import firebase from 'firebase';
 import axios from "axios";
+import { urlConfig } from '../config/config';
+
 
 const initialState = {
     isSignedIn: false,
@@ -38,7 +40,7 @@ class Login extends Component {
     };
 
     actionCodeSettings = {
-        url: 'http://localhost:3000/?user_verified=true'
+        url: urlConfig + '/?user_verified=true'
     };
     
 
@@ -57,7 +59,7 @@ class Login extends Component {
 
                     if (isEmailVerified) {
                         data = {...data, isVerified : true};
-                        axios.put("http://localhost:8080" + "/user/updateuser", data)
+                        axios.put(urlConfig + "/user/updateuser", data)
                             .then(response => {
                                 console.log("Verification status updated: ", response);
                             })
@@ -66,7 +68,7 @@ class Login extends Component {
                             });
                     }
                     
-                    axios.get("http://localhost:8080" + "/user/login/" + data.userName)
+                    axios.get(urlConfig + "/user/login/" + data.userName)
                         .then(response => {
                             console.log(response);
                             if (!response.data.isVerified && !isEmailVerified) {
@@ -86,7 +88,7 @@ class Login extends Component {
                         })
                         .catch((response,errors) => {
                             console.log(response, errors)
-                            axios.post("http://localhost:8080" + "/user/signup", data)
+                            axios.post(urlConfig + "/user/signup", data)
                                 .then(response => {
                                     console.log("Search Result : ", response);
                                     this.sendEmailVerification();
