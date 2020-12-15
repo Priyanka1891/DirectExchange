@@ -56,6 +56,16 @@ public class TransactionDetails {
 
 	private long accountNumber;
 	
+	private double serviceFee;
+	
+	public double getServiceFee() {
+		return serviceFee;
+	}
+
+	public void setServiceFee(double serviceFee) {
+		this.serviceFee = serviceFee;
+	}
+
 	public TransactionDetails() {
 		
 	}

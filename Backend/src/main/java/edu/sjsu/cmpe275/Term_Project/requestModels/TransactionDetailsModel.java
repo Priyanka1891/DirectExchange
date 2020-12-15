@@ -1,12 +1,14 @@
 package edu.sjsu.cmpe275.Term_Project.requestModels;
 
+import edu.sjsu.cmpe275.Term_Project.entity.ExchangeOffer;
+
 public class TransactionDetailsModel {
 	
-	public String getExchangeOfferId() {
+	public long getExchangeOfferId() {
 		return exchangeOfferId;
 	}
 
-	public void setExchangeOfferId(String exchangeOfferId) {
+	public void setExchangeOfferId(long exchangeOfferId) {
 		this.exchangeOfferId = exchangeOfferId;
 	}
 
@@ -79,7 +81,7 @@ public class TransactionDetailsModel {
 
 	private String userName;
 
-	private String exchangeOfferId;
+	private long exchangeOfferId;
 	
 	private double amount;
 	
@@ -89,6 +91,16 @@ public class TransactionDetailsModel {
 	
 	private float inverseExRate;
 	
+	private ExchangeOffer exchangeOffer;
+	
+	public ExchangeOffer getExchangeOffer() {
+		return exchangeOffer;
+	}
+
+	public void setExchangeOffer(ExchangeOffer exchangeOffer) {
+		this.exchangeOffer = exchangeOffer;
+	}
+
 	public float getInverseExRate() {
 		return inverseExRate;
 	}

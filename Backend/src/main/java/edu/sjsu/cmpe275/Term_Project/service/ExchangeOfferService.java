@@ -297,9 +297,8 @@ public class ExchangeOfferService {
 	 * @return
 	 * @throws Exception
 	 */
-	public ExchangeOffer updateOfferStatusToInTransaction(String offer_id, TransactionDetails trdetails) throws Exception {
-		long id = Long.parseLong(offer_id);
-		ExchangeOffer offer = exchangeOfferRepository.findById(id).orElse(null);
+	public ExchangeOffer updateOfferStatusToInTransaction(long offer_id, TransactionDetails trdetails) throws Exception {
+		ExchangeOffer offer = exchangeOfferRepository.findById(offer_id).orElse(null);
 		if (offer == null) {
 			return offer;
 		}
