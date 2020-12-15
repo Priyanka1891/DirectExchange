@@ -28,7 +28,7 @@ import edu.sjsu.cmpe275.Term_Project.repository.UserRepository;
 @Service
 public class ExchangeOfferService {
 	
-	private static DecimalFormat df = new DecimalFormat("0.00");
+	private static DecimalFormat df = new DecimalFormat("0.00000");
 
 	@Autowired
 	private ExchangeOfferRepository exchangeOfferRepository;
