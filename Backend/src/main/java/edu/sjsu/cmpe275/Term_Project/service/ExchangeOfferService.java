@@ -1,6 +1,8 @@
 package edu.sjsu.cmpe275.Term_Project.service;
 
 import java.util.ArrayList;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -25,6 +27,8 @@ import edu.sjsu.cmpe275.Term_Project.repository.UserRepository;
  */
 @Service
 public class ExchangeOfferService {
+	
+	private static DecimalFormat df = new DecimalFormat("0.00");
 
 	@Autowired
 	private ExchangeOfferRepository exchangeOfferRepository;
@@ -340,13 +344,36 @@ public class ExchangeOfferService {
 //			throw new Exception("User cannot propose counter offer to its own exchange offer");
 //		}
 		
+		
 		proposedOffer.setExchangeOffer(exchange_offer);
+		double rate = 1.0/exchange_offer.getExchangeRate();
+		proposedOffer.setExchangeRate(Double.parseDouble(df.format(rate)));
 //		exchange_offer.setOfferStatus("CounterMade");
 		exchange_offer.getProposedOffers().add(proposedOffer);
 		exchangeOfferRepository.save(exchange_offer);
 		return exchange_offer;
 	}
 	
+	
+	public ExchangeOffer updateCounterOffer(long exchange_offer_id, long counter_offer_id, String status) {
+		ExchangeOffer exchange_offer = exchangeOfferRepository.findById(exchange_offer_id).orElse(null);
+		if (exchange_offer == null) {
+			return exchange_offer;
+		}
+		
+		for (ProposedOffer poffer : exchange_offer.getProposedOffers()) {
+			if (poffer.getId() == counter_offer_id) {
+				poffer.setStatus(status);
+				if (status.equals("InTransaction")) {
+					exchange_offer.setAmountToRemitSourceCurrency(poffer.getAmount());
+					exchange_offer.setOfferStatus(status);
+				}	
+				break;
+			}
+		}
+		exchangeOfferRepository.save(exchange_offer);
+		return exchange_offer;
+	}
 	
 	
 }

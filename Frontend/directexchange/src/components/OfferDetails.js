@@ -179,9 +179,9 @@ class OfferDetails extends React.Component {
             "splitUser1Amount": this.state.updatedAmount,
             "splitUser2Amount": 0,
             "exchangeOfferId": this.state.offerDetails.id,
-            // "amount": this.state.amountToRemitSourceCurrency,
+            "amount": this.state.updatedAmount
         }
-        // console.log(data);
+        console.log(data);
         axios
             .post("http://localhost:8080" + "/exchangeOffer/updateOfferStatusForCounterOffer", data)
             .then(response => {

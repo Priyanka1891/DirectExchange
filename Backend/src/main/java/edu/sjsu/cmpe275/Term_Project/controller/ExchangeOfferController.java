@@ -24,6 +24,7 @@ import edu.sjsu.cmpe275.Term_Project.requestModels.AutoSplitMatchRequestModel;
 import edu.sjsu.cmpe275.Term_Project.requestModels.ExchangeOfferRequestModel;
 import edu.sjsu.cmpe275.Term_Project.requestModels.ProposedOfferModel;
 import edu.sjsu.cmpe275.Term_Project.requestModels.TransactionDetailsModel;
+import edu.sjsu.cmpe275.Term_Project.requestModels.UpdateCounterOfferDetailsModel;
 import edu.sjsu.cmpe275.Term_Project.service.ExchangeOfferService;
 
 /**
@@ -221,7 +222,7 @@ public class ExchangeOfferController {
 	@PostMapping("exchangeOffer/updateOfferStatusForCounterOffer")
 	public ResponseEntity updateOfferStatusToCounterMade(@RequestBody ProposedOfferModel proposedOffer) {
 		try {
-			ProposedOffer counterOffer = new ProposedOffer(
+			ProposedOffer counterOffer = new ProposedOffer(proposedOffer.getAmount(),
 					   proposedOffer.getSplitUserId1() , proposedOffer.getSplitUserId2()  ,
 					   proposedOffer.getSplitUser1Amount(),proposedOffer.getSplitUser2Amount());
 			ExchangeOffer offer =
@@ -243,6 +244,33 @@ public class ExchangeOfferController {
 	}
 	
 	
+	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PutMapping("exchangeOffer/updateCounterOffer")
+	public ResponseEntity updateCounterOffer(@RequestBody UpdateCounterOfferDetailsModel updateCounterOffers) {
+		try {
+			
+			long exchangeOfferId = updateCounterOffers.getExchangeOfferId();
+			long counterOfferId = updateCounterOffers.getCounterOfferId();
+			String status = updateCounterOffers.getStatus();
+			
+			ExchangeOffer offer =
+				exchangeOfferService.updateCounterOffer(exchangeOfferId, counterOfferId, status);
+			if (offer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
+			}
+			/**
+			 * Return response with status 200
+			 */
+			return ResponseEntity.ok(offer);
+			
+		} catch(Exception e) {
+			/**
+			 * Return status 400 if input is invalid
+			 */
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+	}
 	
 
 	

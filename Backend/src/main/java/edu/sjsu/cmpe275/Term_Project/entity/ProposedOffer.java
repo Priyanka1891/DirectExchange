@@ -24,7 +24,7 @@ public class ProposedOffer {
 	@GeneratedValue
 	private long id;
 	
-//	private double amount;
+	private double amount;
 
 //	private String proposerUsername;
 	
@@ -52,9 +52,9 @@ public class ProposedOffer {
 		
 	}
 	
-	public ProposedOffer( String splitUserId1 , String splitUserId2, 
+	public ProposedOffer( double amount ,String splitUserId1 , String splitUserId2, 
 			double splitUser1Amount, double splitUser2Amount) {
-//		this.amount = amount;
+		this.amount = amount;
 		this.splitUserId1 = splitUserId1;
 		this.splitUserId2 = splitUserId2;
 		this.splitUser1Amount = splitUser1Amount;
@@ -63,13 +63,13 @@ public class ProposedOffer {
 //		this.proposerUsername = proposerUsername;
 	}
 	
-//	public double getAmount() {
-//		return amount;
-//	}
-//
-//	public void setAmount(double amount) {
-//		this.amount = amount;
-//	}
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
 
 //	public String getProposerUsername() {
 //		return proposerUsername;
