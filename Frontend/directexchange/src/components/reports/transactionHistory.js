@@ -33,6 +33,11 @@ const columns = [
         key: 'destamount',
       },
       {
+        title: 'Status',
+        dataIndex: 'status',
+        key: 'status',
+      },
+      {
         title: 'Exchange Rate',
         dataIndex: 'rate',
         key: 'rate',
