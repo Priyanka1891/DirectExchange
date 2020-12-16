@@ -124,10 +124,10 @@ public class ExchangeOfferService {
 		 * where the user is not the same as the current user
 		 */
 		List<ExchangeOffer> probableMatchingOffers = 
-				exchangeOfferRepository.getMatchingExchangeOffersBasedOnCountry(destinationCountry, 
+				exchangeOfferRepository.getMatchingExchangeOffersBasedOnCountry(sourceCountry, 
+																				sourceCurrency, 
+																			    destinationCountry, 
 																			    destinationCurrency, 
-																			    sourceCountry, 
-																			    sourceCurrency, 
 																			    user);
 		
 		/**
@@ -217,10 +217,10 @@ public class ExchangeOfferService {
 		 * where the user is not the same as the current user
 		 */
 		List<ExchangeOffer> probableMatchingOffers = 
-				exchangeOfferRepository.getMatchingExchangeOffersBasedOnCountry(destinationCountry, 
+				exchangeOfferRepository.getMatchingExchangeOffersBasedOnCountry(sourceCountry, 
+																				sourceCurrency, 
+																			    destinationCountry, 
 																			    destinationCurrency, 
-																			    sourceCountry, 
-																			    sourceCurrency, 
 																			    user);	
 		/**
 		 * Calculate the amount to remit in destination currency
