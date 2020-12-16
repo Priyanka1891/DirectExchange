@@ -143,8 +143,8 @@ public class ExchangeOfferService {
 		/**
 		 * Specify the upper(+10%) and lower bounds(-10%) of the amount to be remitted
 		 */
-		double upperBound = amountToRemitInDestinationCurrency * 1.05;
-		double lowerBound = amountToRemitInDestinationCurrency * 0.97;
+		double upperBound = amountToRemitInDestinationCurrency * 1.1;
+		double lowerBound = amountToRemitInDestinationCurrency * 0.9;
 		
 		List<ExchangeOffer> matchingOffersInRange = new ArrayList<>();
 		
