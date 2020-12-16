@@ -205,7 +205,7 @@ class OfferCard extends React.Component {
             message: standardMessage + amountOfUser2 + " " + currencyOfUser2
         }
 
-        await axios
+        axios
         .post(urlConfig.url + "/sendEmail", emailUser1)
         .then(response => {
             console.log("Search Result : ", response.data);
@@ -222,7 +222,7 @@ class OfferCard extends React.Component {
             console.log("Error" + errors);
         });
 
-        await axios
+        axios
         .post(urlConfig.url + "/sendEmail", emailUser2)
         .then(response => {
             console.log("Search Result : ", response.data);
@@ -238,7 +238,7 @@ class OfferCard extends React.Component {
         .catch(errors => {
             console.log("Error" + errors);
         });
-        
+
         this.setState({
             redirectPage: <Redirect to={{ pathname: '/user/browseoffers' }}></Redirect>
         })
