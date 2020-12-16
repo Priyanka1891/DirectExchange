@@ -19,6 +19,7 @@ import TransactionDetails from './transaction/transaction';
 import MyCounterOffers from './myoffers/MyCounterOffers';
 import TransactionHistory from './reports/transactionHistory';
 import SystemReport from './reports/systemReport';
+import Logout from './logout';
 
 // Main Component
 const initialState = {
@@ -34,6 +35,7 @@ class Main extends React.Component {
   }
 
   componentDidMount = () => {
+//alert(localStorage.getItem("userName"))
     this.setState({
       userName: localStorage.getItem("userName")
     })
@@ -59,7 +61,7 @@ class Main extends React.Component {
   }
 
   render() {
-    if (!this.state.userName) {
+    if (!this.state.userName || this.state.userName === null) {
       return (<Route exact path="/" component={LoginForm} key={Date.now()}/>);
     }
 
@@ -83,16 +85,19 @@ class Main extends React.Component {
             <Route path="/user/rates/" component={Rates} />
             <Route path="/user/createaccount/" component={CreateAccount} />
             <Route path="/user/postoffer/" component={PostOffer} />
-            <Route path="/offer/transaction/" component={TransactionDetails} />
+            <Route path="/user/transactions/" component={TransactionDetails} />
             <Route path="/offer/counteroffers/" component={MyCounterOffers} />
             <Route path="/user/transHistory" component={TransactionHistory} />
             <Route path="/user/reports/" component={SystemReport} />
+
 
             
 
             </>
 
           }
+                      <Route path="/logout/" component={Logout} />
+
 
         </>
 
