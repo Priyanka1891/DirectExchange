@@ -150,6 +150,59 @@ class OfferCard extends React.Component {
         });
 
         //send email for payment notification
+
+        const standardMessage = "Please complete the transaction by paying ";
+        const amountOfUser1 = this.props.value.amountToRemitSourceCurrency;
+        const currencyOfUser1 = this.props.value.sourceCurrency;
+        const amountOfUser2 = this.props.userLoggedIn.amountToRemitSourceCurrency;
+        const currencyOfUser2 = this.props.userLoggedIn.sourceCurrency;
+
+        let emailUser1 = {
+            fromUser: "DirectExchange",
+            toUser: this.props.value.user?.userName,
+            message: standardMessage + amountOfUser1 + " " + currencyOfUser1
+        }
+        
+        let emailUser2 = {
+            fromUser: "DirectExchange",
+            toUser:this.props.userLoggedIn.user?.userName,
+            message: standardMessage + amountOfUser2 + " " + currencyOfUser2
+        }
+
+        await axios
+        .post(urlConfig.url + "/sendEmail", emailUser1)
+        .then(response => {
+            console.log("Search Result : ", response.data);
+            if (response.data != undefined) {
+                message.success('Successfully sent email to the user'+ emailUser1.toUser)
+        
+            } else {
+                
+
+            }
+
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+
+        await axios
+        .post(urlConfig.url + "/sendEmail", emailUser2)
+        .then(response => {
+            console.log("Search Result : ", response.data);
+            if (response.data != undefined) {
+                message.success('Successfully sent email to the user' + emailUser2.toUser)
+                
+            } else {
+                
+
+            }
+
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+
         message.success('Go to Transactions and make the payment');
         this.setState({
             redirectPage: <Redirect to={{ pathname: '/user/myoffers' }}></Redirect>
