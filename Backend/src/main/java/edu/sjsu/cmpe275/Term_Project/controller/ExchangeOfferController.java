@@ -219,6 +219,28 @@ public class ExchangeOfferController {
 	}
 	
 	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PutMapping("/exchangeOffer/updateOfferStatusToInTransactionReverse")
+	public ResponseEntity updateOfferStatusToInTransactionReverse(@RequestBody TransactionDetailsModel transaction) {
+//		System.out.println(transaction);
+		try {
+			System.out.println("DEBUG: " + transaction.getUserName() + " " + transaction.getAmount() + " " + 
+						transaction.getPercentOfTotalAmount() + " " +  transaction.getInverseExRate());
+			TransactionDetails trdetails = new TransactionDetails(transaction.getUserName(), transaction.getAmount(), "", "",
+																  transaction.getBankName(), transaction.getAccountNumber(),
+																  transaction.getPercentOfTotalAmount(), transaction.getInverseExRate(),"","");
+			
+			ExchangeOffer offer = exchangeOfferService.updateOfferStatusToInTransactionReverse(transaction.getExchangeOfferId(), trdetails, transaction.getUserName());
+			if (offer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
+			}
+			return ResponseEntity.ok(offer);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+		
+	}
+	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
 	@PostMapping("exchangeOffer/updateOfferStatusForCounterOffer")
 	public ResponseEntity updateOfferStatusToCounterMade(@RequestBody ProposedOfferModel proposedOffer) {
 		try {
@@ -227,6 +249,36 @@ public class ExchangeOfferController {
 					   proposedOffer.getSplitUser1Amount(),proposedOffer.getSplitUser2Amount());
 			ExchangeOffer offer =
 				exchangeOfferService.updateOfferStatusForCounterOffer(proposedOffer.getExchangeOfferId(), counterOffer);
+			
+			if (offer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
+			}
+			/**
+			 * Return response with status 200
+			 */
+			return ResponseEntity.ok(offer);
+			
+		} catch(Exception e) {
+			/**
+			 * Return status 400 if input is invalid
+			 */
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+	}
+	
+	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PostMapping("exchangeOffer/updateOfferStatusForCounter")
+	public ResponseEntity updateOfferStatusToCounter(@RequestBody ProposedOfferModel proposedOffer) {
+		try {
+			ProposedOffer counterOffer = new ProposedOffer(proposedOffer.getAmount(),
+					   proposedOffer.getSplitUserId1() , proposedOffer.getSplitUserId2()  ,
+					   proposedOffer.getSplitUser1Amount(),proposedOffer.getSplitUser2Amount());
+			
+			ExchangeOffer offer =
+				exchangeOfferService.updateOfferStatusForCounter(proposedOffer.getExchangeOfferId(), counterOffer, proposedOffer.getOfferStatusChange());
+			
+		
 			if (offer == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
 			}
@@ -256,6 +308,8 @@ public class ExchangeOfferController {
 			
 			ExchangeOffer offer =
 				exchangeOfferService.updateCounterOffer(exchangeOfferId, counterOfferId, status);
+			
+			
 			if (offer == null) {
 				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
 			}

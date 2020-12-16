@@ -313,6 +313,7 @@ public class ExchangeOfferService {
 	 */
 	public ExchangeOffer updateOfferStatusToInTransaction(long offer_id, TransactionDetails trdetails) throws Exception {
 		ExchangeOffer offer = exchangeOfferRepository.findById(offer_id).orElse(null);
+		
 		if (offer == null) {
 			return offer;
 		}
@@ -326,6 +327,35 @@ public class ExchangeOfferService {
 		trdetails.setAccountNumber(offer.getReceivingAccountNumber());
 		trdetails.setCountry(offer.getSourceCountry());
 		trdetails.setCurrency(offer.getSourceCurrency());
+		trdetails.setOfferid1(offer_id);
+		recv_trdetails.setOfferid1(offer_id);
+		recv_trdetails.setExchange_offer(offer);
+		offer.setOfferStatus("InTransaction");
+		offer.getTransactionDetails().add(trdetails);
+		offer.getTransactionDetails().add(recv_trdetails);
+		exchangeOfferRepository.save(offer);
+		return offer;
+	}
+	
+	public ExchangeOffer updateOfferStatusToInTransactionReverse(long offer_id, TransactionDetails trdetails, String userName) throws Exception {
+		ExchangeOffer offer = exchangeOfferRepository.findById(offer_id).orElse(null);
+		
+		if (offer == null) {
+			return offer;
+		}
+		System.out.println(userName+trdetails.getAmount()*offer.getExchangeRate());
+		TransactionDetails recv_trdetails = new TransactionDetails(userName, (trdetails.getAmount()*offer.getExchangeRate()), "", "",
+				trdetails.getBankName(), trdetails.getAccountNumber(),											  
+				trdetails.getPercentOfTotalAmount(), (float)offer.getExchangeRate(), offer.getDestinationCountry(), offer.getDestinationCurrency());
+		
+		trdetails.setExchange_offer(offer);
+		trdetails.setUsername(offer.getUser().getUserName());
+		trdetails.setBankName(offer.getReceivingBankName());
+		trdetails.setAccountNumber(offer.getReceivingAccountNumber());
+		trdetails.setCountry(offer.getSourceCountry());
+		trdetails.setCurrency(offer.getSourceCurrency());
+		trdetails.setOfferid1(offer_id);
+		recv_trdetails.setOfferid1(offer_id);
 		recv_trdetails.setExchange_offer(offer);
 		offer.setOfferStatus("InTransaction");
 		offer.getTransactionDetails().add(trdetails);
@@ -361,6 +391,36 @@ public class ExchangeOfferService {
 		proposedOffer.setExchangeRate(Double.parseDouble(df.format(rate)));
 //		exchange_offer.setOfferStatus("CounterMade");
 		exchange_offer.getProposedOffers().add(proposedOffer);
+		exchangeOfferRepository.save(exchange_offer);
+		return exchange_offer;
+	}
+	
+	public ExchangeOffer updateOfferStatusForCounter(String offer_id, ProposedOffer proposedOffer, long offerStatusChange) throws Exception {
+		long id = Long.parseLong(offer_id);
+		ExchangeOffer exchange_offer = exchangeOfferRepository.findById(id).orElse(null);
+		ExchangeOffer offerStatus = exchangeOfferRepository.findById((long) offerStatusChange).orElse(null);
+
+	//	ExchangeOffer offerStatus = exchangeOfferRepository.findById(offerStatusChange).orElse(null);
+		if (exchange_offer == null) {
+			return exchange_offer;
+		}
+		
+//		if (proposedOffer.getSplitUserId1().equals(exchange_offer.getUser().getUserName())) {
+//			throw new Exception("User cannot propose counter offer to its own exchange offer");
+//		}
+		
+		
+		proposedOffer.setExchangeOffer(exchange_offer);
+		double rate = 1.0/exchange_offer.getExchangeRate();
+		proposedOffer.setExchangeRate(Double.parseDouble(df.format(rate)));
+//		exchange_offer.setOfferStatus("CounterMade");
+		exchange_offer.getProposedOffers().add(proposedOffer);
+		
+		
+		if(offerStatus!=null) {
+			offerStatus.setOfferStatus("CounterMade");
+			exchangeOfferRepository.save(offerStatus);
+		}
 		exchangeOfferRepository.save(exchange_offer);
 		return exchange_offer;
 	}

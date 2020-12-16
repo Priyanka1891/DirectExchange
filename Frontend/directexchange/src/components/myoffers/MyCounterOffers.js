@@ -52,7 +52,7 @@ class MyCounterOffers extends React.Component {
 
         var data = {
             "exchangeOfferId": this.state.selectedOffer.id,
-            "counterOfferId": e,
+            "counterOfferId": e.id,
             "status": "InTransaction"
         }
         console.log('e', data);
@@ -67,7 +67,7 @@ class MyCounterOffers extends React.Component {
                     });
                     //Redirect to transaction page
                     this.props.history.push({
-                        pathname: '/offer/transaction/',
+                        pathname: '/user/myoffers',
                         data: response.data // your data array of objects
                     })
                 } else {
@@ -78,6 +78,52 @@ class MyCounterOffers extends React.Component {
             .catch(errors => {
                 console.log("Error" + errors);
             });
+
+          
+
+            var bankObj = this.state.bankAccounts.find(obj => {
+                return obj.id === this.state.selectedBankId;
+            })
+            var data = {
+                "userName": e.splitUserId1,
+                "amount": this.state.selectedOffer.amountToRemitSourceCurrency,
+                "percentOfTotalAmount": 5,
+                "exchangeOfferId": this.state.selectedOffer.id,
+                "bankName": 'US Bank',
+            "accountNumber": 93049039438488999,
+                "inverseExRate": (1 / this.state.selectedOffer.exchangeRate).toFixed(5)
+            }
+
+         
+            axios
+                .put(urlConfig.url + "/exchangeOffer/updateOfferStatusToInTransactionReverse/", data)
+                .then(response => {
+                    console.log("Search Result : ", response.data);
+                    if (response.data != undefined) {
+                        this.setState({
+                            offers: response.data,
+                            showModal: false
+                        });
+                        //Redirect to transaction page
+    
+    
+    
+                        // this.props.history.push({
+                        //     pathname: '/user/myoffers/',
+                        //     data: response.data // your data array of objects
+                        // })
+                    } else {
+    
+                    }
+    
+                })
+                .catch(errors => {
+                    console.log("Error" + errors);
+                });
+
+               
+
+
     }
 
     onRejectClick = (e) => {
@@ -120,8 +166,8 @@ class MyCounterOffers extends React.Component {
             "amount": this.state.selectedOffer.amountToRemitSourceCurrency,
             "percentOfTotalAmount": 5,
             "exchangeOfferId": this.state.selectedOffer.id,
-            "bankName": bankObj.bankName,
-            "accountNumber": bankObj.accountNumber,
+            "bankName": 'US Bank',
+            "accountNumber": 93049039438488999,
             "ExRate": (1 / this.state.selectedOffer.exchangeRate).toFixed(5)
         }
         axios
@@ -138,7 +184,7 @@ class MyCounterOffers extends React.Component {
 
 
                     this.props.history.push({
-                        pathname: '/offer/transaction/',
+                        pathname: '/offer/myoffers/',
                         data: response.data // your data array of objects
                     })
                 } else {
@@ -191,6 +237,8 @@ class MyCounterOffers extends React.Component {
     }
 
     render() {
+        console.log(this.state.offers);
+
         return (
             <div>
                 <div>
@@ -277,9 +325,9 @@ class MyCounterOffers extends React.Component {
 
                                         <p><b>Exchange Rate</b> : {value.exchangeRate}</p>
                                         <Divider />
-                                            {value.status == "Open" && 
+                                            {(value.status == "Open" || value.status == "open" ) && 
                                             <Space>
-                                                <Button type="primary" onClick={this.onAcceptClick.bind(this, value.id)} >Accept</Button>
+                                                <Button type="primary" onClick={this.onAcceptClick.bind(this, value)} >Accept</Button>
                                                 {/* <Button Disabled type="primary">Reject</Button> */}
                                                 <Button type="primary" onClick={this.onRejectClick.bind(this, value.id)}>Reject</Button>
                                             </Space>

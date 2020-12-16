@@ -107,8 +107,7 @@ public class TransactionController {
 			TransactionDetails trdetails = new TransactionDetails();
 			
 			
-			  
-			  
+			 
 			trdetails.setUsername(transaction.getUserName());
 			trdetails.setAmount(transaction.getAmount());
 			trdetails.setOfferid1(transaction.getOffer1());

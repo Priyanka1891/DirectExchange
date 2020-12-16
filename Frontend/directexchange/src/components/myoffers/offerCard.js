@@ -48,8 +48,44 @@ class OfferCard extends React.Component {
     }
 
     counterOfferClicked = (e) => {
-        console.log(this.state.proposedOffer)
+        console.log(this.state.proposedOffer)       
 
+        var data = {
+            "splitUserId1": this.props.userLoggedIn.user?.userName,
+            "splitUserId2": null,
+            "splitUser1Amount": this.state.proposedOffer, //destination currency
+            "splitUser2Amount": 0,
+            "exchangeOfferId": this.props.value.id,//user who has posted
+            "exchangeRate":this.props.value.exchangeRate,
+            "offerStatusChange":this.props.userLoggedIn.id,
+          //  "offer1":this.props.userLoggedIn.id,
+            "amount": this.state.proposedOffer
+        }
+        console.log(data);
+        console.log(urlConfig.url + "/exchangeOffer/updateOfferStatusForCounter");
+        axios
+            .post(urlConfig.url + "/exchangeOffer/updateOfferStatusForCounter", data)
+            .then(response => {
+                console.log("Search Result : ", response.data);
+                if (response.data != undefined) {
+                    this.setState({
+                       // offers: response.data
+
+                    });
+                 
+                } else {
+
+                }
+
+            })
+            .catch(errors => {
+                console.log("Error" + errors);
+            });
+
+            this.setState({
+                redirectPage: <Redirect to={{ pathname: '/user/myoffers' }}></Redirect>
+            })
+            
         //check if it lies within the range
     }
 
@@ -150,9 +186,9 @@ class OfferCard extends React.Component {
         });
 
         //send email for payment notification
-        message.success('Go to Transactions and make the payment');
+       // message.success('Go to Transactions and make the payment');
         this.setState({
-            redirectPage: <Redirect to={{ pathname: '/user/myoffers' }}></Redirect>
+            redirectPage: <Redirect to={{ pathname: '/user/browseoffers' }}></Redirect>
         })
         
 
