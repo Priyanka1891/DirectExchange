@@ -9,9 +9,12 @@ export const firebaseconfig = {
   appId: "1:950077225374:web:c9047b4892424324acbe8f"
 };
 
+// export const urlConfig = {
+//   url:"http://localhost:8080",
+//   urlEmail: "http://localhost:3000",
+// }
+
 export const urlConfig = {
-  url:"http://localhost:8080",
-  urlEmail: "http://localhost:3000",
+  url: "http://3.89.105.90:8080",
+  urlEmail: "http://3.89.105.90:3000"
 }
-
-

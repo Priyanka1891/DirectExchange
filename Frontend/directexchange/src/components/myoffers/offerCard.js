@@ -210,7 +210,7 @@ class OfferCard extends React.Component {
         .then(response => {
             console.log("Search Result : ", response.data);
             if (response.data != undefined) {
-                message.success('Successfully sent email to the user'+ emailUser1.toUser)
+                //message.success('Successfully sent email to the user'+ emailUser1.toUser)
         
             } else {
                 
@@ -227,7 +227,7 @@ class OfferCard extends React.Component {
         .then(response => {
             console.log("Search Result : ", response.data);
             if (response.data != undefined) {
-                message.success('Successfully sent email to the user' + emailUser2.toUser)
+                //message.success('Successfully sent email to the user' + emailUser2.toUser)
                 
             } else {
                 

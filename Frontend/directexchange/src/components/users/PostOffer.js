@@ -76,7 +76,7 @@ class PostOffer extends Component{
 
         console.log(values)
         values.userName = userName;
-        values.offerStatus = "open";
+        values.offerStatus = "Open";
         values.exchangerate=this.state.exchangeRateValue;
         values.exchangeRate = this.state.exchangeRateValue;
         console.log(values);
