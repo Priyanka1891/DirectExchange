@@ -1,6 +1,9 @@
 
 import React, { Component } from 'react';
 import { Card, Button } from 'antd';
+import axios from "axios";
+import {urlConfig} from '../../config/config';
+import Swal from 'sweetalert2';
 
 
 class EachTransaction extends Component{
@@ -41,7 +44,11 @@ class EachTransaction extends Component{
     pay = (e) => {
         //change status to paid
 ///transaction/updateTransactionsBasedOnPayment/
-let values = {};
+let values = {
+    exchangeOfferId : this.props.transaction.exchange_offer.id,
+    amount: this.props.transaction.amount,
+    userName: localStorage.getItem("userName")
+};
 
 axios
 .post(urlConfig.url + "/transaction/updateTransactionsBasedOnPayment/", values)

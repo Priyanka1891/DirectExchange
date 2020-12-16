@@ -85,13 +85,15 @@ public class TransactionController {
 	@PostMapping("/transaction/updateTransactionsBasedOnPayment/")
 	public ResponseEntity updateTransactionsBasedOnPayment(@RequestBody TransactionDetailsModel transactionDetailsModel){
 		try {
+			
 			long exchangeOfferId = transactionDetailsModel.getExchangeOfferId();
 			String userName = transactionDetailsModel.getUserName();
 			double amount = transactionDetailsModel.getAmount();
+			System.out.println("Printing here " + exchangeOfferId + "" + userName + "" + amount);
 			boolean allPartiesPaid = transactionService.updateTransactionsBasedOnPayment(exchangeOfferId, userName, amount);
 			return ResponseEntity.ok(allPartiesPaid);
 		} catch(Exception e) {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.toString());
 		}
 		
 	}
