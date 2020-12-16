@@ -253,7 +253,13 @@ class BrowseOffers extends React.Component {
                                     {/* <p>{value.receivingAccountNumber}</p> */}
                                     <p>Bank : {value.receivingBankName}</p>
                                     <Divider orientation="left">User Details</Divider>
-                                    <p>{value.user.name}<Divider type="vertical" /> <Rate disabled defaultValue={4} /> </p>
+                                    <p>{value.user.name}<Divider type="vertical" /> 
+                                    <Link to={{pathname: '/user/transHistory',state: value}}>
+                                        <Rate disabled defaultValue={value.user.reputation} />
+                                        </Link>
+                                    {/* <Rate disabled defaultValue={4} />  */}
+                                    
+                                    </p>
                                     <Divider dashed />
                                     <Link to={{
                                         pathname: '/offer/details/',

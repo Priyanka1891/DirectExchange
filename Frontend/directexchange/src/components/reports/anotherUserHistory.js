@@ -55,7 +55,7 @@ const columns = [
   ];
 
 
-class TransctionHistory extends Component{
+class TransctionHistoryUser extends Component{
 
     constructor(){
         super();
@@ -68,33 +68,6 @@ class TransctionHistory extends Component{
 
     componentDidMount(){
         //api request to load table
-        console.log(this.props.location.state)
-        if(this.props.location.state && this.props.location.state.user?.userName){
-
-          console.log("insideif")
-          axios
-          .get(urlConfig.url + "/transaction/" + this.props.location.state.user.userName)
-          .then(response => {
-              console.log("Search Result : ", response.data);
-              if (response.data != undefined) {
-                  this.setState({
-                    dataSource:response.data
-                  });
-              } else {
-                this.setState({
-                  dataSource:[]
-                })
-  
-              }
-  
-          })
-          .catch(errors => {
-              console.log("Error" + errors);
-          });
-        }
-        else{
-
-          console.log("insideelse")
         axios
         .get(urlConfig.url + "/transaction/" + localStorage.getItem('userName'))
         .then(response => {
@@ -114,7 +87,6 @@ class TransctionHistory extends Component{
         .catch(errors => {
             console.log("Error" + errors);
         });
-      }
 
 
        
@@ -133,7 +105,7 @@ class TransctionHistory extends Component{
 
                    <div>
                    <div>
-                <h1 style={{paddingTop:'2%', textAlign:'center'}} ><strong>Transaction History</strong></h1>
+                <h1 style={{paddingTop:'2%', textAlign:'center'}} ><strong>User Transaction History</strong></h1>
 
              <Table style={{paddingTop:'1%'}}  dataSource={this.state.dataSource} columns={columns} />;
              </div>

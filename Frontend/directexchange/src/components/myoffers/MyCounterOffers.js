@@ -247,7 +247,7 @@ class MyCounterOffers extends React.Component {
                 <Content style={{ padding: '0 50px' }}>
                     <Layout className="site-layout-background" style={{ padding: '24px 0' }}>
                         <Sider className="site-layout-background" width={300}>
-                            <Card title="My Counter Offers" >
+                            <Card title="My Offers. Click on counter offers" >
                                 {this.state.offers && this.state.offers.map((value, index) => {
                                     return <Card.Grid bordered={true} style={gridStyle}>
                                         <p><b>Offer ID : {value.id}

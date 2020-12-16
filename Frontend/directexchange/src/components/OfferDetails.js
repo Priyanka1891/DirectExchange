@@ -259,7 +259,9 @@ class OfferDetails extends React.Component {
                                 {this.state.offerDetails.user.name}
                                     </Col>
                                     <Col className="gutter-row" span={6}>
-                                        <Rate disabled defaultValue={4} />
+                                        <Link to={{pathname: '/user/transHistory',state: value}}>
+                                        <Rate disabled defaultValue={this.state.offerDetails.user.reputation} />
+                                        </Link>
                                     </Col>
                                     <Space>
                                         <Button type="primary" onClick={this.onAcceptClick} >Accept</Button>

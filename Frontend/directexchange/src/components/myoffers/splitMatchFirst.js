@@ -92,6 +92,10 @@ class SplitMatchFirst extends React.Component {
 
     }
 
+    acceptOfferClicked = () => {
+        
+    }
+
     render(){
         return(
             <div style={{marginLeft:'4%', marginRight:'4%'}}> 
@@ -111,7 +115,7 @@ class SplitMatchFirst extends React.Component {
                     })
                 }
                 <p></p>
-                <Button type="primary" style={{background:'green'}} >Accept Offer</Button>
+                <Button type="primary" style={{background:'green'}} onClick={(e)=>this.acceptOfferClicked(e)}>Accept Offer</Button>
                                   <p></p>
                                  
                                   <Row>
