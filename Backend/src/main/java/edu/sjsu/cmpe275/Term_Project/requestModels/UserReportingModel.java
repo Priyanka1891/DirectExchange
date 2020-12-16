@@ -16,8 +16,16 @@ public class UserReportingModel {
 	private double destAmount;
 	
 	private double total;
+	private String status;
 	
 	
+	
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
 	public double getTotal() {
 		return total;
 	}

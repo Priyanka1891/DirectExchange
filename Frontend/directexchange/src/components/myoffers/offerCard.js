@@ -132,6 +132,29 @@ class OfferCard extends React.Component {
                                    <Button type="primary" onClick={this.sendMessage} danger>Send Message</Button>
                                    </Col>
                                    </Row>
+                                   <Button type="primary" style={{background:'green'}} >Accept Offer</Button>
+                                  <p></p>
+                                  {/* <Row>
+                                      <Col md={12}>
+                                  <Input type="text" value={this.state.changeOffer} onChange={this.onChangeChangeOffer} disabled={this.state.amountToRemit === this.state.userAmountToRemit? true: false}></Input>
+                                       </Col>
+                                  <Col md={12}>
+
+                                 <Button type="primary" disabled={this.state.amountToRemit === this.state.userAmountToRemit? true: false} onClick={(e)=>this.changeMyOfferClicked(e)} style={{background:'blue'}}>Change My Offer</Button>
+                                 </Col>
+                                 </Row> */}
+                                 <p></p>
+                                  <Row>
+                                      <Col md={12}>
+                                  <Input type="text" value={this.state.proposedOffer} onChange={this.changeProposedOffer} disabled={this.state.allowCounterOffers.toUpperCase() === "allow".toUpperCase()?false:true}></Input>
+                                   </Col>
+                                  <Col md={12}>
+
+                                 <Button type="primary" disabled={this.state.allowCounterOffers.toUpperCase() === "allow".toUpperCase()?false:true} onClick={(e)=>this.counterOfferClicked(e)} danger>Propose Counter Offer</Button>
+                                 </Col>
+                                 </Row> 
+
+
                                   {/* <Button type="primary" style={{background:'green'}} disabled={this.state.amountToRemit === this.state.userAmountToRemit? false: true}>Accept Offer</Button>
                                   <p></p>
                                   <Row>

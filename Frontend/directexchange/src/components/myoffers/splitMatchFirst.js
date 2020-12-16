@@ -111,6 +111,20 @@ class SplitMatchFirst extends React.Component {
                     })
                 }
                 <p></p>
+                <Button type="primary" style={{background:'green'}} >Accept Offer</Button>
+                                  <p></p>
+                                 
+                                  <Row>
+                                      <Col md={12}>
+                                  <Input type="text" value={this.state.proposedOffer} onChange={this.changeProposedOffer} disabled={this.state.allowCounterOffers}></Input>
+                                  </Col>
+                                  <Col md={12}>
+
+                                 <Button type="primary" disabled={this.state.allowCounterOffers} onClick={(e)=>this.counterOfferClicked(e)} danger>Propose Counter Offer</Button>
+                                 </Col>
+                                 </Row> 
+
+
                               {/* <Button type="primary" style={{background:'green'}} disabled={this.props.amountToRemit === this.state.userAmountToRemit? false: true}>Accept Offer</Button>
                                   <p></p>
                                   <Row>
