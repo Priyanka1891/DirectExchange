@@ -66,6 +66,7 @@ class MatchingOffers extends React.Component {
         .then(response => {
          
             if (response.data != undefined) {
+                console.log(response.data)
                 this.setState({
                     singleMatches:response.data,
                 })
@@ -461,6 +462,7 @@ class MatchingOffers extends React.Component {
         console.log(value)
         console.log(e)
 
+        
 
 
     }
@@ -484,7 +486,7 @@ class MatchingOffers extends React.Component {
                     {this.state.singleMatches.map((value, ind)=>{
                         return (
                             <div>
-                                 <OfferCard value={value} userAmountToRemit={this.state.amountToRemit}></OfferCard>
+                                 <OfferCard value={value} userAmountToRemit={this.state.amountToRemit} userLoggedIn={this.props.location.state}></OfferCard>
                             </div>
                         );
                     })}

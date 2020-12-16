@@ -19,6 +19,7 @@ import edu.sjsu.cmpe275.Term_Project.entity.TransactionDetails;
 import edu.sjsu.cmpe275.Term_Project.entity.User;
 import edu.sjsu.cmpe275.Term_Project.repository.ExchangeOfferRepository;
 import edu.sjsu.cmpe275.Term_Project.repository.UserRepository;
+import edu.sjsu.cmpe275.Term_Project.requestModels.TransactionDetailsSecondModel;
 
 /**
  * ExchangeOfferService which makes the call to the Repository for performing CRUD operations
@@ -143,8 +144,8 @@ public class ExchangeOfferService {
 		/**
 		 * Specify the upper(+10%) and lower bounds(-10%) of the amount to be remitted
 		 */
-		double upperBound = amountToRemitInDestinationCurrency * 1.05;
-		double lowerBound = amountToRemitInDestinationCurrency * 0.97;
+		double upperBound = amountToRemitInDestinationCurrency * 1.1;
+		double lowerBound = amountToRemitInDestinationCurrency * 0.9;
 		
 		List<ExchangeOffer> matchingOffersInRange = new ArrayList<>();
 		
@@ -153,6 +154,10 @@ public class ExchangeOfferService {
 			/**
 			 * Check whether amount to be remitted is within range and add accordingly
 			 */
+			System.out.println(lowerBound);
+			System.out.println(upperBound);
+			System.out.println(probableMatchingOfferAmountToRemit);
+
 			if(probableMatchingOfferAmountToRemit>=lowerBound && probableMatchingOfferAmountToRemit<=upperBound) {
 				matchingOffersInRange.add(probableMatchingOffer);
 			}
@@ -330,6 +335,8 @@ public class ExchangeOfferService {
 	}
 	
 	
+	
+	
 	/**
 	 * Service to update an offer to in transaction mode
 	 * @param offer id
@@ -377,6 +384,29 @@ public class ExchangeOfferService {
 		}
 		exchangeOfferRepository.save(exchange_offer);
 		return exchange_offer;
+	}
+	
+	
+	public ExchangeOffer updateTransaction(long offer_id, TransactionDetails trdetails, long offer1) throws Exception {
+		ExchangeOffer offer = exchangeOfferRepository.findById(offer_id).orElse(null);
+		ExchangeOffer mainOffer = exchangeOfferRepository.findById(offer1).orElse(null);
+		
+		if (offer == null) {
+			return offer;
+		}
+		
+		
+		
+		trdetails.setExchange_offer(offer);
+		trdetails.setBankName(mainOffer.getReceivingBankName());
+		trdetails.setAccountNumber(mainOffer.getReceivingAccountNumber());
+		trdetails.setCountry(mainOffer.getSourceCountry());
+		trdetails.setCurrency(mainOffer.getSourceCurrency());
+		mainOffer.setOfferStatus("InTransaction");
+		mainOffer.getTransactionDetails().add(trdetails);
+	//	offer.getTransactionDetails().add(recv_trdetails);
+		exchangeOfferRepository.save(offer);
+		return offer;
 	}
 	
 	

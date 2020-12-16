@@ -70,7 +70,7 @@ axios
            <div>
                <div>
                <Card.Grid>
-                        <p>Amount to Transfer: {this.props.transaction.exchange_offer?.amountToRemitSourceCurrency}</p>
+                        <p>Amount to Transfer: {this.props.transaction.amount}</p>
                         <p>Currency: {this.props.transaction.currency}</p>
                         <p>Destination Country: {this.props.transaction.exchange_offer?.destinationCountry}</p>
                         <Button onClick={this.pay} style={{background:'green'}}>Pay</Button>

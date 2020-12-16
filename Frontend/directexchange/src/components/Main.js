@@ -96,7 +96,6 @@ class Main extends React.Component {
             </>
 
           }
-                      <Route path="/user/browseoffers/" component={BrowseOffers} />
 
                       <Route path="/logout/" component={Logout} />
 

@@ -6,6 +6,7 @@ import {    Link
 import axios from 'axios';
 import {urlConfig} from '../../config/config';
 
+import { Redirect } from 'react-router';
 
 const { TextArea } = Input;
 
@@ -99,7 +100,62 @@ class OfferCard extends React.Component {
         }
     }
 
+    acceptOfferClicked = (e) => {
+        var object = {
+            "userName": this.props.value.user?.userName,
+            "amount": this.props.value.amountToRemitSourceCurrency,
+            "percentOfTotalAmount": 5,
+            "exchangeOfferId": this.props.value.id,
+            "offer1":this.props.value.id,
+           // "bankName": bankObj.bankName,
+           // "accountNumber": bankObj.accountNumber,
+        }
+        axios
+        .post(urlConfig.url + "/transaction/acceptoffer", object)
+        .then(response => {
+            console.log("Search Result : ", response.data);
+            if (response.data != undefined) {
+               
+            } else {
+                
+            }
+
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+
+        let secondObjest = {
+            "userName": this.props.userLoggedIn.user?.userName,
+            "amount": this.props.userLoggedIn.amountToRemitSourceCurrency,
+            "percentOfTotalAmount": 5,
+            "exchangeOfferId": this.props.value.id,
+            "offer1":this.props.userLoggedIn.id,
+        }
+
+        axios
+        .post(urlConfig.url + "/transaction/acceptoffer", secondObjest)
+        .then(response => {
+            console.log("Search Result : ", response.data);
+            if (response.data != undefined) {
+               
+            } else {
+                
+            }
+
+        })
+        .catch(errors => {
+            console.log("Error" + errors);
+        });
+
+        //send email for payment notification
+        message.success('Go to Transactions and make the payment');
+        <Redirect to={{ pathname: '/user/myoffers' }}></Redirect>
+
+    }
+
     render(){
+        console.log(this.props)
         return(
             <Card.Grid bordered={true} style={gridStyle} extra={<a>{this.state.offerStatus}</a>}>
                                   {/* <p>Counter Offer Allowed: <strong>{this.state.allowCounterOffers}</strong></p> */}
@@ -118,9 +174,9 @@ class OfferCard extends React.Component {
                                       <Col md={8}>
 
                                       </Col>
-                                  <Link to={{ pathname: 'user/details/', state: this.props.value }}>
+                                  {/* <Link to={{ pathname: 'user/details/', state: this.props.value }}>
                                    <Button type="primary">View User details</Button>
-                                  </Link>
+                                  </Link> */}
                                   </Row>
                                   <p></p>
 
@@ -132,7 +188,8 @@ class OfferCard extends React.Component {
                                    <Button type="primary" onClick={this.sendMessage} danger>Send Message</Button>
                                    </Col>
                                    </Row>
-                                   <Button type="primary" style={{background:'green'}} >Accept Offer</Button>
+                                   <p></p>
+                                   <Button type="primary" style={{background:'green'}} onClick={(e)=>this.acceptOfferClicked(e)}>Accept Offer</Button>
                                   <p></p>
                                   {/* <Row>
                                       <Col md={12}>

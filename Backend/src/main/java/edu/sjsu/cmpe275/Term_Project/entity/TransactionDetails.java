@@ -60,23 +60,23 @@ public class TransactionDetails {
 	
 	private double serviceFee;
 	
-	private int offerid1;
+	private long offerid1;
 	
-	private int offerid2;
+	private long offerid2;
 	
-	public int getOfferid1() {
+	public long getOfferid1() {
 		return offerid1;
 	}
 
-	public void setOfferid1(int offerid1) {
+	public void setOfferid1(long offerid1) {
 		this.offerid1 = offerid1;
 	}
 
-	public int getOfferid2() {
+	public long getOfferid2() {
 		return offerid2;
 	}
 
-	public void setOfferid2(int offerid2) {
+	public void setOfferid2(long offerid2) {
 		this.offerid2 = offerid2;
 	}
 

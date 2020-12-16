@@ -45,8 +45,26 @@ public class TransactionService {
 		
 		List<TransactionDetails> transactionList = transactionRepository.getAllTransactionsOfUser(userName);
 		List<UserReportingModel> reportings =  new ArrayList<>();
+		ExchangeOffer offer;
 		
 		for(TransactionDetails transaction: transactionList) {
+			UserReportingModel reporting = new UserReportingModel();
+			offer = exchangeOfferRepository.findById(transaction.getOfferid1()).orElse(null);
+			reporting.setDate(transaction.getCreateDate());
+			reporting.setDestAmount(transaction.getAmount() * offer.getExchangeRate());
+			reporting.setDestCountry(offer.getDestinationCountry());
+			reporting.setDestCurrency(offer.getDestinationCurrency());
+			reporting.setRate(offer.getExchangeRate());
+			reporting.setServiceFee(transaction.getServiceFee());
+			reporting.setSourceAmount(transaction.getAmount());
+			reporting.setSourceCountry(offer.getSourceCountry());
+			reporting.setSourceCurrency(offer.getSourceCurrency());
+			reporting.setTotal(transaction.getAmount() - transaction.getServiceFee());
+			reporting.setStatus(transaction.getStatus());
+			reportings.add(reporting);
+			
+		}
+	/*	for(TransactionDetails transaction: transactionList) {
 			UserReportingModel reporting = new UserReportingModel();
 			reporting.setDate(transaction.getCreateDate());
 			reporting.setDestAmount(transaction.getAmount() * transaction.getExchange_offer().getExchangeRate());
@@ -62,6 +80,7 @@ public class TransactionService {
 			reportings.add(reporting);
 			
 		}
+		*/
 		
 		
 		
@@ -87,7 +106,8 @@ public class TransactionService {
 				//update to expired
 				transaction.setStatus("Expired");
 				
-				ExchangeOffer updatedOffer = transaction.getExchange_offer();
+			//	ExchangeOffer updatedOffer = transaction.getExchange_offer();
+				ExchangeOffer updatedOffer = exchangeOfferRepository.findById(transaction.getOfferid1()).orElse(null);
 				updatedOffer.setOfferStatus("Expired");
 				transactionRepository.save(transaction);
 				exchangeOfferRepository.save(updatedOffer);

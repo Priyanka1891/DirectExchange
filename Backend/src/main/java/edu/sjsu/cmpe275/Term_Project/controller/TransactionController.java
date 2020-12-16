@@ -1,5 +1,6 @@
 package edu.sjsu.cmpe275.Term_Project.controller;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -16,8 +18,10 @@ import edu.sjsu.cmpe275.Term_Project.constants.Constants;
 import edu.sjsu.cmpe275.Term_Project.entity.ExchangeOffer;
 import edu.sjsu.cmpe275.Term_Project.entity.TransactionDetails;
 import edu.sjsu.cmpe275.Term_Project.requestModels.TransactionDetailsModel;
+import edu.sjsu.cmpe275.Term_Project.requestModels.TransactionDetailsSecondModel;
 import edu.sjsu.cmpe275.Term_Project.requestModels.UserReportingModel;
 import edu.sjsu.cmpe275.Term_Project.service.TransactionService;
+import edu.sjsu.cmpe275.Term_Project.service.ExchangeOfferService;
 
 @RestController
 public class TransactionController {
@@ -25,6 +29,8 @@ public class TransactionController {
 	@Autowired
 	private TransactionService transactionService;
 	
+	@Autowired
+	private ExchangeOfferService exchangeOfferService;
 	@CrossOrigin(origins = Constants.FRONT_END_URL)
 	@GetMapping("/transaction/{userName}")
 	public ResponseEntity getTransactionByUserName(@PathVariable String userName) {
@@ -89,6 +95,37 @@ public class TransactionController {
 		}
 		
 	}
+	
+	@CrossOrigin(origins = Constants.FRONT_END_URL)
+	@PostMapping("/transaction/acceptoffer")
+	public ResponseEntity acceptedOffer(@RequestBody TransactionDetailsSecondModel transaction) {
+		System.out.println(transaction);
+		try {
+			System.out.println("DEBUG: " + transaction.getUserName() + " " + transaction.getAmount() + " " + 
+						transaction.getExchangeOfferId() + " " +  transaction.getOffer1());
+			
+			TransactionDetails trdetails = new TransactionDetails();
+			
+			
+			  
+			  
+			trdetails.setUsername(transaction.getUserName());
+			trdetails.setAmount(transaction.getAmount());
+			trdetails.setOfferid1(transaction.getOffer1());
+			trdetails.setCreateDate(new Date());
+			
+			ExchangeOffer offer = exchangeOfferService.updateTransaction(transaction.getExchangeOfferId(), trdetails, transaction.getOffer1());
+			
+			if (offer == null) {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Offer not found");
+			}
+			return ResponseEntity.ok(offer);
+		} catch (Exception e) {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.toString());
+		}
+		
+	}
+	
 	
 
 }
