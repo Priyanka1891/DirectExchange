@@ -47,6 +47,16 @@ public class ProposedOfferModel {
 	private double splitUser1Amount;
 	
 	private double splitUser2Amount;
+	
+	private long offerStatusChange; 
+
+	public long getOfferStatusChange() {
+		return offerStatusChange;
+	}
+
+	public void setOfferStatusChange(long offerStatusChange) {
+		this.offerStatusChange = offerStatusChange;
+	}
 
 	public String getExchangeOfferId() {
 		return exchangeOfferId;
