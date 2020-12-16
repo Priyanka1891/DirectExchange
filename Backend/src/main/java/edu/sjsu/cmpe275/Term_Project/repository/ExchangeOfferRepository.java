@@ -28,7 +28,7 @@ public interface ExchangeOfferRepository extends JpaRepository<ExchangeOffer, Lo
 	 * @param sourceCurrency
 	 * @return
 	 */
-	@Query("SELECT e FROM ExchangeOffer e WHERE e.destinationCountry=?1 AND e.destinationCurrency=?2 AND e.sourceCountry=?3 AND e.sourceCurrency=?4 AND e.user!=?5 AND e.offerStatus='open'")
+	@Query("SELECT e FROM ExchangeOffer e WHERE e.destinationCountry=?1 AND e.destinationCurrency=?2 AND e.sourceCountry=?3 AND e.sourceCurrency=?4 AND e.user!=?5")
 	public List<ExchangeOffer> getMatchingExchangeOffersBasedOnCountry(String destinationCountry, String destinationCurrency, 
 																		String sourceCountry, String sourceCurrency, User user);
 	

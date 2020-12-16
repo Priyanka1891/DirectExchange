@@ -31,7 +31,7 @@ class SystemReport extends Component{
         let servicefee = 0;
         let completedTransactions = 0;
         let incompletedTransactions = 0;
-
+        let transSet = new Set();
         axios
         .get(urlConfig.url + "/alltransactions")
         .then(response => {
@@ -40,10 +40,18 @@ class SystemReport extends Component{
               let data = response.data;
               for(let i = 0 ; i<data.length;i++){
                 if(data[i].status.toUpperCase() === "EXPIRED"){
-                  incompletedTransactions+=1;
+                  if(!transSet.has(data[i].exchage_offer_id)){
+                    incompletedTransactions+=1;
+                    transSet.add(data[i].exchage_offer_id);
+
+                  }
                 }
                 else if(data[i].status.toUpperCase() === "FULFILLED"){
-                  completedTransactions+=1;
+                  if(!transSet.has(data[i].exchage_offer_id)){
+                    completedTransactions+=1;
+                    transSet.add(data[i].exchage_offer_id);
+
+                  }
                  if(data[i].currency.toUpperCase()!=="USD"){
                     for(let j = 0 ; j<ratesTable.length; j++){
                       if(ratesTable[j]['fromcurrency'].toUpperCase() === data[i].currency.toUpperCase()

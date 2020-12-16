@@ -90,9 +90,12 @@ class Headers extends Component {
     localStorage.removeItem('userName');
     firebase.auth().signOut();
      this.setState({
-       redirectPage: <Redirect to={{ pathname: '/' }} />
+       redirectPage: <Redirect to={{ pathname: '/logout' }} />
+     },()=>{
+    //  alert(localStorage.getItem('userName')) 
+     // location.reload();
      });
-  //  location.reload();
+   
   }
 
 

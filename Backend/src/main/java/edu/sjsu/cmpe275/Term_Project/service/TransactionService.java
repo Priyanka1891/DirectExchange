@@ -41,42 +41,7 @@ public class TransactionService {
 		if(user==null) {
 			throw new Exception("User does not exist");
 		}
-	/*	[
-		    {
-		        "id": 7,
-		        "exchange_offer": {
-		            "id": 3,
-		            "sourceCountry": "usa",
-		            "sourceCurrency": "USD",
-		            "amountToRemitSourceCurrency": 2000.0,
-		            "destinationCountry": "india",
-		            "destinationCurrency": "INR",
-		            "exchangeRate": 72.0,
-		            "expirationDate": "2020-12-31T17:13:15.835Z",
-		            "allowCounterOffers": "allow",
-		            "allowSplitExchanges": "allow",
-		            "receivingBankName": "us bank",
-		            "receivingAccountNumber": 837476574859,
-		            "offerStatus": "Expired"
-		        },
-		        "amount": 2000.0,
-		        "createDate": "2020-12-15T18:24:11.040+00:00",
-		        "status": "Expired",
-		        "expiryDate": "",
-		        "percentOfTotalAmount": 5.0,
-		        "isTransferred": false,
-		        "bankName": "us bank",
-		        "accountNumber": 837476574859,
-		        "serviceFee": 0.0,
-		        "offerid1": 0,
-		        "offerid2": 0,
-		        "country": "usa",
-		        "currency": "USD",
-		        "username": "aliceharper216@gmail.com",
-		        "rate": 0.01
-		    }
-		]*/
-		
+	
 		
 		List<TransactionDetails> transactionList = transactionRepository.getAllTransactionsOfUser(userName);
 		List<UserReportingModel> reportings =  new ArrayList<>();
@@ -146,13 +111,14 @@ public class TransactionService {
 		}
 		List<TransactionDetails> transactionList = transactionRepository.getAllTransactionsOfUser(userName);
 
-		boolean success = updateStatus(userName, transactionList);
+	/*	boolean success = updateStatus(userName, transactionList);
 		int totalTransactions = transactionList.size();
 		int expiredTransactions = transactionRepository.getExpiredTransactions(userName).size();
 		double reputation = ((1-(expiredTransactions)/(totalTransactions)) * 4)+1;
 		
 		user.setReputation(reputation);
 		userRepository.save(user);
+		*/
 		
 		List<TransactionDetails> pendingTransactionList = transactionRepository.getPendingTransactionsOfUser(userName);
 		return pendingTransactionList;

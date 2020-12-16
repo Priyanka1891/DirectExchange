@@ -31,7 +31,7 @@ public interface TransactionRepository extends JpaRepository<TransactionDetails,
 	 * @param userName
 	 * @return
 	 */
-	@Query("SELECT t FROM TransactionDetails t WHERE t.Username=?1")
+	@Query("SELECT t FROM TransactionDetails t WHERE t.Username=?1 and status='Fulfilled'")
 	public List<TransactionDetails> getAllTransactionsOfUser(String userName);
 	
 	/**
