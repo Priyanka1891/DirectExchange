@@ -35,6 +35,7 @@ class OfferCard extends React.Component {
             userAmountToRemit:this.props.userAmountToRemit,
             proposedOffer:'',
             message:'',
+            redirect:'',
 
         }
     }
@@ -150,13 +151,18 @@ class OfferCard extends React.Component {
 
         //send email for payment notification
         message.success('Go to Transactions and make the payment');
-        <Redirect to={{ pathname: '/user/myoffers' }}></Redirect>
+        this.setState({
+            redirectPage: <Redirect to={{ pathname: '/user/myoffers' }}></Redirect>
+        })
+        
 
     }
 
     render(){
         console.log(this.props)
         return(
+            <div>
+                {this.state.redirectPage}
             <Card.Grid bordered={true} style={gridStyle} extra={<a>{this.state.offerStatus}</a>}>
                                   {/* <p>Counter Offer Allowed: <strong>{this.state.allowCounterOffers}</strong></p> */}
                                   <p>Amount to Remit: <strong>{this.state.amountToRemitSourceCurrency}</strong></p>
@@ -234,7 +240,7 @@ class OfferCard extends React.Component {
                                  </Col>
                                  </Row> */}
                                  </Card.Grid>
-                                
+                                 </div>
                                  
         );
     }
