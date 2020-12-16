@@ -142,7 +142,7 @@ class OfferDetails extends React.Component {
 
 
                     this.props.history.push({
-                        pathname: '/offer/transaction/',
+                        pathname: '/user/transHistory/',
                         data: response.data // your data array of objects
                     })
                 } else {
@@ -193,8 +193,7 @@ class OfferDetails extends React.Component {
 
                     });
                     this.props.history.push({
-                        pathname: '/transactionDetails',
-                        pathname: '/offer/transaction/',
+                        pathname: '/user/browseoffers/',
                         data: response.data // your data array of objects
                     })
                 } else {
